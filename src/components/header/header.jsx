@@ -20,7 +20,7 @@ const Header = (props) => {
 				<a className={styles.login}>Add a new project</a>
 				<GoogleLogin
 					className={styles.googleLogin}
-					clientId="439002818439-7schr17esj308t5h9cr9f6cbrfcltmsf.apps.googleusercontent.com"
+					clientId={process.env.REACT_APP_GOOGLE_API_KEY}
 					buttonText="Sign in with google"
 					onSuccess={responseGoogle}
 					onFailure={responseFail}
