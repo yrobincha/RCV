@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styles from './app.module.css';
 import '../node_modules/video-react/dist/video-react.css';
 import Header from './components/header/header';
 import VideoPlayer from './components/videoPlayer/videoPlayer';
 import VideoSelector from './components/videoSelector/videoSelector';
+import Footer from './components/footer/footer';
 
 function App() {
 	return (
@@ -11,8 +12,8 @@ function App() {
 			<Header />
 			<div className={styles.container}>
 				<VideoSelector />
-				<VideoPlayer />
 			</div>
+			<Footer />
 		</div>
 	);
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './videoPlayer.module.css';
 import { Player } from 'video-react';
+
 const VideoPlayer = (props) => {
 	// <Player>
 	// 	{/* playsInline src={videoFileURL} */}
