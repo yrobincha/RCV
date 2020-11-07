@@ -16,7 +16,7 @@ const VideoSelector = (props) => {
 	};
 
 	const onVideoLoad = (files) => {
-		if (files !== null) {
+		if (files.length !== 0) {
 			handleVideoLoad(files[0]);
 		}
 	};

@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './header.module.css';
 import { GoogleLogin } from 'react-google-login';
-import { Spinner } from 'reactstrap';
 const Header = (props) => {
 	const responseGoogle = (res) => {
 		console.log(res);
