@@ -1,0 +1,45 @@
+.header {
+	display: flex;
+	height: 5em;
+	width: 100%;
+	margin-bottom: 3em;
+	padding: 0.5em 1em;
+	background-color: #303030;
+	align-items: center;
+}
+
+.logoImage {
+	height: 3em;
+}
+
+.logo {
+	margin-left: 0.5em;
+}
+
+.container {
+	margin-left: auto;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.login {
+	font-size: 1.4rem;
+	color: white;
+	margin-right: 1em;
+	cursor: pointer;
+}
+
+.login:hover {
+	color: #74acc8;
+	text-decoration: none;
+}
+
+.googleLogin {
+	transition: transform 0.2s ease-in-out;
+	cursor: pointer;
+}
+
+.googleLogin:hover {
+	transform: scale(1.02);
+}
