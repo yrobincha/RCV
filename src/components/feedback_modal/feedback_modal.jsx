@@ -11,10 +11,10 @@ const FeedbackModal = (props) => {
 	return (
 		<div className={styles.modalContainer}>
 			<Button color="secondary" onClick={toggle}>
-				Feedbacks
+				Feedback
 			</Button>
 			<Modal isOpen={modal} toggle={toggle} className={className}>
-				<ModalHeader toggle={toggle}>Feedbacks</ModalHeader>
+				<ModalHeader toggle={toggle}>Feedback</ModalHeader>
 				<ModalBody>
 					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
 					magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo

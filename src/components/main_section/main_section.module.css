@@ -52,6 +52,14 @@
 	filter: brightness(50%);
 }
 
+.logoImage {
+	z-index: 100;
+	height: 12vh;
+	margin-left: 1em;
+	margin-bottom: 1em;
+	filter: invert(100%) sepia(3%) saturate(3%) hue-rotate(348deg) brightness(105%) contrast(100%);
+}
+
 .startButton {
 	font-size: 16px;
 	background-color: transparent;

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import Player from 'video-react/lib/components/Player';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import styles from './videoSelector.module.css';
+import styles from './video_selector.module.css';
 import LoadingSpinner from 'video-react/lib/components/LoadingSpinner';
 import ControlBar from 'video-react/lib/components/control-bar/ControlBar';
 import PlayToggle from 'video-react/lib/components/control-bar/PlayToggle';
+import FeedbackModal from '../feedback_modal/feedback_modal';
 const VideoSelector = (props) => {
 	const [videoFileURL, setVideoURL] = useState(null);
 
@@ -32,12 +33,19 @@ const VideoSelector = (props) => {
 					onChange={(e) => onVideoLoad(e.target.files)}
 				/>
 			</div>
-			<Player className={styles.videoPlayer} playsInline src={videoFileURL} fluid={false} width={1024} height={480}>
-				<LoadingSpinner />
-				<ControlBar autoHide={false}>
-					<PlayToggle />
-				</ControlBar>
-			</Player>
+			<div className={styles.playerContainer}>
+				<Player className={styles.videoPlayer} playsInline src={videoFileURL} fluid={false} width={1024} height={480}>
+					<LoadingSpinner />
+					<ControlBar autoHide={false}>
+						<PlayToggle />
+					</ControlBar>
+				</Player>
+				<div className={styles.modalContainer}>
+					<FeedbackModal className={styles.feedbackModal} />
+					<FeedbackModal className={styles.feedbackModal} />
+					<FeedbackModal className={styles.feedbackModal} />
+				</div>
+			</div>
 		</div>
 	);
 };

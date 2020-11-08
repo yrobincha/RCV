@@ -1,11 +1,11 @@
 import React, { useRef } from 'react';
-import styles from './mainSection.module.css';
+import styles from './main_section.module.css';
 import { Nav, NavLink, NavItem } from 'reactstrap';
 const MainSection = (props) => {
 	const Scroll = require('react-scroll');
 	const scroll = Scroll.animateScroll;
 	const onClick = () => {
-		scroll.scrollTo(700);
+		scroll.scrollTo(730);
 	};
 
 	return (
@@ -13,6 +13,7 @@ const MainSection = (props) => {
 			<div className={styles.container}>
 				<div className={styles.textContainer}>
 					<h1 className={styles.text}>Realtime Collaborative Video Editor</h1>
+					<img className={styles.logoImage} src="images/movie-reel.png" alt="logo" />
 				</div>
 				<div className={styles.logoContainer}>
 					<h1 className={styles.logo}>(RCV)</h1>
