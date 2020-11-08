@@ -22,7 +22,7 @@ const VideoSelector = (props) => {
 	};
 
 	return (
-		<div className={styles.container}>
+		<div className={styles.videoContainer}>
 			<div className={styles.videoFileInput}>
 				<input //
 					id="ex_file"

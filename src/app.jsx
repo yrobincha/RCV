@@ -5,14 +5,16 @@ import Header from './components/header/header';
 import VideoPlayer from './components/videoPlayer/videoPlayer';
 import VideoSelector from './components/videoSelector/videoSelector';
 import Footer from './components/footer/footer';
-import MainImage from './components/mainImage/mainImage';
+import MainSection from './components/mainImage/mainSection';
+import FeedbackModal from './components/feedback_modal/feedback_modal';
 
 function App() {
 	return (
 		<div className={styles.app}>
 			<Header />
 			<div className={styles.container}>
-				<MainImage />
+				<MainSection />
+				<FeedbackModal />
 				<VideoSelector />
 			</div>
 			<Footer />

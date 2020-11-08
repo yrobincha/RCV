@@ -2,7 +2,7 @@
 .container {
 	position: relative;
 	left: 0%;
-	height: 800px;
+	height: 774px;
 }
 
 .textContainer {
@@ -10,7 +10,14 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	margin-bottom: 4em;
+	margin-bottom: 2em;
+}
+
+.logoContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 2em;
 }
 
 .buttonContainer {
@@ -19,12 +26,20 @@
 	align-items: center;
 }
 
-.mainLogo {
+.text,
+.logo {
 	font-family: 'Shadows Into Light', cursive;
 	font-weight: 2000;
-	font-size: 5rem;
 	color: white;
 	z-index: 100;
+}
+
+.text {
+	font-size: 5rem;
+}
+
+.logo {
+	font-size: 3rem;
 }
 
 .mainImage {
@@ -38,7 +53,7 @@
 }
 
 .startButton {
-	font-size: 14px;
+	font-size: 16px;
 	background-color: transparent;
 	font-weight: 800;
 	border: 2px solid hsla(0, 0%, 100%, 0.5) !important;
@@ -48,6 +63,7 @@
 	transition: transform 0.2s ease-in-out;
 	cursor: pointer;
 	z-index: 100;
+	width: 23vh;
 }
 
 .startButton:hover {
