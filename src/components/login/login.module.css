@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500&display=swap');
+
+.login {
+	font-size: 1rem;
+	margin-right: 1em;
+	cursor: pointer;
+	color: white;
+	font-weight: 600;
+	font-family: 'Manrope', sans-serif;
+	transition: color 0.2s ease-in;
+}
+
+.login:hover {
+	color: #74acc8;
+	text-decoration: none;
+}
+
+.googleLogin {
+	transition: transform 0.2s ease-in-out;
+	cursor: pointer;
+}
+
+.googleLogin:hover {
+	transform: scale(1.02);
+}

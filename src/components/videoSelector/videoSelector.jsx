@@ -22,16 +22,15 @@ const VideoSelector = (props) => {
 	};
 
 	return (
-		<div className={styles.container}>
-			<div className={styles.videoInput}>
-				<form id="videoFile" className={styles.videoFile}>
-					<input //
-						type="file"
-						name="video"
-						multiple={false}
-						onChange={(e) => onVideoLoad(e.target.files)}
-					/>
-				</form>
+		<div className={styles.videoContainer}>
+			<div className={styles.videoFileInput}>
+				<input //
+					id="ex_file"
+					type="file"
+					name="video"
+					multiple={false}
+					onChange={(e) => onVideoLoad(e.target.files)}
+				/>
 			</div>
 			<Player className={styles.videoPlayer} playsInline src={videoFileURL} fluid={false} width={1024} height={480}>
 				<LoadingSpinner />
