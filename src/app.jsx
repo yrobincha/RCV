@@ -14,7 +14,6 @@ function App() {
 			<Header />
 			<div className={styles.container}>
 				<MainSection />
-				<FeedbackModal />
 				<VideoSelector />
 				<FeatureSection />
 			</div>

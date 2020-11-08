@@ -7,6 +7,22 @@
 	margin-bottom: 3em;
 	padding-left: 10em;
 }
+
+.playerContainer {
+	display: flex;
+}
+
+.modalContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+.feedbackModal {
+	height: 14vh;
+}
+
 .videoPlayer {
-	margin: auto;
+	margin-left: 10em;
+	margin-right: 10em;
 }
