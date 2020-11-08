@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Player from 'video-react/lib/components/Player';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import styles from './videoSelector.module.css';
+import styles from './video_selector.module.css';
 import LoadingSpinner from 'video-react/lib/components/LoadingSpinner';
 import ControlBar from 'video-react/lib/components/control-bar/ControlBar';
 import PlayToggle from 'video-react/lib/components/control-bar/PlayToggle';

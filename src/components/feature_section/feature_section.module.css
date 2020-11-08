@@ -1,0 +1,13 @@
+.featureSection {
+	height: 700px;
+}
+
+.imageContainer {
+	display: flex;
+	justify-content: space-around;
+}
+
+.featureImage {
+	height: 14vh;
+	filter: invert(100%) sepia(3%) saturate(3%) hue-rotate(348deg) brightness(105%) contrast(100%);
+}
