@@ -5,12 +5,14 @@ import Header from './components/header/header';
 import VideoPlayer from './components/videoPlayer/videoPlayer';
 import VideoSelector from './components/videoSelector/videoSelector';
 import Footer from './components/footer/footer';
+import MainImage from './components/mainImage/mainImage';
 
 function App() {
 	return (
 		<div className={styles.app}>
 			<Header />
 			<div className={styles.container}>
+				<MainImage />
 				<VideoSelector />
 			</div>
 			<Footer />

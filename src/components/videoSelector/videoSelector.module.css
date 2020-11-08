@@ -2,12 +2,11 @@
 	height: 800px;
 }
 
-.videoInput {
+.videoFileInput {
 	text-align: center;
 	margin-bottom: 3em;
 	padding-left: 10em;
 }
-
 .videoPlayer {
 	margin: auto;
 }
