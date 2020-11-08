@@ -16,6 +16,7 @@
     "react-dom": "^16.13.1",
     "react-google-login": "^5.1.22",
     "react-scripts": "3.4.3",
+    "react-scroll": "^1.8.1",
     "reactstrap": "^8.7.1",
     "redux": "^4.0.5",
     "video-react": "^0.14.1"

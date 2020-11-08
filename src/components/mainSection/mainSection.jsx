@@ -2,6 +2,12 @@ import React, { useRef } from 'react';
 import styles from './mainSection.module.css';
 import { Nav, NavLink, NavItem } from 'reactstrap';
 const MainSection = (props) => {
+	const Scroll = require('react-scroll');
+	const scroll = Scroll.animateScroll;
+	const onClick = () => {
+		scroll.scrollTo(700);
+	};
+
 	return (
 		<>
 			<div className={styles.container}>
@@ -12,7 +18,9 @@ const MainSection = (props) => {
 					<h1 className={styles.logo}>(RCV)</h1>
 				</div>
 				<div className={styles.buttonContainer}>
-					<button className={styles.startButton}>시작하기</button>
+					<button className={styles.startButton} onClick={onClick}>
+						시작하기
+					</button>
 				</div>
 				<img className={styles.mainImage} src="images/collaboration.jpg" alt="main image" />
 			</div>
