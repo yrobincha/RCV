@@ -22,24 +22,3 @@
 	justify-content: flex-end;
 	align-items: center;
 }
-
-.login {
-	font-size: 1.4rem;
-	color: white;
-	margin-right: 1em;
-	cursor: pointer;
-}
-
-.login:hover {
-	color: #74acc8;
-	text-decoration: none;
-}
-
-.googleLogin {
-	transition: transform 0.2s ease-in-out;
-	cursor: pointer;
-}
-
-.googleLogin:hover {
-	transform: scale(1.02);
-}
