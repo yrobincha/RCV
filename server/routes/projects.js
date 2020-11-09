@@ -24,7 +24,7 @@ router.route('/')
 
 router.route('/:projectID/video')
 	.get((req,res, next) => {
-		res.sendFile(__dirname+'/index.html');
+		res.render('index.html');
 	})
 	.post(uploader.single('video'), (req,res, next)=>{
 		console.log('파일 업로드')
