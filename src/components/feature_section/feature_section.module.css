@@ -1,13 +1,10 @@
-body {
-  text-align: center;
-}
-
 .container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   text-align: center;
   width: 100%;
+  margin-top: 5em;
 }
 
 .featureImage {
@@ -20,6 +17,7 @@ body {
 .feature {
   font-size: 1.7rem;
   margin-bottom: 1.5em;
+  text-align: center;
 }
 
 .featureContent {

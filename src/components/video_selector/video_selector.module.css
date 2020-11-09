@@ -29,6 +29,7 @@
   height: 35px;
   padding-left: 0.7em;
   padding-top: 0.3em;
+  z-index: 2;
 }
 
 input.uploadHidden {
