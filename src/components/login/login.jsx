@@ -35,8 +35,11 @@ const Login = (props) => {
 				<>
 				<a className={styles.login}>로그인</a>
 					<GoogleLogin
-					className={styles.googleLogin}
+					className={styles.googleLoginButton}
 					clientId={process.env.REACT_APP_GOOGLE_API_KEY}
+					// render={renderProps => (
+					// 	<button onClick={renderProps.onClick} disabled={renderProps.disabled} className={styles.googleLoginButton}>This is my custom Google button</button>
+					//   )}
 					buttonText="Sign in with google"
 					onSuccess={responseGoogle}
 					onFailure={responseFail}
