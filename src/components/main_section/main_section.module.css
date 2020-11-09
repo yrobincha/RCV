@@ -1,79 +1,80 @@
-@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap");
 .container {
-	position: relative;
-	left: 0%;
-	height: 774px;
+  position: relative;
+  left: 0%;
+  height: 105vh;
+  margin-bottom: 0;
 }
 
 .textContainer {
-	padding-top: 15em;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-bottom: 2em;
+  padding-top: 15em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2em;
 }
 
 .logoContainer {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-bottom: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2em;
 }
 
 .buttonContainer {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .text,
 .logo {
-	font-family: 'Shadows Into Light', cursive;
-	font-weight: 2000;
-	color: white;
-	z-index: 100;
+  font-family: "Shadows Into Light", cursive;
+  font-weight: 2000;
+  color: white;
+  z-index: 100;
 }
 
 .text {
-	font-size: 5rem;
+  font-size: 5rem;
 }
 
 .logo {
-	font-size: 3rem;
+  font-size: 3rem;
 }
 
 .mainImage {
-	width: 100%;
-	height: 100vh;
-	position: absolute;
-	top: 0%;
-	left: 0%;
-	z-index: 0;
-	filter: brightness(50%);
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  z-index: 0;
+  filter: brightness(50%);
 }
 
 .logoImage {
-	z-index: 100;
-	height: 12vh;
-	margin-left: 1em;
-	margin-bottom: 1em;
-	filter: invert(100%) sepia(3%) saturate(3%) hue-rotate(348deg) brightness(105%) contrast(100%);
+  z-index: 100;
+  height: 12vh;
+  margin-left: 1em;
+  filter: invert(100%) sepia(3%) saturate(3%) hue-rotate(348deg)
+    brightness(105%) contrast(100%);
 }
 
 .startButton {
-	font-size: 16px;
-	background-color: transparent;
-	font-weight: 800;
-	border: 2px solid hsla(0, 0%, 100%, 0.5) !important;
-	color: white;
-	border-radius: 3.25vw;
-	padding: 8px 30px;
-	transition: transform 0.2s ease-in-out;
-	cursor: pointer;
-	z-index: 100;
-	width: 23vh;
+  font-size: 16px;
+  background-color: transparent;
+  font-weight: 800;
+  border: 2px solid hsla(0, 0%, 100%, 0.5) !important;
+  color: white;
+  border-radius: 3.25vw;
+  padding: 8px 30px;
+  transition: transform 0.2s ease-in-out;
+  cursor: pointer;
+  z-index: 100;
+  width: 23vh;
 }
 
 .startButton:hover {
-	transform: translateY(-4px);
+  transform: translateY(-4px);
 }

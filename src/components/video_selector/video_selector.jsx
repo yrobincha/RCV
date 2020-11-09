@@ -23,9 +23,10 @@ const VideoSelector = (props) => {
 	};
 
 	return (
-		<div className={styles.videoContainer}>
+		<div className={styles.container}>
 			<div className={styles.inputContainer}>
 				<label className={styles.uploadLabel} for="ex_filename">UPLOAD VIDEO</label>
+				{/* <FontAwesomeIcon icon={faUpload} /> */}
 				<input //
 					className={styles.uploadHidden}
 					type="file"
@@ -34,7 +35,6 @@ const VideoSelector = (props) => {
 					multiple={false}
 					onChange={(e) => onVideoLoad(e.target.files)}
 				/>
-				
 			</div>
 			<div className={styles.playerContainer}>
 				<Player className={styles.videoPlayer} playsInline src={videoFileURL} fluid={false} width={1024} height={480}>
