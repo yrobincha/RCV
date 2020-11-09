@@ -23,11 +23,14 @@ const VideoSelector = (props) => {
 	};
 
 	return (
-		<div className={styles.videoContainer}>
-			<div className={styles.videoFileInput}>
+		<div className={styles.container}>
+			<div className={styles.inputContainer}>
+				<label className={styles.uploadLabel} for="ex_filename">UPLOAD VIDEO</label>
+				{/* <FontAwesomeIcon icon={faUpload} /> */}
 				<input //
-					id="ex_file"
+					className={styles.uploadHidden}
 					type="file"
+					id="ex_filename"
 					name="video"
 					multiple={false}
 					onChange={(e) => onVideoLoad(e.target.files)}

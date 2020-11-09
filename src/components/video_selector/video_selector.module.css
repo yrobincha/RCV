@@ -1,28 +1,58 @@
-.videoContainer {
-	height: 650px;
+.container {
+  height: 90vh;
+  margin-top: 5em;
 }
 
-.videoFileInput {
-	text-align: center;
-	margin-bottom: 3em;
-	padding-left: 10em;
+.inputContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5em;
 }
 
-.playerContainer {
-	display: flex;
+.uploadName {
+  opacity: 0;
+  width: 1px;
+}
+
+.uploadLabel {
+  display: flex;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: normal;
+  vertical-align: middle;
+  background-color: #0278ae;
+  cursor: pointer;
+  border-radius: 0.25em;
+  width: 150px;
+  height: 35px;
+  padding-left: 0.7em;
+  padding-top: 0.3em;
+}
+
+input.uploadHidden {
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  cursor: pointer;
 }
 
 .modalContainer {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-around;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #a6a6a4;
 }
 
-.feedbackModal {
-	height: 14vh;
-}
-
-.videoPlayer {
-	margin-left: 10em;
-	margin-right: 10em;
+.playerContainer {
+  display: flex;
+  justify-content: center;
 }
