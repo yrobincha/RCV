@@ -24,14 +24,17 @@ const VideoSelector = (props) => {
 
 	return (
 		<div className={styles.videoContainer}>
-			<div className={styles.videoFileInput}>
+			<div className={styles.inputContainer}>
+				<label className={styles.uploadLabel} for="ex_filename">UPLOAD VIDEO</label>
 				<input //
-					id="ex_file"
+					className={styles.uploadHidden}
 					type="file"
+					id="ex_filename"
 					name="video"
 					multiple={false}
 					onChange={(e) => onVideoLoad(e.target.files)}
 				/>
+				
 			</div>
 			<div className={styles.playerContainer}>
 				<Player className={styles.videoPlayer} playsInline src={videoFileURL} fluid={false} width={1024} height={480}>
