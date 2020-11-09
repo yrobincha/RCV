@@ -5,7 +5,7 @@ const MainSection = (props) => {
 	const Scroll = require('react-scroll');
 	const scroll = Scroll.animateScroll;
 	const onClick = () => {
-		scroll.scrollTo(850);
+		scroll.scrollTo(800);
 	};
 
 	return (

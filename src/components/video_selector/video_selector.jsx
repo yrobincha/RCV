@@ -25,7 +25,7 @@ const VideoSelector = (props) => {
 	return (
 		<div className={styles.container}>
 			<div className={styles.inputContainer}>
-				<label className={styles.uploadLabel} for="ex_filename">UPLOAD VIDEO</label>
+				<label className={styles.uploadLabel} htmlFor="ex_filename">UPLOAD VIDEO</label>
 				{/* <FontAwesomeIcon icon={faUpload} /> */}
 				<input //
 					className={styles.uploadHidden}
