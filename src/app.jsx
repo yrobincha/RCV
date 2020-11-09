@@ -7,11 +7,14 @@ import Footer from './components/footer/footer';
 import MainSection from './components/main_section/main_section';
 import FeedbackModal from './components/feedback_modal/feedback_modal';
 import FeatureSection from './components/feature_section/feature_section';
+import Test from './components/Test';
 
 function App() {
+	
 	return (
 		<div className={styles.app}>
 			<Header />
+			<Test />
 			<div className={styles.container}>
 				<MainSection />
 				<VideoSelector />

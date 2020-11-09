@@ -3,8 +3,9 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.send({title: 'hello react!'});
+  res.send({title: 'hello api!'});
 });
+
 
 
 module.exports = router;
