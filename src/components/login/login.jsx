@@ -41,14 +41,17 @@ return (
 				</> :
 				<>
 				<a className={styles.login}>로그인</a>
-				<GoogleLogin
-				className={styles.googleLogin}
-				clientId={process.env.REACT_APP_GOOGLE_API_KEY}
-				buttonText="Sign in with google"
-				onSuccess={responseGoogle}
-				onFailure={responseFail}
-				cookiePolicy={'single_host_origin'}
-				/>
+					<GoogleLogin
+					className={styles.googleLoginButton}
+					clientId={process.env.REACT_APP_GOOGLE_API_KEY}
+					// render={renderProps => (
+					// 	<button onClick={renderProps.onClick} disabled={renderProps.disabled} className={styles.googleLoginButton}>This is my custom Google button</button>
+					//   )}
+					buttonText="Sign in with google"
+					onSuccess={responseGoogle}
+					onFailure={responseFail}
+					cookiePolicy={'single_host_origin'}
+					/>
 				</>
 				}
 </div>
