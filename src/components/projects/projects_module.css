@@ -11,7 +11,6 @@
 #textContainer {
 	text-align: center;
 	border-bottom: 1px solid rgb(216, 216, 216);
-	padding-bottom: 0.5em;
 }
 
 #title {
@@ -31,10 +30,6 @@
 	cursor: pointer;
 	z-index: 100;
 	width: 23vh;
-}
-
-#border {
-	border-bottom: 1px solid rgb(216, 216, 216);
 }
 
 #addProjectButton:hover {
