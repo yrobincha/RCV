@@ -1,13 +1,11 @@
 import React from 'react';
 import styles from './header.module.css';
 import Login from '../login/login';
-import People from '../people/people';
-import Project from '../project/project';
-const Header = (props) => {
+const Header = ({ isLoggedIn }) => {
 	return (
 		<header className={styles.header}>
 			<div className={styles.container}>
-				<Login />
+				<Login isLoggedIn={isLoggedIn} />
 			</div>
 		</header>
 	);
