@@ -20,7 +20,6 @@ function App() {
 				<Route path={['/', '/home']} exact>
 					{/* <Test /> */}
 					<MainSection />
-					<VideoSelector />
 					<FeatureSection />
 					<Footer />
 				</Route>
