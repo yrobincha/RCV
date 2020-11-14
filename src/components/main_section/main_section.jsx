@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import styles from './main_section.module.css';
 import { Nav, NavLink, NavItem } from 'reactstrap';
+import StartButton from '../start_button/start_button';
 const MainSection = (props) => {
 	const Scroll = require('react-scroll');
 	const scroll = Scroll.animateScroll;
@@ -19,9 +20,10 @@ const MainSection = (props) => {
 					<h1 className={styles.logo}>(RCV)</h1>
 				</div>
 				<div className={styles.buttonContainer}>
-					<button className={styles.startButton} onClick={onClick}>
+					{/* <button className={styles.startButton} onClick={onClick}>
 						시작하기
-					</button>
+					</button> */}
+					<StartButton />
 				</div>
 				<img className={styles.mainImage} src="images/collaboration.jpg" alt="main image" />
 			</div>

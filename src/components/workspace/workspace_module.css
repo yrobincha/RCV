@@ -1,0 +1,30 @@
+.container {
+	display: flex;
+	height: 100%;
+	width: 100%;
+	background-color: transparent;
+	justify-content: center;
+	align-items: center;
+}
+
+.title {
+	font-size: 15rem;
+}
+
+.addProjectButton {
+	font-size: 16px;
+	background-color: transparent;
+	font-weight: 800;
+	border: 2px solid hsla(0, 0%, 100%, 0.5) !important;
+	color: white;
+	border-radius: 3.25vw;
+	padding: 8px 30px;
+	transition: transform 0.2s ease-in-out;
+	cursor: pointer;
+	z-index: 100;
+	width: 23vh;
+}
+
+.addProjectButton:hover {
+	transform: translateY(-4px);
+}
