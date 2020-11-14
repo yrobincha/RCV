@@ -34,7 +34,7 @@
 	height: 100%;
 }
 
-@media screen and (max-width: 150vh) {
+@media screen and (max-width: 130vh) {
 	.container {
 		flex-direction: column;
 	}
