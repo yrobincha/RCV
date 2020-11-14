@@ -10,6 +10,7 @@ import MainSection from './components/main_section/main_section';
 import FeatureSection from './components/feature_section/feature_section';
 import Projects from './components/projects/projects';
 import AddNewProject from './components/add_new_project/add_new_project';
+import FeatureCarousel from './components/feature_carousel/feature_carousel';
 
 // import Test from './components/Test';
 
@@ -21,6 +22,7 @@ function App() {
 					{/* <Test /> */}
 					<MainSection />
 					<FeatureSection />
+					<FeatureCarousel />
 					<Footer />
 				</Route>
 				<Route path="/new" exact>
