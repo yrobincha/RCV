@@ -23,11 +23,11 @@ function App() {
 					<FeatureSection />
 					<Footer />
 				</Route>
-				<Route path="/projects" exact>
-					<Projects />
-				</Route>
 				<Route path="/new" exact>
 					<AddNewProject />
+				</Route>
+				<Route path="/projects" exact>
+					<Projects />
 				</Route>
 			</Switch>
 		</Router>
