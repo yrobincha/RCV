@@ -2,12 +2,12 @@
 .container {
 	position: relative;
 	left: 0%;
-	height: 95vh;
+	height: 100vh;
 	margin-bottom: 0;
 }
 
 .textContainer {
-	padding-top: 15em;
+	padding-top: 15rem;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -61,4 +61,7 @@
 	margin-left: 1em;
 	margin-bottom: 0.8em;
 	filter: invert(100%) sepia(3%) saturate(3%) hue-rotate(348deg) brightness(105%) contrast(100%);
+}
+
+@media screen and (max-width: 150vh) {
 }
