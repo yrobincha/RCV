@@ -4,7 +4,8 @@
 	align-items: center;
 	text-align: center;
 	width: 100%;
-	margin-top: 8rem;
+	height: 60vh;
+	margin-top: 8em;
 	padding-left: 10em;
 	padding-right: 10em;
 }
@@ -30,9 +31,10 @@
 	color: white;
 	margin-bottom: 10em;
 	font-size: 1.15rem;
+	height: 100%;
 }
 
-@media screen and (max-width: 150vh) {
+@media screen and (max-width: 130vh) {
 	.container {
 		flex-direction: column;
 	}
