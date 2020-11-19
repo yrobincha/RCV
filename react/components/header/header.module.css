@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+
+.header {
+	position: absolute;
+	top: 0%;
+	display: flex;
+	height: 10vh;
+	width: 100%;
+	padding: 0.5em 1em;
+	align-items: center;
+	color: white;
+	z-index: 10;
+}
+
+.container {
+	margin-left: auto;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
