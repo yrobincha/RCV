@@ -1,5 +1,9 @@
 .DS_STORE
 node_modules
+# Output files
+public/main.js
+public/style.css
+
 scripts/flow/*/.flowconfig
 .flowconfig
 *~
