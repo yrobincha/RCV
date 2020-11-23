@@ -33,23 +33,20 @@ const Login = ({ isLoggedIn }) => {
 	};
 
 	return (
-		<div>
+		<div id={'login'}>
 			{isLoggedIn ? (
 				<>
-					<a className={styles.userName}>Hello {userName}</a>
-					<a className={styles.login} onClick={setLoggedOut}>
+					<a className={'user-name'}>Hello {userName}</a>
+					<a className={'login-button'} onClick={setLoggedOut}>
 						로그아웃
 					</a>
 				</>
 			) : (
 				<>
-					<a className={styles.login}>로그인</a>
+					<a className={'login-button'}>로그인</a>
 					<GoogleLogin
-						className={styles.googleLoginButton}
-						clientId={process.env.REACT_APP_GOOGLE_API_KEY}
-						// render={renderProps => (
-						// 	<button onClick={renderProps.onClick} disabled={renderProps.disabled} className={styles.googleLoginButton}>This is my custom Google button</button>
-						//   )}
+						className={'google-login-button'}
+						clientId="439002818439-7schr17esj308t5h9cr9f6cbrfcltmsf.apps.googleusercontent.com"
 						buttonText="Sign in with google"
 						onSuccess={responseGoogle}
 						onFailure={responseFail}

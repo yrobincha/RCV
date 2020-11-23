@@ -11,6 +11,7 @@ import FeatureSection from './components/feature_section/feature_section';
 import Projects from './components/projects/projects';
 import AddNewProject from './components/add_new_project/add_new_project';
 import FeatureCarousel from './components/feature_carousel/feature_carousel';
+import StartButton from './components/start_button/start_button';
 
 // import Test from './components/Test';
 
@@ -21,6 +22,7 @@ function App() {
 				<Route path={['/', '/home']} exact>
 					{/* <Test /> */}
 					<MainSection />
+					<StartButton />
 					<FeatureSection />
 					<FeatureCarousel />
 					<Footer />
