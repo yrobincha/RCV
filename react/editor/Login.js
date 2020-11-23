@@ -45,7 +45,6 @@ class Login extends Component {
 					</>
 				) : (
 					<>
-						<a className={'login'}>로그인</a>
 						<GoogleLogin
 							className={'google-login-button'}
 							clientId="439002818439-7schr17esj308t5h9cr9f6cbrfcltmsf.apps.googleusercontent.com"

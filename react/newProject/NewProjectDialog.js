@@ -81,13 +81,14 @@ export default class NewProjectDialog extends Component {
 						RCV
 					</h2>
 					<div>
-						<button id={'create-project-button'} onClick={() => this.createProject()}>
+						<button id={'create-project-button'} onClick={() => this.openModal()}>
 							시작하기
 						</button>
-						<button id={'create-project-button'} onClick={() => this.openModal()}>
-							Modal Open
-						</button>
-						<SignIn isOpen={this.state.isModalOpen} close={() => this.closeModal()} />
+						<SignIn
+							isOpen={this.state.isModalOpen}
+							close={() => this.closeModal()}
+							create={() => this.createProject()}
+						/>
 					</div>
 				</Modal>
 			</div>

@@ -533,9 +533,10 @@ tr:nth-child(even) {
 
 // Login
 #login {
+	padding-top: 1em;
 	.login,
 	.user-name {
-		font-size: 1rem;
+		font-size: 1.3rem;
 		margin-right: 1.5em;
 		cursor: pointer;
 		color: white;
