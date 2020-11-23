@@ -5,7 +5,7 @@
 
 exports.server = {
 	port: 3000,
-	host: 'localhost',
+	host: '193.122.97.49',
 
 	get serverUrl() {
 		return `http://${this.host}:${this.port}`;
