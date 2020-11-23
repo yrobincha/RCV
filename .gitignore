@@ -3,7 +3,7 @@ node_modules
 # Output files
 public/main.js
 public/style.css
-
+config.js
 scripts/flow/*/.flowconfig
 .flowconfig
 *~

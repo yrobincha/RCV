@@ -16,7 +16,7 @@ export default class Preview extends Component {
             {" "}
             movie_filter{" "}
           </i>
-          Náhled
+          미리보기
         </h3>
         {typeof this.props.items.video !== "undefined" &&
           Object.keys(this.props.items.video).map((key) => (
