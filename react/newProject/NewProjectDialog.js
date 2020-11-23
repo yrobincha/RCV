@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import { server } from '../../config';
 import FetchErrorDialog from '../editor/FetchErrorDialog';
 import Header from '../editor/Header';
+import SignIn from '../editor/SignIn';
 
 Modal.setAppElement(document.body);
 
@@ -12,7 +13,8 @@ export default class NewProjectDialog extends Component {
 
 		this.state = {
 			showFetchError: false,
-			fetchError: ''
+			fetchError: '',
+			isModalOpen: false
 		};
 
 		this.closeFetchErrorDialog = this.closeFetchErrorDialog.bind(this);
@@ -58,6 +60,14 @@ export default class NewProjectDialog extends Component {
 		});
 	}
 
+	openModal() {
+		this.setState({ isModalOpen: true });
+	}
+
+	closeModal() {
+		this.setState({ isModalOpen: false });
+	}
+
 	render() {
 		return (
 			<div>
@@ -74,6 +84,10 @@ export default class NewProjectDialog extends Component {
 						<button id={'create-project-button'} onClick={() => this.createProject()}>
 							시작하기
 						</button>
+						<button id={'create-project-button'} onClick={() => this.openModal()}>
+							Modal Open
+						</button>
+						<SignIn isOpen={this.state.isModalOpen} close={() => this.closeModal()} />
 					</div>
 				</Modal>
 			</div>
