@@ -46,8 +46,8 @@ export default class SubmitDialog extends Component {
               이메일을 입력하면 처리되는 즉시 결과 비디오에 대한 링크를
               보내드립니다.
               <br />
-              <input type={"submit"} className={"success"} value={"Zahájit"} />
-              <button onClick={this.handleCloseDialog}>Storno</button>
+              <input type={"submit"} className={"success"} value={"시작"} />
+              <button onClick={this.handleCloseDialog}>취소</button>
             </form>
           </div>
         </Modal>

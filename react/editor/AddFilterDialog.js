@@ -35,13 +35,13 @@ export default class AddFilterDialog extends Component {
           overlayClassName={"overlay"}
           onRequestClose={this.handleCloseDialog}
         >
-          <h2>Filtry</h2>
+          <h2>필터</h2>
           <div>
             <table>
               <tbody>
                 {item.filters.length === 0 && (
                   <tr>
-                    <td>žádné filtry</td>
+                    <td>필터 없음</td>
                   </tr>
                 )}
                 {item.filters.map((filter) => (
@@ -61,10 +61,10 @@ export default class AddFilterDialog extends Component {
               </tbody>
             </table>
           </div>
-          <h3>Přidat nový filtr</h3>
+          <h3>새 필터 추가</h3>
           <div>
             <form onSubmit={this.handleAddFilter}>
-              <label htmlFor={"filter"}>Filtr: </label>
+              <label htmlFor={"filter"}>필터: </label>
               <select name={"filter"} onChange={this.handleFilterChange}>
                 {filters.videoFilters.map((filter) => (
                   <option value={filter.id} key={filter.id}>
@@ -81,7 +81,7 @@ export default class AddFilterDialog extends Component {
               {AddFilterDialog.getFilter(this.state.filter).in[0].id ===
                 "level" && (
                 <>
-                  <label htmlFor={"level"}>Úroveň: </label>
+                  <label htmlFor={"level"}>값: </label>
                   <input
                     type={"range"}
                     name={"level"}
@@ -96,7 +96,7 @@ export default class AddFilterDialog extends Component {
               {AddFilterDialog.getFilter(this.state.filter).in[0].id ===
                 "duration" && (
                 <>
-                  <label htmlFor={"duration"}>Doba trvání: </label>
+                  <label htmlFor={"duration"}>길이: </label>
                   <input
                     type={"text"}
                     name={"duration"}
@@ -110,7 +110,7 @@ export default class AddFilterDialog extends Component {
               )}
               <br />
               <input type={"submit"} value={"필터 추가"} />
-              <button onClick={this.handleCloseDialog}>Zavřít</button>
+              <button onClick={this.handleCloseDialog}>닫기</button>
             </form>
           </div>
         </Modal>

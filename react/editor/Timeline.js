@@ -148,21 +148,21 @@ export default class Timeline extends Component {
           <i className="material-icons" aria-hidden="true">
             flare
           </i>
-          Filtry
+          필터
         </button>
         {/*<button><i className="material-icons" aria-hidden="true">photo_filter</i>Přidat přechod</button>*/}
         <button onClick={this.buttonSplit}>
           <i className="material-icons" aria-hidden="true">
             flip
           </i>
-          Rozdělit v bodě
+          분할하기
         </button>
         {/*<button><i className="material-icons" aria-hidden="true">menu</i>Vlastnosti</button>*/}
         <button onClick={this.buttonDel}>
           <i className="material-icons" aria-hidden="true">
             remove
           </i>
-          Odebrat
+          제거
         </button>
         <div id="time">
           {TimelineModel.dateToString(this.props.time)} / {this.state.duration}
