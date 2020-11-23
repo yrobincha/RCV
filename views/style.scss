@@ -1,4 +1,4 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500&display=swap');
 
 @font-face {
 	font-family: SourceSans;
@@ -7,7 +7,7 @@
 
 body {
 	font-family: SourceSans, sans-serif;
-	background: #1F1F1F;
+	background: #1f1f1f;
 	color: white;
 	font-size: 14px;
 	margin: 0;
@@ -47,7 +47,8 @@ footer {
 	flex: 0 1 auto;
 }
 
-footer, header {
+footer,
+header {
 	box-shadow: 0 0 10px #111;
 	background: #373737;
 }
@@ -58,7 +59,8 @@ h3 {
 	font-weight: inherit;
 }
 
-h2.logo, h2.error {
+h2.logo,
+h2.error {
 	img {
 		width: 120px;
 		height: 120px;
@@ -71,7 +73,8 @@ h2.logo {
 	font-size: 4em;
 }
 
-select, input {
+select,
+input {
 	height: 28px;
 	background: #25282d;
 	color: #fff;
@@ -100,7 +103,8 @@ progress {
 	min-height: 100vh;
 }
 
-#sources, #preview {
+#sources,
+#preview {
 	flex: 1;
 }
 
@@ -159,7 +163,7 @@ progress {
 	}
 }
 
-.overlay{
+.overlay {
 	position: fixed;
 	top: 0px;
 	left: 0px;
@@ -212,14 +216,19 @@ progress {
 }
 
 @keyframes spin {
-	0% { transform: rotate(0deg); }
-	100% { transform: rotate(360deg); }
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
 }
 
 /*
  * BUTTONS
  */
-button, input[type="submit"] {
+button,
+input[type='submit'] {
 	font-size: 14px;
 	color: inherit;
 	border: 1px solid #555;
@@ -262,7 +271,7 @@ button, input[type="submit"] {
 	}
 }
 
-input[type="submit"] {
+input[type='submit'] {
 	height: 1.85em;
 }
 
@@ -282,7 +291,8 @@ table {
 	}
 }
 
-th, td {
+th,
+td {
 	vertical-align: middle;
 	font-size: 15px;
 	line-height: 24px;
@@ -328,7 +338,7 @@ tr:nth-child(even) {
 	margin: 0 auto;
 	position: relative;
 	box-sizing: border-box;
-	transition: all .15s linear;
+	transition: all 0.15s linear;
 	border: 2px solid #555;
 	border-radius: 4px;
 }
@@ -425,9 +435,10 @@ tr:nth-child(even) {
 	.vis-item {
 		height: 4em;
 
-		&.video, &.audio {
+		&.video,
+		&.audio {
 			border-radius: 10px;
-			color: #FFF;
+			color: #fff;
 			padding: 2px;
 		}
 
@@ -458,7 +469,7 @@ tr:nth-child(even) {
 		}
 
 		&.vis-selected {
-			border-color: #FFC200;
+			border-color: #ffc200;
 		}
 
 		div.filter {
@@ -486,12 +497,18 @@ tr:nth-child(even) {
 		color: inherit;
 	}
 
-	.vis-time-axis .vis-grid.vis-minor, .vis-time-axis .vis-grid.vis-major, .vis-panel.vis-center, .vis-panel.vis-left, .vis-panel.vis-right, .vis-panel.vis-top, .vis-panel.vis-bottom {
+	.vis-time-axis .vis-grid.vis-minor,
+	.vis-time-axis .vis-grid.vis-major,
+	.vis-panel.vis-center,
+	.vis-panel.vis-left,
+	.vis-panel.vis-right,
+	.vis-panel.vis-top,
+	.vis-panel.vis-bottom {
 		border-color: #555;
 	}
 
 	.vis-custom-time {
-		background-color: #FF7676;
+		background-color: #ff7676;
 	}
 
 	.vis-labelset .vis-label .vis-inner {
@@ -501,4 +518,69 @@ tr:nth-child(even) {
 	.vis-foreground .vis-group {
 		border-bottom: none;
 	}
+}
+
+// Header
+#header {
+	.container {
+		margin-left: auto;
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		padding-right: 20px;
+	}
+}
+
+// Login
+#login {
+	.login,
+	.user-name {
+		font-size: 1rem;
+		margin-right: 1.5em;
+		cursor: pointer;
+		color: white;
+		font-weight: 600;
+		transition: color 0.2s ease-in;
+	}
+
+	.login:hover,
+	.user-name:hover {
+		color: #74acc8;
+		text-decoration: none;
+	}
+
+	.google-login-button {
+		display: inline-block;
+		background: white;
+		color: #444;
+		width: 190px;
+		border-radius: 5px;
+		border: thin solid #888;
+		box-shadow: 1px 1px 1px grey;
+		white-space: nowrap;
+		transition: transform 0.2s ease-in-out;
+		cursor: pointer;
+	}
+
+	.google-login-button:hover {
+		transform: scale(1.03);
+	}
+}
+
+// Create Project Button
+#create-project-button {
+	font-size: 16px;
+	background-color: transparent;
+	font-weight: 800;
+	border: 2px solid hsla(0, 0%, 100%, 0.5) !important;
+	color: white;
+	border-radius: 3.25vw;
+	padding: 8px 30px;
+	transition: transform 0.2s ease-in-out;
+	cursor: pointer;
+	z-index: 100;
+	width: 23vh;
+}
+#create-project-button:hover {
+	transform: translateY(-4px);
 }
