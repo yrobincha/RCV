@@ -1,5 +1,11 @@
 .DS_STORE
 node_modules
+package-lock.json
+
+# Output files
+public/main.js
+public/style.css
+
 scripts/flow/*/.flowconfig
 .flowconfig
 *~
