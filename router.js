@@ -5,6 +5,10 @@ const router = server.Router();
 const mainController = require("./controllers/mainController");
 const apiController = require("./controllers/apiController");
 const errorController = require("./controllers/errorController");
+const loginController = require("./controllers/loginController");
+
+// login route
+router.post("/login", loginController.login);
 
 // Homepage route
 router.get("/", mainController.main);

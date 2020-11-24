@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { GoogleLogin } from 'react-google-login';
+import axios from "axios";
 
 class Login extends Component {
 	constructor(props) {
@@ -25,6 +26,13 @@ class Login extends Component {
 	responseGoogle(user) {
 		const name = user.getBasicProfile().getName();
 		console.log('Signed in as ' + user.getBasicProfile().getName());
+		axios.post('/login', {
+				userID : user.getBasicProfile().getId(),
+				name : user.getBasicProfile().getName()
+		})
+		.then((res)=>{
+			console.log(res);
+		})
 		this.setUserName(name);
 		this.setLoggedIn();
 	}
