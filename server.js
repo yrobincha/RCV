@@ -2,10 +2,20 @@ import { server as config } from "./config";
 import express from "express";
 
 const server = express();
+const cors = require("cors");
+server.use(cors());
 
 const bodyParser = require("body-parser");
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
+
+const mongoose = require("mongoose");
+mongoose.connect('mongodb://localhost/rcv', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true
+});
 
 const log4js = require("log4js");
 import log from "./models/logger";
