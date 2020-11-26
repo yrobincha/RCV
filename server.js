@@ -28,6 +28,6 @@ server.use('/', router);
 
 server.use(express.static('public'));
 
-server.listen(config.port, '0.0.0.0', () => {
+server.listen(config.port, config.host, () => {
 	log.info('Express listening on port', config.port);
 });
