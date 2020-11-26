@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { create } from "../../models/users";
+import axios from "axios";
 
 class SignIn extends Component {
   constructor(props) {
     super(props);
-    this.state = { value: "" };
+    this.state = { value: "", projects: [] };
 
+    this.getProjects = this.getProjects.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -19,6 +20,16 @@ class SignIn extends Component {
     this.props.create(this.state.value);
   }
 
+  getProjects() {
+    axios.get("/api/projects", {}).then((res) => {
+      console.log(res);
+      this.setState({
+        projects: res.data,
+      });
+      console.log(this.state.projects);
+    });
+  }
+
   render() {
     const { isOpen, close, create } = this.props;
     return (
@@ -27,9 +38,12 @@ class SignIn extends Component {
           <div id={"modal"}>
             <div>
               <h1 className={"title"}>Projects</h1>
-              <p>
-                진행 중인 프로젝트가 없습니다. 새로운 프로젝트를 추가하세요.
-              </p>
+              <div>
+                <button onClick={this.getProjects}></button>
+                <p>
+                  진행 중인 프로젝트가 없습니다. 새로운 프로젝트를 추가하세요.
+                </p>
+              </div>
               <form onSubmit={this.handleSubmit}>
                 <label>
                   이름:
