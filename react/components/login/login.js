@@ -15,10 +15,12 @@ const Login = ({ isLoggedIn }) => {
 	};
 
 	const responseGoogle = (user) => {
-		// axios.post('/login', {
-		// 	userID: user.getBasicProfile().getId(),
-		// 	uname: user.getBasicProfile().getName()
-		// });
+		console.log(user.getBasicProfile().getId());
+		const name = user.getBasicProfile().getName();
+		axios.post('/login', {
+			userID: user.getBasicProfile().getId(),
+			uname: user.getBasicProfile().getName()
+		});
 		// userName = user.getBasicProfile.getName();
 		console.log('Signed in as ' + user.getBasicProfile().getName());
 		setLoggedIn();

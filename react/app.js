@@ -22,6 +22,7 @@ function App() {
 				<Route path={['/', '/home']} exact>
 					{/* <Test /> */}
 					<MainSection />
+					<StartButton />
 					<FeatureSection />
 					<FeatureCarousel />
 					<Footer />
