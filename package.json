@@ -68,6 +68,7 @@
     "rwlock": "^5.0.0",
     "sass-loader": "^8.0.2",
     "socket.io": "^3.0.3",
+    "socket.io-client": "^3.0.3",
     "video-react": "^0.14.1",
     "vis-timeline": "^7.3.6",
     "webpack": "^4.43.0",

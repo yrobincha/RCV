@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 import projectManager from "../models/projectManager";
 const fs = require("fs");
 const path = require("path");
- 
+
 const User = require('../models/users')
 const Project = require('../models/projects')
 
@@ -16,9 +16,12 @@ exports.login = (req, res) => {
 			newUser.save(() => { res.json({ result: 1 }) });
 		}
 		else {
+			
 			Project.find({projectID : {$in : user.projectIDs}}, (err, project) => {
-				console.log(project)
-				res.json(project[0].name);
+				if(!project){}
+				else{
+					res.json(project[0].name);
+				}
 			});
 		}
 	})
@@ -41,7 +44,7 @@ exports.projectPOST = (req, res, next) => {
 			
 			var newProject = new Project();
 			newProject.projectID = projectID;
-			newProject.name = req.body.name;
+			newProject.name = "abc"; //req.body.name;
 			newProject.save();
 
 			User.updateOne({ userID: sess.userID }, { "$push": { projectIDs: projectID } }, 

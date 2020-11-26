@@ -47,6 +47,10 @@ server.use("/", router);
 
 server.use(express.static("public"));
 
-server.listen(config.port, config.host, () => {
+const http = require('http').createServer(server);
+const io = require('socket.io')(http);
+var socket = require('./sockets')(io);
+
+http.listen(config.port, config.host, () => {
   log.info("Express listening on port", config.port);
 });
