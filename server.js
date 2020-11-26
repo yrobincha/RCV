@@ -3,7 +3,11 @@ import express from "express";
 
 const server = express();
 const cors = require("cors");
-server.use(cors());
+const corsOptions = {
+  origin: true,
+  credentials: true
+};
+server.use(cors(corsOptions));
 
 const bodyParser = require("body-parser");
 server.use(bodyParser.urlencoded({ extended: true }));
@@ -16,6 +20,13 @@ mongoose.connect('mongodb://localhost/rcv', {
   useFindAndModify: false,
   useCreateIndex: true
 });
+
+var session = require('express-session')
+server.use(session({
+  secret: '@rcv',
+  resave: false,
+  saveUninitialized: true
+}));
 
 const log4js = require("log4js");
 import log from "./models/logger";

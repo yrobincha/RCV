@@ -2,7 +2,16 @@ import { config } from "../config";
 const fs = require("fs");
 const path = require("path");
 
-exports.main = (req, res) => res.render("main", {});
+exports.main = (req, res) => {
+  if (req.session.num === undefined) {
+    req.session.num = 1;
+  }
+  else {
+    req.session.num = req.session.num + 1;
+  }
+  console.log(req.session.num)
+  res.render("main", {})
+};
 exports.project = (req, res) => res.render("project", {});
 
 exports.finished = (req, res) => {

@@ -23,7 +23,12 @@ export default class NewProjectDialog extends Component {
 	createProject() {
 		const url = `${server.apiUrl}/project`;
 		const params = {
-			method: 'POST'
+			method: 'POST',
+			// headers: {
+			// 	'Accept':  'application/json',
+			// 	 'Content-Type': 'application/json',
+			//   },
+			credentials: 'include'
 		};
 
 		fetch(url, params)
@@ -31,6 +36,7 @@ export default class NewProjectDialog extends Component {
 			.then((data) => {
 				if (typeof data.err === 'undefined') {
 					window.location = `${server.serverUrl}/project/${data.project}`;
+
 				} else {
 					alert(`${data.err}\n\n${data.msg}`);
 				}

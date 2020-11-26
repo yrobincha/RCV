@@ -16,24 +16,23 @@ const Busboy = require("busboy");
 
 exports.default = (req, res) => {
   res.json({
-    msg: "",
+    msg: req.session.userID,
   });
+  
 };
 
 exports.projectPOST = (req, res, next) => {
-  let projectID = nanoid(32);
-  fs.mkdir(
-    path.join(config.projectPath, projectID),
-    { recursive: true },
-    (err) => {
-      if (err) return next(err);
 
-      projectManager.save(projectID, projectManager.init()).then(
-        () => res.json({ project: projectID }),
-        (err) => next(err)
-      );
-    }
-  );
+	let projectID = nanoid(32);
+	fs.mkdir(path.join(config.projectPath, projectID), { recursive: true }, (err) => {
+		if (err) return next(err);
+
+		projectManager.save(projectID, projectManager.init()).then(
+			() => res.json({ project: projectID }),
+			err => next(err)
+		);
+	});
+
 };
 
 exports.projectGET = (req, res) => {

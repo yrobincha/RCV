@@ -9,6 +9,7 @@ const loginController = require("./controllers/loginController");
 
 // login route
 router.post("/login", loginController.login);
+router.post("/api/project", loginController.projectPOST);
 
 // Homepage route
 router.get("/", mainController.main);
@@ -18,7 +19,7 @@ router.get("/project/:projectID/output.mp4", mainController.finished);
 // API route
 router.all("/api", apiController.default);
 
-router.post("/api/project", apiController.projectPOST);
+//router.post("/api/project", apiController.projectPOST);
 
 router.get("/api/project/:projectID", apiController.projectGET);
 
