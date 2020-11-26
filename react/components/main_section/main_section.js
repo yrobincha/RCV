@@ -11,18 +11,18 @@ const MainSection = (props) => {
 	return (
 		<>
 			<Header isLoggedIn={isLoggedIn} />
-			<div id={'main-section'}>
-				<div className={'text-container'}>
-					<h1 className={'text'}>Realtime Collaborative Video Editor</h1>
-					<img className={'logo-image'} src="images/movie-reel.png" alt="logo" />
+			<div className={styles.container}>
+				<div className={styles.textContainer}>
+					<h1 className={styles.text}>Realtime Collaborative Video Editor</h1>
+					<img className={styles.logoImage} src="images/movie-reel.png" alt="logo" />
 				</div>
-				<div className={'logo-container'}>
-					<h1 className={'logo'}>(RCV)</h1>
+				<div className={styles.logoContainer}>
+					<h1 className={styles.logo}>(RCV)</h1>
 				</div>
-				<div className={'button-container'}>
+				<div className={styles.buttonContainer}>
 					<StartButton isLoggedIn={isLoggedIn} />
 				</div>
-				<img className={'main-image'} src="images/collaboration.jpg" alt="main image" />
+				<img className={styles.mainImage} src="images/collaboration.jpg" alt="main image" />
 			</div>
 		</>
 	);

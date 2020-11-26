@@ -4,7 +4,7 @@
  */
 
 exports.server = {
-	port: 3000,
+	port: 8080,
 	host: 'localhost',
 
 	get serverUrl() {
@@ -12,7 +12,7 @@ exports.server = {
 	},
 	get apiUrl() {
 		return `http://${this.host}:${this.port}/api`;
-	}
+	},
 };
 
 exports.config = {
@@ -24,13 +24,12 @@ exports.config = {
 
 	projectPath: 'WORKER',
 
-	declareXML:
-		'<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE mlt SYSTEM "https://raw.githubusercontent.com/mltframework/mlt/master/src/modules/xml/mlt-xml.dtd">',
+	declareXML: '<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE mlt SYSTEM "https://raw.githubusercontent.com/mltframework/mlt/master/src/modules/xml/mlt-xml.dtd">',
 
 	mapFilterNames: {
 		fadeInBrightness: 'brightness',
 		fadeOutBrightness: 'brightness',
 		fadeInVolume: 'volume',
-		fadeOutVolume: 'volume'
+		fadeOutVolume: 'volume',
 	}
 };

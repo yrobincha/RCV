@@ -3,8 +3,8 @@ import styles from './header.module.css';
 import Login from '../login/login';
 const Header = ({ isLoggedIn }) => {
 	return (
-		<header id={'header'}>
-			<div className={'header-container'}>
+		<header className={styles.header}>
+			<div className={styles.container}>
 				<Login isLoggedIn={isLoggedIn} />
 			</div>
 		</header>

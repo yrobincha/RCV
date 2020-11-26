@@ -52,7 +52,7 @@ const FeatureCarousel = (props) => {
 		);
 	});
 	return (
-		<div id={'feature-carousel'}>
+		<div className={styles.container}>
 			<Carousel activeIndex={activeIndex} next={next} previous={previous}>
 				<CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={goToIndex} />
 				{slides}

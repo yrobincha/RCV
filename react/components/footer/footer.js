@@ -3,7 +3,7 @@ import styles from './footer.module.css';
 const Footer = (props) => {
 	return (
 		<>
-			<footer id={'footer'}>© Copyright 2020 RCV(Realtime Collaborative Video Editor)</footer>
+			<footer className={styles.footer}>© Copyright 2020 RCV(Realtime Collaborative Video Editor)</footer>
 		</>
 	);
 };
