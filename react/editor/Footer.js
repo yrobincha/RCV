@@ -2,8 +2,8 @@ import React from 'react';
 
 const Footer = (props) => {
 	return (
-		<div>
-			<h1>Footer</h1>
+		<div className={'footer'}>
+			<a className={'footer-content'}>© Copyright 2020 RCV(Realtime Collaborative Video Editor)</a>
 		</div>
 	);
 };

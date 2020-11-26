@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class SignIn extends Component {
+class CreateProject extends Component {
 	render() {
 		const { isOpen, close, create } = this.props;
 		return (
@@ -21,4 +21,4 @@ class SignIn extends Component {
 	}
 }
 
-export default SignIn;
+export default CreateProject;

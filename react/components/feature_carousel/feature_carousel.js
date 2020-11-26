@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Carousel, CarouselItem, CarouselControl, CarouselIndicators, CarouselCaption } from 'reactstrap';
-import styles from './feature_carousel.module.css';
 const items = [
 	{
 		src:
@@ -52,7 +51,7 @@ const FeatureCarousel = (props) => {
 		);
 	});
 	return (
-		<div className={styles.container}>
+		<div className={'container'}>
 			<Carousel activeIndex={activeIndex} next={next} previous={previous}>
 				<CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={goToIndex} />
 				{slides}

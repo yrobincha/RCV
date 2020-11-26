@@ -25,8 +25,7 @@ const FeatureSection = (props) => {
 				<img className={styles.featureImage} src="/images/collaboration-icon.png" alt="collaboration" />
 				<h1 className={styles.feature}>작업물 공유</h1>
 				<div className={styles.featureContent}>
-					편집이 완료된 작업물을 SNS 서비스를 통해 간편하게 공유할 수 있습니다. 편집이 완료된 작업물을 SNS 서비스를 통해
-					간편하게 공유할 수 있습니다.
+					편집이 완료된 작업물을 SNS 서비스를 통해 간편하게 공유할 수 있습니다.
 				</div>
 			</div>
 		</div>

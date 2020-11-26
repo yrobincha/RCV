@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
 import { server } from '../../config';
+import FeatureSection from '../editor/FeatureSection';
 import Footer from '../editor/Footer';
 import Header from '../editor/Header';
 import MainSection from '../editor/MainSection';
-import SignIn from '../editor/SignIn';
+import CreateProject from '../editor/CreateProject';
 
 Modal.setAppElement(document.body);
 
@@ -50,17 +51,22 @@ export default class NewProjectDialog extends Component {
 
 	render() {
 		return (
-			<div>
+			<>
 				<Header />
 				<MainSection />
 				<div className={'button-container'}>
 					<button id={'create-project-button'} onClick={() => this.openModal()}>
 						시작하기
 					</button>
-					<SignIn isOpen={this.state.isModalOpen} close={() => this.closeModal()} create={() => this.createProject()} />
+					<CreateProject
+						isOpen={this.state.isModalOpen}
+						close={() => this.closeModal()}
+						create={() => this.createProject()}
+					/>
 				</div>
+				<FeatureSection />
 				<Footer />
-			</div>
+			</>
 		);
 	}
 }

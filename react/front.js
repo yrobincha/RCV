@@ -7,7 +7,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import NewProjectDialog from './newProject/NewProjectDialog';
 import Editor from './editor/Editor';
-
 if (document.getElementById('newProjectDialog') !== null) {
 	// Landing page
 	ReactDOM.render(<NewProjectDialog />, document.getElementById('newProjectDialog'));

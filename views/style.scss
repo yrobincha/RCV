@@ -583,7 +583,7 @@ tr:nth-child(even) {
 
 		.title {
 			font-family: 'Shadows Into Light', cursive;
-			font-weight: 2000;
+			font-weight: 100;
 			color: white;
 			z-index: 1;
 			font-size: 5rem;
@@ -604,7 +604,7 @@ tr:nth-child(even) {
 		height: 30vh;
 		.logo {
 			font-family: 'Shadows Into Light', cursive;
-			font-weight: 2000;
+			font-weight: 100;
 			color: white;
 			z-index: 1;
 			font-size: 4rem;
@@ -648,5 +648,76 @@ tr:nth-child(even) {
 	}
 	#create-project-button:hover {
 		transform: translateY(-4px);
+	}
+}
+// Modal for creating project
+#modal {
+	position: absolute;
+	display: flex;
+	top: 0vh;
+	width: 90%;
+	height: 70vh;
+	background-color: #000;
+	align-items: center;
+	justify-content: center;
+}
+
+// Feature Section
+.feature-section {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	text-align: center;
+	width: 90%;
+	height: 80vh;
+	margin-left: 5em;
+	margin-right: 5em;
+	.feature-container {
+		width: 40vh;
+	}
+
+	.feature-image {
+		height: 14vh;
+		filter: invert(100%) sepia(3%) saturate(3%) hue-rotate(348deg) brightness(105%) contrast(100%);
+		margin-bottom: 3em;
+	}
+
+	.feature {
+		font-size: 1.7rem;
+		margin-bottom: 1.5em;
+		text-align: center;
+	}
+
+	.feature-content {
+		color: white;
+		margin-bottom: 10em;
+		font-size: 1.15rem;
+		height: 100%;
+	}
+}
+
+// Feature Carousel
+.feature-carousel {
+	text-align: center;
+	height: 60vh;
+	margin-top: 10em;
+}
+
+// @media screen and (max-width: 150vh) {
+// 	.feature-carousel {
+// 		visibility: hidden;
+// 	}
+// }
+
+// Footer
+.footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 15vh;
+	.footer-content {
+		text-align: center;
+		color: white;
+		font-size: 1rem;
 	}
 }
