@@ -601,7 +601,7 @@ tr:nth-child(even) {
 		display: flex;
 		justify-content: center;
 		align-items: center;
-
+		height: 30vh;
 		.logo {
 			font-family: 'Shadows Into Light', cursive;
 			font-weight: 2000;
@@ -624,19 +624,29 @@ tr:nth-child(even) {
 }
 
 // Create Project Button
-#create-project-button {
-	font-size: 16px;
-	background-color: transparent;
-	font-weight: 800;
-	border: 2px solid hsla(0, 0%, 100%, 0.5) !important;
-	color: white;
-	border-radius: 3.25vw;
-	padding: 8px 30px;
-	transition: transform 0.2s ease-in-out;
-	cursor: pointer;
-	z-index: 100;
-	width: 23vh;
-}
-#create-project-button:hover {
-	transform: translateY(-4px);
+
+.button-container {
+	position: absolute;
+	width: 100%;
+	top: 70vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	#create-project-button {
+		font-size: 16px;
+		background-color: transparent;
+		font-weight: 800;
+		border: 2px solid hsla(0, 0%, 100%, 0.5) !important;
+		color: white;
+		border-radius: 3.25vw;
+		padding: 8px 30px;
+		transition: transform 0.2s ease-in-out;
+		cursor: pointer;
+		z-index: 100;
+		width: 23vh;
+	}
+	#create-project-button:hover {
+		transform: translateY(-4px);
+	}
 }

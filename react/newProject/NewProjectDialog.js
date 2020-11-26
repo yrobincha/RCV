@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
 import { server } from '../../config';
-import FetchErrorDialog from '../editor/FetchErrorDialog';
 import Footer from '../editor/Footer';
 import Header from '../editor/Header';
 import MainSection from '../editor/MainSection';
@@ -14,12 +13,8 @@ export default class NewProjectDialog extends Component {
 		super(props);
 
 		this.state = {
-			showFetchError: false,
-			fetchError: '',
 			isModalOpen: false
 		};
-
-		this.closeFetchErrorDialog = this.closeFetchErrorDialog.bind(this);
 	}
 
 	createProject() {
@@ -42,29 +37,7 @@ export default class NewProjectDialog extends Component {
 					alert(`${data.err}\n\n${data.msg}`);
 				}
 			})
-			.catch((error) => this.openFetchErrorDialog(error.message));
-	}
-
-	/**
-	 * Show Connection error dialog
-	 *
-	 * @param {String} msg
-	 */
-	openFetchErrorDialog(msg) {
-		this.setState({
-			showFetchError: true,
-			fetchError: msg
-		});
-	}
-
-	/**
-	 * Close Connection error dialog
-	 */
-	closeFetchErrorDialog() {
-		this.setState({
-			showFetchError: false,
-			fetchError: ''
-		});
+			.catch((error) => console.log(error));
 	}
 
 	openModal() {
@@ -78,12 +51,9 @@ export default class NewProjectDialog extends Component {
 	render() {
 		return (
 			<div>
-				{this.state.showFetchError && (
-					<FetchErrorDialog msg={this.state.fetchError} onClose={this.closeFetchErrorDialog} />
-				)}
 				<Header />
 				<MainSection />
-				<div>
+				<div className={'button-container'}>
 					<button id={'create-project-button'} onClick={() => this.openModal()}>
 						시작하기
 					</button>
