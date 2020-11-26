@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import Modal from 'react-modal';
 import { server } from '../../config';
 import FetchErrorDialog from '../editor/FetchErrorDialog';
+import Footer from '../editor/Footer';
 import Header from '../editor/Header';
+import MainSection from '../editor/MainSection';
 import SignIn from '../editor/SignIn';
 
 Modal.setAppElement(document.body);
@@ -25,8 +27,8 @@ export default class NewProjectDialog extends Component {
 		const params = {
 			method: 'POST',
 			headers: {
-			 	'Accept':  'application/json',
-			 	'Content-Type': 'application/json',
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
 			},
 			credentials: 'include'
 		};
@@ -36,7 +38,6 @@ export default class NewProjectDialog extends Component {
 			.then((data) => {
 				if (typeof data.err === 'undefined') {
 					window.location = `${server.serverUrl}/project/${data.project}`;
-
 				} else {
 					alert(`${data.err}\n\n${data.msg}`);
 				}
@@ -81,22 +82,14 @@ export default class NewProjectDialog extends Component {
 					<FetchErrorDialog msg={this.state.fetchError} onClose={this.closeFetchErrorDialog} />
 				)}
 				<Header />
-				<Modal isOpen={true} contentLabel="new project" className={'modal'} overlayClassName={'null'}>
-					<h2 className={'logo'}>
-						<img src={'/icons/favicon.svg'} alt={'logo'} />
-						RCV
-					</h2>
-					<div>
-						<button id={'create-project-button'} onClick={() => this.openModal()}>
-							시작하기
-						</button>
-						<SignIn
-							isOpen={this.state.isModalOpen}
-							close={() => this.closeModal()}
-							create={() => this.createProject()}
-						/>
-					</div>
-				</Modal>
+				<MainSection />
+				<div>
+					<button id={'create-project-button'} onClick={() => this.openModal()}>
+						시작하기
+					</button>
+					<SignIn isOpen={this.state.isModalOpen} close={() => this.closeModal()} create={() => this.createProject()} />
+				</div>
+				<Footer />
 			</div>
 		);
 	}
