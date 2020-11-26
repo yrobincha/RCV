@@ -203,6 +203,7 @@ exports.projectGET = (req, res) => {
         resources: resources,
         timeline: timeline,
         processing: processing,
+        name : req.session.name
       });
     },
     (err) => fileErr(err, res)

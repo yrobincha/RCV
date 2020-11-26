@@ -9,6 +9,7 @@ import FetchErrorDialog from "./FetchErrorDialog";
 import SubmitToolbar from "./SubmitToolbar";
 import Preview from "./Preview";
 import timeManager from "../../models/timeManager";
+import { io } from 'socket.io-client';
 
 export default class Editor extends Component {
   constructor(props) {
@@ -33,6 +34,7 @@ export default class Editor extends Component {
     this.datetimeStart = new Date(1970, 0, 1);
     this.timerStart = new Date(1970, 0, 1);
     this.timerFunction = null;
+    this.socket = io();
 
     this.state = {
       project: window.location.href.match(/project\/([^/]*)/)[1],
@@ -49,7 +51,7 @@ export default class Editor extends Component {
 
     this.loadData();
   }
-
+  
   render() {
     return (
       <>
@@ -139,6 +141,7 @@ export default class Editor extends Component {
             processing: data.processing,
             loading: false,
           });
+          this.socket.emit('addMember',  data.name);
         } else {
           alert(`${data.err}\n\n${data.msg}`);
         }
