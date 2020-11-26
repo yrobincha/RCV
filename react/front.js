@@ -11,8 +11,7 @@ import Editor from './editor/Editor';
 if (document.getElementById('newProjectDialog') !== null) {
 	// Landing page
 	ReactDOM.render(<NewProjectDialog />, document.getElementById('newProjectDialog'));
-}
-else {
+} else {
 	// Project page
 	ReactDOM.render(<Editor />, document.getElementById('app'));
 }
