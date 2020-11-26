@@ -1,6 +1,6 @@
 exports.server = {
 	port: 3000,
-	host: '0.0.0.0',
+	host: 'localhost',
 
 	get serverUrl() {
 		return `http://${this.host}:${this.port}`;

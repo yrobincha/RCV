@@ -24,10 +24,10 @@ export default class NewProjectDialog extends Component {
 		const url = `${server.apiUrl}/project`;
 		const params = {
 			method: 'POST',
-			// headers: {
-			// 	'Accept':  'application/json',
-			// 	 'Content-Type': 'application/json',
-			//   },
+			headers: {
+			 	'Accept':  'application/json',
+			 	'Content-Type': 'application/json',
+			},
 			credentials: 'include'
 		};
 
