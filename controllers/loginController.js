@@ -3,21 +3,11 @@ import { nanoid } from "nanoid";
 import projectManager from "../models/projectManager";
 const fs = require("fs");
 const path = require("path");
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const UserSchema = new Schema({
-	userID: Number,
-	name: String,
-	projectIDs: []
-})
-
-
-var User = mongoose.model('users', UserSchema);
+ 
+const User = require('../models/users')
+const Project = require('../models/projects')
 
 exports.login = (req, res) => {
-	var sess;
-	sess = req.session;
-
 	User.findOne({ userID: req.body.userID }, (err, user) => {
 		if (!user) {
 			var newUser = new User();
@@ -26,12 +16,15 @@ exports.login = (req, res) => {
 			newUser.save(() => { res.json({ result: 1 }) });
 		}
 		else {
-			res.json(user.projectIDs);
+			Project.find({projectID : {$in : user.projectIDs}}, (err, project) => {
+				console.log(project)
+				res.json(project[0].name);
+			});
 		}
 	})
-	sess.userID = req.body.userID;
-	sess.name = req.body.name;
-	console.log(sess);
+	req.session.userID = req.body.userID;
+	req.session.name = req.body.name;
+	console.log(req.session);
 
 }
 
@@ -46,6 +39,11 @@ exports.projectPOST = (req, res, next) => {
 		(err) => {
 			if (err) return next(err);
 			
+			var newProject = new Project();
+			newProject.projectID = projectID;
+			newProject.name = req.body.name;
+			newProject.save();
+
 			User.updateOne({ userID: sess.userID }, { "$push": { projectIDs: projectID } }, 
 			(err, user) => {
 				if(err) return console.log("error");
