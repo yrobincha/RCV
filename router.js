@@ -10,6 +10,7 @@ const loginController = require("./controllers/loginController");
 // login route
 router.post("/login", loginController.login);
 router.post("/api/project", loginController.projectPOST);
+router.get("/api/projects", loginController.projectsGET);
 
 // Homepage route
 router.get("/", mainController.main);

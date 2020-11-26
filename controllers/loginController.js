@@ -62,3 +62,16 @@ exports.projectPOST = (req, res, next) => {
   );
   console.log(sess);
 };
+
+exports.projectsGET = (req, res) => {
+  User.findOne({ userID: req.session.userID }, (err, user) => {
+    if (err) console.log("no user");
+    Project.find({ projectID: { $in: user.projectIDs } }, (err, project) => {
+      if (!project) {
+        res.json({});
+      } else {
+        res.json(project);
+      }
+    });
+  });
+};
