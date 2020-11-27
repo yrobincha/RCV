@@ -4,6 +4,7 @@ import { server } from "../../config";
 import FetchErrorDialog from "../editor/FetchErrorDialog";
 import Header from "../editor/Header";
 import SignIn from "../editor/SignIn";
+import axios from "axios";
 
 Modal.setAppElement(document.body);
 
@@ -15,6 +16,7 @@ export default class NewProjectDialog extends Component {
       showFetchError: false,
       fetchError: "",
       isModalOpen: false,
+      projects: [],
     };
 
     this.closeFetchErrorDialog = this.closeFetchErrorDialog.bind(this);
@@ -67,7 +69,12 @@ export default class NewProjectDialog extends Component {
   }
 
   openModal() {
-    this.setState({ isModalOpen: true });
+    axios.get("/api/projects", {}).then((res) => {
+      this.setState({
+        isModalOpen: true,
+        projects: res.data,
+      });
+    });
   }
 
   closeModal() {
@@ -105,6 +112,7 @@ export default class NewProjectDialog extends Component {
               isOpen={this.state.isModalOpen}
               close={() => this.closeModal()}
               create={(projectName) => this.createProject(projectName)}
+              projects={this.state.projects}
             />
           </div>
         </Modal>
