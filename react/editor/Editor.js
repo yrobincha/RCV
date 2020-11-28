@@ -35,8 +35,20 @@ export default class Editor extends Component {
     this.timerStart = new Date(1970, 0, 1);
     this.timerFunction = null;
     this.socket = io();
-
+    this.socket.on('userJoin', (data) => {
+      console.log( data + ' joined ');
+    });
+    this.socket.on('userList', (data) => {
+      console.log( data );
+    });
+    this.socket.on('reload', (data) => {
+      console.log( data + "reload!" );
+      this.loadData();
+    });
+     
+    
     this.state = {
+      id : null,
       project: window.location.href.match(/project\/([^/]*)/)[1],
       resources: {},
       timeline: {},
@@ -50,6 +62,7 @@ export default class Editor extends Component {
     };
 
     this.loadData();
+
   }
   
   render() {
@@ -136,12 +149,15 @@ export default class Editor extends Component {
           if (this.state.processing !== null && data.processing === null)
             data.processing = 100;
           this.setState({
+            id : data.project,
             resources: data.resources,
             timeline: data.timeline,
             processing: data.processing,
             loading: false,
           });
-          this.socket.emit('addMember',  data.name);
+          console.log(this.state.id);
+          this.socket.emit('addMember', { name: data.name, projectID: this.state.id});
+          // rPthr 'addMember' emfdjrksmsrj tnwjdgodigka
         } else {
           alert(`${data.err}\n\n${data.msg}`);
         }
@@ -153,6 +169,7 @@ export default class Editor extends Component {
     const resources = Object.assign({}, this.state.resources);
     resources[resource.id] = resource;
     this.setState({ resources: resources });
+    this.socket.emit('reload', this.state.id);
   }
 
   delResource(id) {

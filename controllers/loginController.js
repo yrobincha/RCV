@@ -60,5 +60,5 @@ exports.projectPOST = (req, res, next) => {
       );
     }
   );
-  console.log(sess);
+  //console.log(sess);
 };
