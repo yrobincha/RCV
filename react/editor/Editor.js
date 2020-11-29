@@ -42,13 +42,20 @@ export default class Editor extends Component {
       console.log( data );
     });
     this.socket.on('reload', (data) => {
-      console.log( data + "reload!" );
-      this.loadData();
+      if(this.socket.id != data){
+        this.loadData();
+        this.socket.emit('reload complete', this.state.id);
+      }
     });
-     
+    this.socket.on('reload complete', (data) => {
+      if(data==this.state.id){
+        this.setState({req:true});
+      }
+    });
     
     this.state = {
       id : null,
+      req : false,
       project: window.location.href.match(/project\/([^/]*)/)[1],
       resources: {},
       timeline: {},
@@ -155,9 +162,11 @@ export default class Editor extends Component {
             processing: data.processing,
             loading: false,
           });
-          console.log(this.state.id);
           this.socket.emit('addMember', { name: data.name, projectID: this.state.id});
-          // rPthr 'addMember' emfdjrksmsrj tnwjdgodigka
+          if(!this.state.req){
+            this.setState({req : true});
+            this.socket.emit('reload', this.state.id);
+          }
         } else {
           alert(`${data.err}\n\n${data.msg}`);
         }
@@ -176,6 +185,7 @@ export default class Editor extends Component {
     const resources = Object.assign({}, this.state.resources);
     delete resources[id];
     this.setState({ resources: resources });
+    this.socket.emit('reload', this.state.id);
   }
 
   putResource(id, duration, trackId) {
@@ -196,6 +206,7 @@ export default class Editor extends Component {
       transitionFrom: null,
     });
     track.duration = timeEnd;
+    this.socket.emit('reload', this.state.id);
     this.setState({ timeline: timeline });
 
     if (trackLength === 0) {
@@ -222,6 +233,7 @@ export default class Editor extends Component {
           alert(`${data.err}\n\n${data.msg}`);
         }
         this.loadData();
+        this.socket.emit('reload', this.state.id);
       })
       .catch((error) => this.openFetchErrorDialog(error.message));
   }
@@ -245,6 +257,7 @@ export default class Editor extends Component {
           const item = TimelineModel.findItem(track.items, parameters.item);
 
           item.filters.push({ service: parameters.filter });
+          this.socket.emit('reload', this.state.id);
           this.setState({ timeline: timeline });
         } else {
           alert(`${data.err}\n\n${data.msg}`);
@@ -261,8 +274,9 @@ export default class Editor extends Component {
     item.filters = item.filters.filter(
       (filter) => filter.service !== parameters.filter
     );
-
+    this.socket.emit('reload', this.state.id);
     this.setState({ timeline: timeline });
+   
   }
 
   openSubmitDialog() {
@@ -333,5 +347,6 @@ export default class Editor extends Component {
       this.setState({ playing: false });
     }
     this.setState({ time: time });
+    this.socket.emit('reload', this.state.id);
   }
 }
