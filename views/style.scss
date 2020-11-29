@@ -528,12 +528,8 @@ tr:nth-child(even) {
 		justify-content: flex-end;
 		align-items: center;
 		padding-right: 20px;
+		padding-top: 1em;
 	}
-}
-
-// Login
-#login {
-	padding-top: 1em;
 	.login,
 	.user-name {
 		font-size: 1.3rem;
@@ -549,7 +545,10 @@ tr:nth-child(even) {
 		color: #74acc8;
 		text-decoration: none;
 	}
+}
 
+// Login
+#login {
 	.google-login-button {
 		display: inline-block;
 		background: white;

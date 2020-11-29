@@ -28,9 +28,9 @@ const CreateNewProject = (props) => {
 		<div className={'create-new-project'}>
 			<div className={'container'}>
 				<h1 className={'title'}>Projects</h1>
-				<p className={'content'}>진행 중인 프로젝트가 없습니다. 새로운 프로젝트를 추가하세요.</p>
+				<p className={'content'}>진행 중인 프로젝트가 없습니다. 새로운 프로젝트를 생성하세요.</p>
 				<button onClick={createProject} className={'create-project-button'}>
-					Add Project
+					Create Project
 				</button>
 			</div>
 		</div>
