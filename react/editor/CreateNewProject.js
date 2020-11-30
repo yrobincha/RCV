@@ -1,6 +1,6 @@
 import React from 'react';
 import { server } from '../../config';
-const CreateNewProject = (props) => {
+const CreateNewProject = () => {
 	const createProject = () => {
 		const url = `${server.apiUrl}/project`;
 		const params = {

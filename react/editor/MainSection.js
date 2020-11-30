@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router';
 
-const MainSection = (props) => {
+const MainSection = ({ logged }) => {
 	const history = useHistory();
 	return (
 		<>
@@ -17,7 +17,10 @@ const MainSection = (props) => {
 					<button
 						className={'start-button'}
 						onClick={() => {
-							history.push('/project');
+							if (logged === true) {
+								history.push('/project');
+								console.log('logged in');
+							}
 						}}
 					>
 						시작하기

@@ -13,7 +13,6 @@ function NewProjectDialog() {
 
 	useEffect(() => {
 		const id = window.sessionStorage.getItem('id');
-		console.log(id);
 		if (id) {
 			onLogin();
 		} else {
@@ -44,7 +43,7 @@ function NewProjectDialog() {
 			<Switch>
 				<Route path={['/', '/home']} exact>
 					<Header logged={logged} onLogout={onLogout} onLogin={onLogin} />
-					<MainSection />
+					<MainSection logged={logged} />
 					<FeatureSection />
 					<Footer />
 				</Route>
