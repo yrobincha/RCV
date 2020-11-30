@@ -12,7 +12,6 @@ const Header = ({ logged, onLogout, onLogin }) => {
 						<a className={'login'} onClick={onLogout}>
 							로그아웃
 						</a>
-						{/* test commit */}
 					</>
 				) : (
 					<Login onLogin={onLogin} />

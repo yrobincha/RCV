@@ -43,7 +43,7 @@ function NewProjectDialog() {
 			<Switch>
 				<Route path={['/', '/home']} exact>
 					<Header logged={logged} onLogout={onLogout} onLogin={onLogin} />
-					<MainSection logged={logged} />
+					<MainSection logged={logged} onLogin={onLogin} />
 					<FeatureSection />
 					<Footer />
 				</Route>
