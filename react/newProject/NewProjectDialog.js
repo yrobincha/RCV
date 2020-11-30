@@ -3,9 +3,8 @@ import FeatureSection from '../editor/FeatureSection';
 import Footer from '../editor/Footer';
 import Header from '../editor/Header';
 import MainSection from '../editor/MainSection';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
 import CreateNewProject from '../editor/CreateNewProject';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 // Modal.setAppElement(document.body);
 
