@@ -4,7 +4,7 @@ const { get } = require("mongoose");
  
 module.exports = function(io) {
     let projects = new Map(); //
-    let cnt = 1;
+    let cnt = 0;
     io.on('connection', (socket) => {
         console.log('a user connected');
         socket.on('disconnect', () => {
@@ -39,30 +39,29 @@ module.exports = function(io) {
               //  console.log(projects.get(data.projectID));
         });
 
-        socket.on('reload', (projectID) => {
-            console.log("in reload -- > ");
-            if(!projects.has(projectID)){
-               console.log("ERROR : we have not this project '" + projectID);
+        socket.on('reload', (data) => {
+           // console.log("in reload -- > ");
+            if(!projects.has(data.projectID)){
+               console.log("ERROR : we have not this project '" + data.projectID);
             }
             else{
-                console.log(socket.id);
-                io.to(projectID).emit('reload', socket.id); 
+                socket.leave(data.projectID)
+                io.to(data.projectID).emit('reload',{id: socket.id, time: data.time}); 
+                socket.join(data.projectID)
             }
         });
         
         socket.on('reload complete', (projectID) => {
-            console.log("in reload complete -- > ");
             if(!projects.has(projectID)){
                console.log("ERROR : we have not this project '" + projectID);
             }
             else{
                 cnt++;
                 if(projects.get(projectID).size == cnt){
-                    console.log('complete~~!!');
-                    cnt == 1;
-                    io.to(projectID).emit('reload complete', projectID); 
+                    console.log( socket.id + ' reload completed.');
+                    cnt = 0;
+                    io.to(projectID).emit('reload complete', socket.id); 
                 }
-                
             }
         });
 
