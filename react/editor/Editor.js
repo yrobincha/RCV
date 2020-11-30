@@ -42,13 +42,21 @@ export default class Editor extends Component {
       console.log( data );
     });
     this.socket.on('reload', (data) => {
-      console.log( data + "reload!" );
-      this.loadData();
+      if(this.socket.id != data.id){
+        console.log( this.socket.id + " !=  " + data.id);
+        this.setState({req:true});
+        console.log(data.time);
+        this.loadData();
+      }
     });
-     
+    this.socket.on('reload complete', (data) => {
+      //if(data==this.socket.id)
+        this.setState({req:false});
+    });
     
     this.state = {
       id : null,
+      req : false,
       project: window.location.href.match(/project\/([^/]*)/)[1],
       resources: {},
       timeline: {},
@@ -155,9 +163,12 @@ export default class Editor extends Component {
             processing: data.processing,
             loading: false,
           });
-          console.log(this.state.id);
           this.socket.emit('addMember', { name: data.name, projectID: this.state.id});
-          // rPthr 'addMember' emfdjrksmsrj tnwjdgodigka
+          if(!this.state.req){
+            this.setState({req : true});
+            this.socket.emit('reload', {projectID : this.state.id, time : this.state.time});
+          }
+          this.socket.emit('reload complete', this.state.id);
         } else {
           alert(`${data.err}\n\n${data.msg}`);
         }
@@ -169,13 +180,14 @@ export default class Editor extends Component {
     const resources = Object.assign({}, this.state.resources);
     resources[resource.id] = resource;
     this.setState({ resources: resources });
-    this.socket.emit('reload', this.state.id);
+    this.loadData();
   }
 
   delResource(id) {
     const resources = Object.assign({}, this.state.resources);
     delete resources[id];
     this.setState({ resources: resources });
+    this.loadData();
   }
 
   putResource(id, duration, trackId) {
@@ -197,7 +209,7 @@ export default class Editor extends Component {
     });
     track.duration = timeEnd;
     this.setState({ timeline: timeline });
-
+    this.loadData();
     if (trackLength === 0) {
       this.addTrack(trackId.includes("audio") ? "audio" : "video");
     }
@@ -246,6 +258,7 @@ export default class Editor extends Component {
 
           item.filters.push({ service: parameters.filter });
           this.setState({ timeline: timeline });
+          this.loadData();
         } else {
           alert(`${data.err}\n\n${data.msg}`);
         }
@@ -261,8 +274,8 @@ export default class Editor extends Component {
     item.filters = item.filters.filter(
       (filter) => filter.service !== parameters.filter
     );
-
     this.setState({ timeline: timeline });
+    this.loadData();
   }
 
   openSubmitDialog() {
@@ -333,5 +346,7 @@ export default class Editor extends Component {
       this.setState({ playing: false });
     }
     this.setState({ time: time });
+   // this.loadData();
+   // this.socket.emit('reload', this.state.id);
   }
 }

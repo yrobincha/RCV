@@ -55,5 +55,4 @@ function NewProjectDialog() {
 		</Router>
 	);
 }
-
 export default NewProjectDialog;
