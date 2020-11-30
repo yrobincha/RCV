@@ -30,6 +30,7 @@ class Login extends Component {
 		// console.log(this.state.id, this.state.name, this.state.provider);
 		// this.props.onLogin();
 		this.doSignUp();
+		this.props.closeModal();
 	}
 
 	responseFail(err) {

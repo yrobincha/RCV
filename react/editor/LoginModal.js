@@ -1,7 +1,7 @@
 import React from 'react';
 import Login from './Login';
 
-const LoginFailedModal = ({ isModalOpen, closeModal, onLogin }) => {
+const LoginModal = ({ isModalOpen, closeModal, onLogin }) => {
 	return (
 		<>
 			{isModalOpen ? (
@@ -9,11 +9,11 @@ const LoginFailedModal = ({ isModalOpen, closeModal, onLogin }) => {
 					<h1 onClick={closeModal} className={'title'}>
 						시작하기
 					</h1>
-					<Login onLogin={onLogin} />
+					<Login onLogin={onLogin} closeModal={closeModal} />
 				</div>
 			) : null}
 		</>
 	);
 };
 
-export default LoginFailedModal;
+export default LoginModal;
