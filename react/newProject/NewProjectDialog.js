@@ -1,114 +1,59 @@
-import React, { Component } from "react";
-import Modal from "react-modal";
-import { server } from "../../config";
-import FetchErrorDialog from "../editor/FetchErrorDialog";
-import Header from "../editor/Header";
-import SignIn from "../editor/SignIn";
+import React, { useEffect, useState } from 'react';
+import FeatureSection from '../editor/FeatureSection';
+import Footer from '../editor/Footer';
+import Header from '../editor/Header';
+import MainSection from '../editor/MainSection';
+import CreateNewProject from '../editor/CreateNewProject';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-Modal.setAppElement(document.body);
+// Modal.setAppElement(document.body);
 
-export default class NewProjectDialog extends Component {
-  constructor(props) {
-    super(props);
+function NewProjectDialog() {
+	const [logged, setLogged] = useState(false);
 
-    this.state = {
-      showFetchError: false,
-      fetchError: "",
-      isModalOpen: false,
-    };
+	useEffect(() => {
+		const id = window.sessionStorage.getItem('id');
+		console.log(id);
+		if (id) {
+			onLogin();
+		} else {
+			onLogout();
+		}
+	});
 
-    this.closeFetchErrorDialog = this.closeFetchErrorDialog.bind(this);
-  }
+	const onLogin = () => {
+		setLogged(true);
+	};
 
-  createProject(projectName) {
-    const data = { projectName: projectName };
-    const url = `${server.apiUrl}/project`;
-    const params = {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-    };
+	const onLogout = () => {
+		setLogged(false);
 
-    fetch(url, params)
-      .then((response) => response.json())
-      .then((data) => {
-        if (typeof data.err === "undefined") {
-          window.location = `${server.serverUrl}/project/${data.project}`;
-        } else {
-          alert(`${data.err}\n\n${data.msg}`);
-        }
-      })
-      .catch((error) => this.openFetchErrorDialog(error.message));
-  }
+		const provider = window.sessionStorage.getItem('provider');
+		if (provider === 'google') {
+			const auth2 = window.gapi.auth2.getAuthInstance();
+			auth2.signOut().then(function () {
+				console.log('Google logout');
+			});
+		}
 
-  /**
-   * Show Connection error dialog
-   *
-   * @param {String} msg
-   */
-  openFetchErrorDialog(msg) {
-    this.setState({
-      showFetchError: true,
-      fetchError: msg,
-    });
-  }
+		window.sessionStorage.clear();
+	};
 
-  /**
-   * Close Connection error dialog
-   */
-  closeFetchErrorDialog() {
-    this.setState({
-      showFetchError: false,
-      fetchError: "",
-    });
-  }
-
-  openModal() {
-    this.setState({ isModalOpen: true });
-  }
-
-  closeModal() {
-    this.setState({ isModalOpen: false });
-  }
-
-  render() {
-    return (
-      <div>
-        {this.state.showFetchError && (
-          <FetchErrorDialog
-            msg={this.state.fetchError}
-            onClose={this.closeFetchErrorDialog}
-          />
-        )}
-        <Header />
-        <Modal
-          isOpen={true}
-          contentLabel="new project"
-          className={"modal"}
-          overlayClassName={"null"}
-        >
-          <h2 className={"logo"}>
-            <img src={"/icons/favicon.svg"} alt={"logo"} />
-            RCV
-          </h2>
-          <div>
-            <button
-              id={"create-project-button"}
-              onClick={() => this.openModal()}
-            >
-              시작하기
-            </button>
-            <SignIn
-              isOpen={this.state.isModalOpen}
-              close={() => this.closeModal()}
-              create={(projectName) => this.createProject(projectName)}
-            />
-          </div>
-        </Modal>
-      </div>
-    );
-  }
+	return (
+		<Router>
+			<Switch>
+				<Route path={['/', '/home']} exact>
+					<Header logged={logged} onLogout={onLogout} onLogin={onLogin} />
+					<MainSection />
+					<FeatureSection />
+					<Footer />
+				</Route>
+				<Route path="/project" exact>
+					<CreateNewProject />
+				</Route>
+			</Switch>
+		</Router>
+	);
 }
+
+export default NewProjectDialog;
