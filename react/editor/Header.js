@@ -1,5 +1,5 @@
 import React from 'react';
-import Login from './Login';
+import SignInWithGoogle from './SignInWithGoogle';
 
 const Header = ({ logged, onLogout, onLogin }) => {
 	const name = window.sessionStorage.getItem('name');
@@ -14,7 +14,7 @@ const Header = ({ logged, onLogout, onLogin }) => {
 						</a>
 					</>
 				) : (
-					<Login onLogin={onLogin} />
+					<SignInWithGoogle onLogin={onLogin} />
 				)}
 			</div>
 		</div>

@@ -1,7 +1,9 @@
 import React from 'react';
-import Login from './Login';
+import SignInWithGoogle from './SignInWithGoogle';
+import SignInWithKakao from './SignInWithKakao';
 
 const LoginModal = ({ isModalOpen, closeModal, onLogin }) => {
+	
 	return (
 		<>
 			{isModalOpen ? (
@@ -9,7 +11,8 @@ const LoginModal = ({ isModalOpen, closeModal, onLogin }) => {
 					<h1 onClick={closeModal} className={'title'}>
 						시작하기
 					</h1>
-					<Login onLogin={onLogin} closeModal={closeModal} />
+					<SignInWithGoogle onLogin={onLogin} closeModal={closeModal} isModalOpen={isModalOpen} />
+					<SignInWithKakao onLogin={onLogin} closeModal={closeModal} isModalOpen={isModalOpen} />
 				</div>
 			) : null}
 		</>

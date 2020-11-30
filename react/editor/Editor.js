@@ -41,9 +41,7 @@ export default class Editor extends Component {
 			}
 		});
 		this.socket.on('userList', (data) => {
-			// data.forEach((user) => console.log(user));
 			this.setState({ userList: data });
-			// console.log(this.state.userList);
 			this.state.userList.forEach((user) => console.log(user));
 		});
 		this.socket.on('reload', (data) => {

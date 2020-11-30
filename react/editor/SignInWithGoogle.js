@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { GoogleLogin } from 'react-google-login';
 import axios from 'axios';
 require('dotenv').config();
-class Login extends Component {
+class SignInWithGoogle extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -27,10 +27,10 @@ class Login extends Component {
 			name: user.getBasicProfile().getName(),
 			provider: 'google'
 		});
-		// console.log(this.state.id, this.state.name, this.state.provider);
-		// this.props.onLogin();
 		this.doSignUp();
-		this.props.closeModal();
+		if(this.props.isModalOpen === true) {
+			this.props.closeModal();
+		}
 	}
 
 	responseFail(err) {
@@ -63,4 +63,4 @@ class Login extends Component {
 	}
 }
 
-export default Login;
+export default SignInWithGoogle;
