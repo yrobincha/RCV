@@ -45,12 +45,11 @@ export default class Editor extends Component {
       if(this.socket.id != data.id){
         console.log( this.socket.id + " !=  " + data.id);
         this.setState({req:true});
-        console.log(data.time);
+        this.setState({ time: new Date(data.time) });
         this.loadData();
       }
     });
     this.socket.on('reload complete', (data) => {
-      //if(data==this.socket.id)
         this.setState({req:false});
     });
     
@@ -166,6 +165,7 @@ export default class Editor extends Component {
           this.socket.emit('addMember', { name: data.name, projectID: this.state.id});
           if(!this.state.req){
             this.setState({req : true});
+            console.log(this.state.time);
             this.socket.emit('reload', {projectID : this.state.id, time : this.state.time});
           }
           this.socket.emit('reload complete', this.state.id);
@@ -346,7 +346,6 @@ export default class Editor extends Component {
       this.setState({ playing: false });
     }
     this.setState({ time: time });
-   // this.loadData();
-   // this.socket.emit('reload', this.state.id);
+    this.loadData();
   }
 }
