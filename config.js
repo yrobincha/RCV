@@ -8,6 +8,8 @@ exports.server = {
 	get apiUrl() {
 		return `http://${this.host}:${this.port}/api`;
 	}
+
+	
 };
 
 exports.config = {
@@ -27,5 +29,7 @@ exports.config = {
 		fadeOutBrightness: 'brightness',
 		fadeInVolume: 'volume',
 		fadeOutVolume: 'volume'
-	}
+	},
+
+
 };

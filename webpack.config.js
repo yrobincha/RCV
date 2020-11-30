@@ -1,9 +1,17 @@
+const Dotenv = require('dotenv-webpack');
+
 module.exports = {
   entry: ["./react/front.js", "./views/style.scss"],
   output: {
     path: __dirname + "/public",
     filename: "[name].js",
   },
+  node: {
+    fs: 'empty'
+  },
+  plugins: [
+    new Dotenv()
+  ],
   module: {
     rules: [
       {
