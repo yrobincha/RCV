@@ -27,13 +27,23 @@ module.exports = function (io) {
 				io.to(data.projectID).emit('userJoin', data.name);
 				io.to(data.projectID).emit('userList', Array.from(projects.get(data.projectID).values()));
 			} else {
-				if (!projects.get(data.projectID).has(socket.id)) {
 					projects.get(data.projectID).set(socket.id, data.name);
 					io.to(data.projectID).emit('userJoin', data.name);
 					io.to(data.projectID).emit('userList', Array.from(projects.get(data.projectID).values()));
-				}
+					for (let item of  Array.from(projects.get(data.projectID).keys())) {
+						if(item != socket.id){
+							io.of('/').sockets.get(item).emit('load', {id: socket.id});
+							break;
+						}
+					}
+					  
+					  
 			}
 			//  console.log(projects.get(data.projectID));
+		});
+
+		socket.on('receive', (data) => {
+			io.of('/').sockets.get(data.id).emit('receive', {time : data.time, id :data.id});
 		});
 
 		socket.on('reload', (data) => {

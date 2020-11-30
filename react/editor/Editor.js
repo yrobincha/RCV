@@ -36,26 +36,27 @@ export default class Editor extends Component {
 		this.timerFunction = null;
 		this.socket = io();
 		this.socket.on('userJoin', (data) => {
-			if (data !== null) {
-				// console.log(data);
-			}
+			if (data !== null) {}
 		});
 		this.socket.on('userList', (data) => {
-			// data.forEach((user) => console.log(user));
 			this.setState({ userList: data });
-			// console.log(this.state.userList);
 			this.state.userList.forEach((user) => console.log(user));
+		});
+		this.socket.on('load', (data) => {
+			this.socket.emit('receive', {id : data.id, time : this.state.time})
+		});
+		this.socket.on('receive', (data) => {
+			console.log("receive");
+			this.setState({time : new Date(data.time)});
 		});
 		this.socket.on('reload', (data) => {
 			if (this.socket.id != data.id) {
-				console.log(this.socket.id + ' !=  ' + data.id);
-				this.setState({ req: true });
-				console.log(data.time);
+				//console.log(this.socket.id + ' !=  ' + data.id);
+				this.setState({ req: true, time : new Date(data.time) });
 				this.loadData();
 			}
 		});
 		this.socket.on('reload complete', (data) => {
-			//if(data==this.socket.id)
 			this.setState({ req: false });
 		});
 
@@ -72,13 +73,12 @@ export default class Editor extends Component {
 			fetchError: '',
 			time: new Date(1970, 0, 1),
 			playing: false,
-			userList: {}
+			userList: {},
+			init: false
 		};
 
 		this.loadData();
 	}
-
-	// componentDidUpdate(prevState) {}
 
 	render() {
 		return (
@@ -167,12 +167,16 @@ export default class Editor extends Component {
 						processing: data.processing,
 						loading: false
 					});
-					this.socket.emit('addMember', { name: data.name, projectID: this.state.id });
+					if (!this.state.init) {
+						this.socket.emit('addMember', { name: data.name, projectID: this.state.id });
+						this.state.init = true;
+					} else {
 					if (!this.state.req) {
 						this.setState({ req: true });
 						this.socket.emit('reload', { projectID: this.state.id, time: this.state.time });
 					}
 					this.socket.emit('reload complete', this.state.id);
+				}
 				} else {
 					alert(`${data.err}\n\n${data.msg}`);
 				}
@@ -346,7 +350,12 @@ export default class Editor extends Component {
 			this.setState({ playing: false });
 		}
 		this.setState({ time: time });
-		// this.loadData();
+		if (!this.state.req) {
+			this.setState({ req: true });
+			this.socket.emit('reload', { projectID: this.state.id, time: this.state.time });
+		}
+		this.socket.emit('reload complete', this.state.id);
+
 		// this.socket.emit('reload', this.state.id);
 	}
 }
