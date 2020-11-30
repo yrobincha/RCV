@@ -650,7 +650,27 @@ tr:nth-child(even) {
 		transform: translateY(-4px);
 	}
 }
-// Modal for creating project
+
+// Modal for not logged in
+.login-failed-modal {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 320px;
+	height: 300px;
+	border-radius: 10px;
+	background-color: #161616;
+	box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+	text-align: center;
+	z-index: 101;
+	.title {
+		font-size: 1.3rem;
+		margin-bottom: 0.2em;
+	}
+}
+
+// Page for creating project
 .create-new-project {
 	display: flex;
 	width: 100%;
