@@ -1,37 +1,31 @@
 import React, { Component } from "react";
-import axios from "axios";
+import { server } from "../../config";
 
 class SignIn extends Component {
   constructor(props) {
     super(props);
-    this.state = { value: "", projects: [] };
+    this.state = { newProject: "" };
 
-    this.getProjects = this.getProjects.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.navigateToProject = this.navigateToProject.bind(this);
   }
 
   handleChange(event) {
-    this.setState({ value: event.target.value });
+    this.setState({ newProject: event.target.value });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.create(this.state.value);
+    this.props.create(this.state.newProject);
   }
 
-  getProjects() {
-    axios.get("/api/projects", {}).then((res) => {
-      console.log(res);
-      this.setState({
-        projects: res.data,
-      });
-      console.log(this.state.projects);
-    });
+  navigateToProject(projectID) {
+    window.location = `${server.serverUrl}/project/${projectID}`;
   }
 
   render() {
-    const { isOpen, close, create } = this.props;
+    const { isOpen, close, create, projects } = this.props;
     return (
       <>
         {isOpen ? (
@@ -39,17 +33,27 @@ class SignIn extends Component {
             <div>
               <h1 className={"title"}>Projects</h1>
               <div>
-                <button onClick={this.getProjects}></button>
-                <p>
-                  진행 중인 프로젝트가 없습니다. 새로운 프로젝트를 추가하세요.
-                </p>
+                {projects ? (
+                  projects.map((project) => (
+                    <button
+                      key={project.projectID}
+                      onClick={() => this.navigateToProject(project.projectID)}
+                    >
+                      {project.name}
+                    </button>
+                  ))
+                ) : (
+                  <p>
+                    진행 중인 프로젝트가 없습니다. 새로운 프로젝트를 추가하세요.
+                  </p>
+                )}
               </div>
               <form onSubmit={this.handleSubmit}>
                 <label>
                   이름:
                   <input
                     type="text"
-                    value={this.state.value}
+                    value={this.state.newProject}
                     onChange={this.handleChange}
                   />
                 </label>
