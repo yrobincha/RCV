@@ -3,6 +3,7 @@ import { nanoid } from "nanoid";
 import projectManager from "../models/projectManager";
 const fs = require("fs");
 const path = require("path");
+var ffmpeg = require('fluent-ffmpeg');
 
 const User = require("../models/users");
 const Project = require("../models/projects");
@@ -75,3 +76,49 @@ exports.projectsGET = (req, res) => {
     });
   });
 };
+
+
+
+exports.thumbnailPOST = (req, res) => {
+
+  let thumbsFilePath = "";
+  let fileDuration = "";
+  let date = new Date(req.body.time)
+
+  let timestamp = date.getMinutes() + ':' + date.getSeconds()+ ':' + date.getMilliseconds();
+  console.log(timestamp)
+ 
+ 
+  var filename = null;
+  var video = path.join(__dirname, '..', 'WORKER', req.body.projectID, Object.keys(req.body.resource)[0] + ".mp4");
+  ffmpeg(video)
+  .on("filenames", function (filenames) {
+    console.log("Will generate " + filenames.join(", "));
+    thumbsFilePath = path.join("../public/images" , filenames[0]);
+    filename = filenames[0];
+  })
+  .on("end", function () {
+    console.log("Screenshots taken");
+    return res.json({
+      success: true,
+      thumbsFilePath: filename,
+      fileDuration: fileDuration,
+    });
+  })
+  .on("error", function (err) {
+    console.error(err);
+    return res.json({ success: false, err });
+  })
+  .screenshots({
+    // Will take screens at 20%, 40%, 60% and 80% of the video
+    count : 1,
+    timestamps : [date.getSeconds()],
+    folder: "public/images",
+    size: "320x200",
+    // %b input basename ( filename w/o extension )
+    filename: "thumbnail-%b.png",
+  });
+
+
+};
+

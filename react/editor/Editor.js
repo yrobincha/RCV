@@ -40,13 +40,12 @@ export default class Editor extends Component {
 		});
 		this.socket.on('userList', (data) => {
 			this.setState({ userList: data });
-			this.state.userList.forEach((user) => console.log(user));
+			//this.state.userList.forEach((user) => console.log(user));
 		});
 		this.socket.on('load', (data) => {
 			this.socket.emit('receive', {id : data.id, time : this.state.time})
 		});
 		this.socket.on('receive', (data) => {
-			console.log("receive");
 			this.setState({time : new Date(data.time)});
 		});
 		this.socket.on('reload', (data) => {
@@ -74,7 +73,9 @@ export default class Editor extends Component {
 			time: new Date(1970, 0, 1),
 			playing: false,
 			userList: {},
-			init: false
+			init: false,
+			thumbnail: null,
+			count : 0
 		};
 
 		this.loadData();
@@ -123,6 +124,7 @@ export default class Editor extends Component {
 							fetchError={this.openFetchErrorDialog}
 						/>
 						<Preview
+							thumbnail={this.state.thumbnail}
 							items={this.state.timeline}
 							time={this.state.time}
 							playing={this.state.playing}
@@ -188,6 +190,7 @@ export default class Editor extends Component {
 		const resources = Object.assign({}, this.state.resources);
 		resources[resource.id] = resource;
 		this.setState({ resources: resources });
+		console.log(this.state.resources);
 		this.loadData();
 	}
 
@@ -355,6 +358,34 @@ export default class Editor extends Component {
 			this.socket.emit('reload', { projectID: this.state.id, time: this.state.time });
 		}
 		this.socket.emit('reload complete', this.state.id);
+
+		const url = `${server.apiUrl}/project/${this.state.project}/thumbnail`;
+		const params = {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				resource : this.state.resources, 
+				projectID : this.state.project, 
+				time : this.state.time})
+		};
+
+		fetch(url, params)
+			.then((response) => response.json())
+			.then((data) => {
+				if (typeof data.err !== 'undefined') {
+					alert(`${data.err}\n\n${data.msg}`);
+				}
+				console.log(data.thumbsFilePath);
+				this.state.thumbnail = data.thumbsFilePath;
+				console.log({count : this.state.count});
+				this.state.count = this.state.count + 1;
+				
+				this.loadData();
+			})
+			.catch((error) => this.openFetchErrorDialog(error.message));
+
 
 		// this.socket.emit('reload', this.state.id);
 	}
