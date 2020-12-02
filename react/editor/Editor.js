@@ -75,7 +75,8 @@ export default class Editor extends Component {
 			userList: {},
 			init: false,
 			thumbnail: null,
-			count : 0
+			thumbnailHash: new Date(1970, 0, 1),
+			editing : false,
 		};
 
 		this.loadData();
@@ -124,7 +125,9 @@ export default class Editor extends Component {
 							fetchError={this.openFetchErrorDialog}
 						/>
 						<Preview
+							editing={this.state.editing}
 							thumbnail={this.state.thumbnail}
+							thumbnailHash={this.state.thumbnailHash}
 							items={this.state.timeline}
 							time={this.state.time}
 							playing={this.state.playing}
@@ -352,10 +355,10 @@ export default class Editor extends Component {
 			clearInterval(this.timerFunction);
 			this.setState({ playing: false });
 		}
-		this.setState({ time: time });
+		
 		if (!this.state.req) {
 			this.setState({ req: true });
-			this.socket.emit('reload', { projectID: this.state.id, time: this.state.time });
+			this.socket.emit('reload', { projectID: this.state.id, time: time });
 		}
 		this.socket.emit('reload complete', this.state.id);
 
@@ -368,25 +371,25 @@ export default class Editor extends Component {
 			body: JSON.stringify({
 				resource : this.state.resources, 
 				projectID : this.state.project, 
-				time : this.state.time})
+				time : time})
 		};
-
+		if(Math.abs(time.getTime() - this.state.time.getTime()) >= 100){
 		fetch(url, params)
 			.then((response) => response.json())
 			.then((data) => {
 				if (typeof data.err !== 'undefined') {
 					alert(`${data.err}\n\n${data.msg}`);
 				}
-				console.log(data.thumbsFilePath);
-				this.state.thumbnail = data.thumbsFilePath;
-				console.log({count : this.state.count});
-				this.state.count = this.state.count + 1;
-				
+				this.setState({
+					thumbnail : '/images/' + data.thumbsFilePath,
+					thumbnailHash : Date.now()
+				}) 
+				console.log(this.state.thumbnail);
 				this.loadData();
 			})
 			.catch((error) => this.openFetchErrorDialog(error.message));
-
-
+		}
+		this.setState({ editing : true, time: time });
 		// this.socket.emit('reload', this.state.id);
 	}
 }

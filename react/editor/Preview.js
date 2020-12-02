@@ -7,21 +7,13 @@ export default class Preview extends Component {
     super(props);
     this.stop = this.stop.bind(this);
     this.state = {
-      url: '',
-      count: 0
+      url: null,
     }
   }
-
-  // componentDidUpdate() {
-  //   if(this.props.count !== this.state.count) {
-  //     this.setState({
-  //       url: `/images/${this.props.thumbnail}`
-  //     })
-  //   }
-  // }
+  componentDidUpdate() {
+  }
 
   render() {
-
     return (
       <div id="preview">
         <h3>
@@ -33,9 +25,7 @@ export default class Preview extends Component {
         </h3>
         <div>
           {
-            this.props.thumbnail ?
-            <img src={this.state.url}/>
-            : null
+            this.props.editing && <img src={`${this.props.thumbnail}?${this.props.thumbnailHash}`}/>
           }
         </div>
         {typeof this.props.items.video !== "undefined" &&
