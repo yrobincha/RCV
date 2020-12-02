@@ -6,6 +6,11 @@ export default class Preview extends Component {
   constructor(props) {
     super(props);
     this.stop = this.stop.bind(this);
+    this.state = {
+      url: null,
+    }
+  }
+  componentDidUpdate() {
   }
 
   render() {
@@ -18,6 +23,11 @@ export default class Preview extends Component {
           </i>
           미리보기
         </h3>
+        <div>
+          {
+            this.props.editing && <img src={`${this.props.thumbnail}?${this.props.thumbnailHash}`}/>
+          }
+        </div>
         {typeof this.props.items.video !== "undefined" &&
           Object.keys(this.props.items.video).map((key) => (
             <PreviewTrack

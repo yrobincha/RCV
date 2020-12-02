@@ -40,13 +40,12 @@ export default class Editor extends Component {
 		});
 		this.socket.on('userList', (data) => {
 			this.setState({ userList: data });
-			this.state.userList.forEach((user) => console.log(user));
+			//this.state.userList.forEach((user) => console.log(user));
 		});
 		this.socket.on('load', (data) => {
 			this.socket.emit('receive', {id : data.id, time : this.state.time})
 		});
 		this.socket.on('receive', (data) => {
-			console.log("receive");
 			this.setState({time : new Date(data.time)});
 		});
 		this.socket.on('reload', (data) => {
@@ -74,7 +73,10 @@ export default class Editor extends Component {
 			time: new Date(1970, 0, 1),
 			playing: false,
 			userList: {},
-			init: false
+			init: false,
+			thumbnail: null,
+			thumbnailHash: new Date(1970, 0, 1),
+			editing : false,
 		};
 
 		this.loadData();
@@ -123,6 +125,9 @@ export default class Editor extends Component {
 							fetchError={this.openFetchErrorDialog}
 						/>
 						<Preview
+							editing={this.state.editing}
+							thumbnail={this.state.thumbnail}
+							thumbnailHash={this.state.thumbnailHash}
 							items={this.state.timeline}
 							time={this.state.time}
 							playing={this.state.playing}
@@ -188,6 +193,7 @@ export default class Editor extends Component {
 		const resources = Object.assign({}, this.state.resources);
 		resources[resource.id] = resource;
 		this.setState({ resources: resources });
+		console.log(this.state.resources);
 		this.loadData();
 	}
 
@@ -349,13 +355,41 @@ export default class Editor extends Component {
 			clearInterval(this.timerFunction);
 			this.setState({ playing: false });
 		}
-		this.setState({ time: time });
+		
 		if (!this.state.req) {
 			this.setState({ req: true });
-			this.socket.emit('reload', { projectID: this.state.id, time: this.state.time });
+			this.socket.emit('reload', { projectID: this.state.id, time: time });
 		}
 		this.socket.emit('reload complete', this.state.id);
 
+		const url = `${server.apiUrl}/project/${this.state.project}/thumbnail`;
+		const params = {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				resource : this.state.resources, 
+				projectID : this.state.project, 
+				time : time})
+		};
+		if(Math.abs(time.getTime() - this.state.time.getTime()) >= 100){
+		fetch(url, params)
+			.then((response) => response.json())
+			.then((data) => {
+				if (typeof data.err !== 'undefined') {
+					alert(`${data.err}\n\n${data.msg}`);
+				}
+				this.setState({
+					thumbnail : '/images/' + data.thumbsFilePath,
+					thumbnailHash : Date.now()
+				}) 
+				console.log(this.state.thumbnail);
+				this.loadData();
+			})
+			.catch((error) => this.openFetchErrorDialog(error.message));
+		}
+		this.setState({ editing : true, time: time });
 		// this.socket.emit('reload', this.state.id);
 	}
 }

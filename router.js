@@ -11,6 +11,7 @@ const loginController = require("./controllers/loginController");
 router.post("/login", loginController.login);
 router.post("/api/project", loginController.projectPOST);
 router.get("/api/projects", loginController.projectsGET);
+router.post("/api/project/:projectID/thumbnail", loginController.thumbnailPOST);
 
 // Homepage route
 router.get("/", mainController.main);
