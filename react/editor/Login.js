@@ -13,7 +13,6 @@ class Login extends Component {
 	}
 
 	responseGoogle(user) {
-		const name = user.getBasicProfile().getName();
 		console.log('Signed in as ' + user.getBasicProfile().getName());
 		axios
 			.post('/login', {

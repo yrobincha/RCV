@@ -11,9 +11,11 @@ export default class Preview extends Component {
     this.pause = this.pause.bind(this);
 
     this.state = {
+      url: null,
       playing: false,
     };
   }
+  componentDidUpdate() {}
 
   render() {
     console.log(this.props.items);
@@ -26,6 +28,11 @@ export default class Preview extends Component {
           </i>
           미리보기
         </h3>
+        <div>
+          {this.props.editing && (
+            <img src={`${this.props.thumbnail}?${this.props.thumbnailHash}`} />
+          )}
+        </div>
         {typeof this.props.items.video !== "undefined" && (
           <ReactPlayer
             url={`${window.location.href}/output.mp4`}

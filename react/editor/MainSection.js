@@ -1,8 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router';
+import LoginFailedModal from './LoginFailedModal';
 
-const MainSection = (props) => {
+const MainSection = ({ logged, onLogin }) => {
 	const history = useHistory();
+	const [isModalOpen, setModalOpen] = useState(false);
+
+	const openModal = () => {
+		setModalOpen(true);
+	};
+
+	const closeModal = () => {
+		setModalOpen(false);
+	};
+
 	return (
 		<>
 			<div className={'main-section'}>
@@ -17,12 +28,17 @@ const MainSection = (props) => {
 					<button
 						className={'start-button'}
 						onClick={() => {
-							history.push('/project');
+							if (logged === true) {
+								history.push('/project');
+							} else {
+								openModal();
+							}
 						}}
 					>
 						시작하기
 					</button>
 				</div>
+				<LoginFailedModal isModalOpen={isModalOpen} closeModal={closeModal} onLogin={onLogin} />
 			</div>
 			<img className={'main-image'} src="images/collaboration.jpg" alt="main image" />
 		</>

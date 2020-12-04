@@ -9,7 +9,7 @@ import FetchErrorDialog from "./FetchErrorDialog";
 import SubmitToolbar from "./SubmitToolbar";
 import Preview from "./Preview";
 import timeManager from "../../models/timeManager";
-import { io } from 'socket.io-client';
+import { io } from "socket.io-client";
 
 export default class Editor extends Component {
   constructor(props) {
@@ -35,27 +35,34 @@ export default class Editor extends Component {
     this.timerStart = new Date(1970, 0, 1);
     this.timerFunction = null;
     this.socket = io();
-    this.socket.on('userJoin', (data) => {
-      console.log( data + ' joined ');
+    this.socket.on("userJoin", (data) => {
+      if (data !== null) {
+      }
     });
-    this.socket.on('userList', (data) => {
-      console.log( data );
+    this.socket.on("userList", (data) => {
+      this.setState({ userList: data });
+      //this.state.userList.forEach((user) => console.log(user));
     });
-    this.socket.on('reload', (data) => {
-      if(this.socket.id != data.id){
-        console.log( this.socket.id + " !=  " + data.id);
-        this.setState({req:true});
-        this.setState({ time: new Date(data.time) });
+    this.socket.on("load", (data) => {
+      this.socket.emit("receive", { id: data.id, time: this.state.time });
+    });
+    this.socket.on("receive", (data) => {
+      this.setState({ time: new Date(data.time) });
+    });
+    this.socket.on("reload", (data) => {
+      if (this.socket.id != data.id) {
+        //console.log(this.socket.id + ' !=  ' + data.id);
+        this.setState({ req: true, time: new Date(data.time) });
         this.loadData();
       }
     });
-    this.socket.on('reload complete', (data) => {
-        this.setState({req:false});
+    this.socket.on("reload complete", (data) => {
+      this.setState({ req: false });
     });
-    
+
     this.state = {
-      id : null,
-      req : false,
+      id: null,
+      req: false,
       project: window.location.href.match(/project\/([^/]*)/)[1],
       resources: {},
       timeline: {},
@@ -66,12 +73,16 @@ export default class Editor extends Component {
       fetchError: "",
       time: new Date(1970, 0, 1),
       playing: false,
+      userList: {},
+      init: false,
+      thumbnail: null,
+      thumbnailHash: new Date(1970, 0, 1),
+      editing: false,
     };
 
     this.loadData();
-
   }
-  
+
   render() {
     return (
       <>
@@ -100,6 +111,7 @@ export default class Editor extends Component {
             </button>
           </a>
           <div className="divider" />
+          <h1 className={"project-name"}>Project Name</h1>
           <SubmitToolbar
             openSubmitDialog={this.openSubmitDialog}
             progress={this.state.processing}
@@ -117,6 +129,9 @@ export default class Editor extends Component {
               fetchError={this.openFetchErrorDialog}
             />
             <Preview
+              editing={this.state.editing}
+              thumbnail={this.state.thumbnail}
+              thumbnailHash={this.state.thumbnailHash}
               items={this.state.timeline}
               time={this.state.time}
               playing={this.state.playing}
@@ -156,19 +171,28 @@ export default class Editor extends Component {
           if (this.state.processing !== null && data.processing === null)
             data.processing = 100;
           this.setState({
-            id : data.project,
+            id: data.project,
             resources: data.resources,
             timeline: data.timeline,
             processing: data.processing,
             loading: false,
           });
-          this.socket.emit('addMember', { name: data.name, projectID: this.state.id});
-          if(!this.state.req){
-            this.setState({req : true});
-            console.log(this.state.time);
-            this.socket.emit('reload', {projectID : this.state.id, time : this.state.time});
+          if (!this.state.init) {
+            this.socket.emit("addMember", {
+              name: data.name,
+              projectID: this.state.id,
+            });
+            this.state.init = true;
+          } else {
+            if (!this.state.req) {
+              this.setState({ req: true });
+              this.socket.emit("reload", {
+                projectID: this.state.id,
+                time: this.state.time,
+              });
+            }
+            this.socket.emit("reload complete", this.state.id);
           }
-          this.socket.emit('reload complete', this.state.id);
         } else {
           alert(`${data.err}\n\n${data.msg}`);
         }
@@ -180,6 +204,7 @@ export default class Editor extends Component {
     const resources = Object.assign({}, this.state.resources);
     resources[resource.id] = resource;
     this.setState({ resources: resources });
+    console.log(this.state.resources);
     this.loadData();
   }
 
@@ -345,7 +370,42 @@ export default class Editor extends Component {
       clearInterval(this.timerFunction);
       this.setState({ playing: false });
     }
-    this.setState({ time: time });
-    this.loadData();
+
+    if (!this.state.req) {
+      this.setState({ req: true });
+      this.socket.emit("reload", { projectID: this.state.id, time: time });
+    }
+    this.socket.emit("reload complete", this.state.id);
+
+    const url = `${server.apiUrl}/project/${this.state.project}/thumbnail`;
+    const params = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        resource: this.state.resources,
+        projectID: this.state.project,
+        time: time,
+      }),
+    };
+    if (Math.abs(time.getTime() - this.state.time.getTime()) >= 100) {
+      fetch(url, params)
+        .then((response) => response.json())
+        .then((data) => {
+          if (typeof data.err !== "undefined") {
+            alert(`${data.err}\n\n${data.msg}`);
+          }
+          this.setState({
+            thumbnail: "/images/" + data.thumbsFilePath,
+            thumbnailHash: Date.now(),
+          });
+          console.log(this.state.thumbnail);
+          this.loadData();
+        })
+        .catch((error) => this.openFetchErrorDialog(error.message));
+    }
+    this.setState({ editing: true, time: time });
+    // this.socket.emit('reload', this.state.id);
   }
 }
