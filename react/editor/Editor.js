@@ -15,6 +15,7 @@ export default class Editor extends Component {
   constructor(props) {
     super(props);
     this.loadData = this.loadData.bind(this);
+    this.renderVideo = this.renderVideo.bind(this);
     this.addResource = this.addResource.bind(this);
     this.delResource = this.delResource.bind(this);
     this.putResource = this.putResource.bind(this);
@@ -78,6 +79,7 @@ export default class Editor extends Component {
       thumbnail: null,
       thumbnailHash: new Date(1970, 0, 1),
       editing: false,
+      rendering: false,
     };
 
     this.loadData();
@@ -138,6 +140,7 @@ export default class Editor extends Component {
               pause={this.pause}
               play={this.play}
               setTime={this.setTime}
+              rendering={this.state.rendering}
             />
           </div>
         </main>
@@ -152,6 +155,7 @@ export default class Editor extends Component {
             fetchError={this.openFetchErrorDialog}
             time={this.state.time}
             setTime={this.setTime}
+            renderVideo={this.renderVideo}
           />
         </footer>
       </>
@@ -168,8 +172,10 @@ export default class Editor extends Component {
       .then((data) => {
         if (typeof data.err === "undefined") {
           if (data.processing !== null) setTimeout(this.loadData, 5000);
-          if (this.state.processing !== null && data.processing === null)
+          if (this.state.processing !== null && data.processing === null) {
             data.processing = 100;
+            this.setState({ rendering: false });
+          }
           this.setState({
             id: data.project,
             resources: data.resources,
@@ -198,6 +204,28 @@ export default class Editor extends Component {
         }
       })
       .catch((error) => this.openFetchErrorDialog(error.message));
+  }
+
+  renderVideo() {
+    this.setState({ rendering: true });
+    const url = `${server.apiUrl}/project/${this.state.project}`;
+    const params = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    fetch(url, params)
+      .then((response) => response.json())
+      .then((data) => {
+        if (typeof data.err === "undefined") {
+          this.startProcessing();
+        } else {
+          alert(`${data.err}\n\n${data.msg}`);
+        }
+      })
+      .catch((error) => this.props.fetchError(error.message));
   }
 
   addResource(resource) {

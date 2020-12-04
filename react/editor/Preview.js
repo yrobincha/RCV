@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import PreviewTrack from "./PreviewTrack";
 import ReactPlayer from "react-player";
 
 export default class Preview extends Component {
@@ -11,14 +10,11 @@ export default class Preview extends Component {
     this.pause = this.pause.bind(this);
 
     this.state = {
-      url: null,
       playing: false,
     };
   }
-  componentDidUpdate() {}
 
   render() {
-    console.log(this.props.items);
     return (
       <div id="preview">
         <h3>
@@ -33,11 +29,14 @@ export default class Preview extends Component {
             <img src={`${this.props.thumbnail}?${this.props.thumbnailHash}`} />
           )}
         </div>
-        {typeof this.props.items.video !== "undefined" && (
+        {typeof this.props.items.video !== "undefined" &&
+        !this.props.rendering ? (
           <ReactPlayer
             url={`${window.location.href}/output.mp4`}
             playing={this.state.playing}
           />
+        ) : (
+          <ReactPlayer url={""} playing={false} />
         )}
         <br />
         <div className="prev-toolbar">
@@ -59,16 +58,6 @@ export default class Preview extends Component {
               </i>
             </button>
           )}
-          <button disabled title="이전 이벤트">
-            <i className="material-icons" aria-hidden="true">
-              skip_previous
-            </i>
-          </button>
-          <button disabled title="다음 이벤트">
-            <i className="material-icons" aria-hidden="true">
-              skip_next
-            </i>
-          </button>
         </div>
       </div>
     );

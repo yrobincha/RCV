@@ -25,6 +25,7 @@ export default class Timeline extends Component {
     this.buttonFilter = this.buttonFilter.bind(this);
     this.buttonSplit = this.buttonSplit.bind(this);
     this.buttonDel = this.buttonDel.bind(this);
+    this.buttonRender = this.buttonRender.bind(this);
     this.closeAddFilterDialog = this.closeAddFilterDialog.bind(this);
     this.getItemFromTrackIndex = this.getItemFromTrackIndex.bind(this);
     this.addTrack = this.addTrack.bind(this);
@@ -164,6 +165,12 @@ export default class Timeline extends Component {
           </i>
           제거
         </button>
+        <button onClick={this.buttonRender}>
+          <i className="material-icons" aria-hidden="true">
+            render
+          </i>
+          렌더링
+        </button>
         <div id="time">
           {TimelineModel.dateToString(this.props.time)} / {this.state.duration}
         </div>
@@ -263,6 +270,10 @@ export default class Timeline extends Component {
         }
       })
       .catch((error) => this.props.fetchError(error.message));
+  }
+
+  buttonRender() {
+    this.props.renderVideo();
   }
 
   getItemFromTrackIndex(trackIndex) {
