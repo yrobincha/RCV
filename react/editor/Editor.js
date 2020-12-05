@@ -88,6 +88,7 @@ export default class Editor extends Component {
       rendering: false,
       logged: false,
       isModalOpen: false,
+      projectName: "",
     };
 
     this.loadData();
@@ -137,7 +138,7 @@ export default class Editor extends Component {
             </button>
           </a>
           <div className="divider" />
-          <h1 className={"project-name"}>Project Name</h1>
+          <h1 className={"project-name"}>{this.state.projectName}</h1>
           {userList}
           <InviteDialog
             project={this.state.project}
@@ -228,14 +229,14 @@ export default class Editor extends Component {
           if (this.state.processing !== null && data.processing === null) {
             data.processing = 100;
             this.setState({ rendering: false });
-		  }
-		  console.log(data.projectName);
+          }
           this.setState({
             id: data.project,
             resources: data.resources,
             timeline: data.timeline,
             processing: data.processing,
             loading: false,
+            projectName: data.projectName,
           });
           if (!this.state.init) {
             this.socket.emit("addMember", {

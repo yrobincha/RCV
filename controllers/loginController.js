@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 import projectManager from "../models/projectManager";
 const fs = require("fs");
 const path = require("path");
-var ffmpeg = require('fluent-ffmpeg');
+var ffmpeg = require("fluent-ffmpeg");
 
 const User = require("../models/users");
 const Project = require("../models/projects");
@@ -77,59 +77,60 @@ exports.projectsGET = (req, res) => {
   });
 };
 
-var zero = function(n, digits) {
-  var z = '';
+var zero = function (n, digits) {
+  var z = "";
   n = n.toString();
   var i = 0;
   if (n.length < digits) {
-    for (i = 0; i < digits - n.length; i++)
-      z += '0';
+    for (i = 0; i < digits - n.length; i++) z += "0";
   }
 
   return z + n;
-}
+};
 
 exports.thumbnailPOST = (req, res) => {
-
   let thumbsFilePath = "";
   let fileDuration = "";
   let date = new Date(req.body.time);
-  let mm = zero(date.getMinutes(),2);
-  let ss = zero(date.getSeconds(),2);
-  let ms = zero(date.getMilliseconds(),3);
-  let timestamp = mm + ':' + ss + '.' + ms;
+  let mm = zero(date.getMinutes(), 2);
+  let ss = zero(date.getSeconds(), 2);
+  let ms = zero(date.getMilliseconds(), 3);
+  let timestamp = mm + ":" + ss + "." + ms;
   //console.log(timestamp)
- 
+
   var filename = null;
-  var video = path.join(__dirname, '..', 'WORKER', req.body.projectID, Object.keys(req.body.resource)[0] + ".mp4");
+  var video = path.join(
+    __dirname,
+    "..",
+    "WORKER",
+    req.body.projectID,
+    Object.keys(req.body.resource)[0] + ".mp4"
+  );
   ffmpeg(video)
-  .on("filenames", function (filenames) {
-    //console.log("Will generate " + filenames.join(", "));
-    thumbsFilePath = path.join("../public/images" , filenames[0]);
-    filename = filenames[0];
-  })
-  .on("end", function () {
-    //console.log("Screenshots taken");
-    return res.json({
-      success: true,
-      thumbsFilePath: filename,
-      fileDuration: fileDuration,
+    .on("filenames", function (filenames) {
+      //console.log("Will generate " + filenames.join(", "));
+      thumbsFilePath = path.join("../public/images", filenames[0]);
+      filename = filenames[0];
+    })
+    .on("end", function () {
+      //console.log("Screenshots taken");
+      return res.json({
+        success: true,
+        thumbsFilePath: filename,
+        fileDuration: fileDuration,
+      });
+    })
+    .on("error", function (err) {
+      console.error(err);
+      return res.json({ success: false, err });
+    })
+    .screenshots({
+      // Will take screens at 20%, 40%, 60% and 80% of the video
+      count: 1,
+      timestamps: [timestamp],
+      folder: "public/images",
+      size: "320x200",
+      // %b input basename ( filename w/o extension )
+      filename: "thumbnail-%b.png",
     });
-  })
-  .on("error", function (err) {
-    console.error(err);
-    return res.json({ success: false, err });
-  })
-  .screenshots({
-    // Will take screens at 20%, 40%, 60% and 80% of the video
-    count : 1,
-    timestamps : [timestamp],
-    folder: "public/images",
-    size: "320x200",
-    // %b input basename ( filename w/o extension )
-    filename: "thumbnail-%b.png",
-  });
-
-
 };
-
