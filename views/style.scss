@@ -594,6 +594,17 @@ tr:nth-child(even) {
 	}
 }
 
+// Modal for Login
+.login-modal {
+	display: flex;
+	.close-button-container {
+		display: flex;
+		.close-button {
+			margin-left: auto;
+		}
+	}
+}
+
 // Main Section
 .main-section {
 	position: relative;
