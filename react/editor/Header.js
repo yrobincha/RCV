@@ -3,9 +3,12 @@ import LoginModal from './LoginModal';
 import SignInWithGoogle from './SignInWithGoogle';
 import SignInWithKakao from './SignInWithKakao';
 import styled from 'styled-components';
+import GoogleLogin from 'react-google-login';
 
 const Hidden = styled.div`
 	position: absolute;
+	top: 0;
+	left: 0;
 	width: 0px;
 	height: 0px;
 	z-index: -100;
