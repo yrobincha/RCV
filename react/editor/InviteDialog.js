@@ -39,7 +39,7 @@ class InviteDialog extends Component {
 				{this.props.isModalOpen && (
 					<>
 						<ModalOverlay />
-						<ModalWrapper onClick={this.handleMaskClick} tabIndex="-1">
+						<ModalWrapper tabIndex="-1">
 							<ModalInner>
 								<div className={'close-button-container'}>
 									<button className={'close-button'} onClick={this.handleMaskClick}>
