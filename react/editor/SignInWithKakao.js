@@ -14,18 +14,18 @@ class SignInWithKakao extends Component {
 
 	responseKakao(user) {
 		console.log('Signed in as ' + user.profile.id);
-		console.log(JSON.stringify(user));
+		// console.log(user.profile.properties.nickname);
 		axios
 			.post('/login', {
-				userID: user.profile.id
-				// name: user.profile.properties.nickname
+				userID: user.profile.id,
+				name: user.profile.properties.nickname
 			})
 			.then((res) => {
 				console.log(res);
 			});
 		this.setState({
 			id: user.profile.id,
-			// name: user.profile.properties.nickname,
+			name: user.profile.properties.nickname,
 			provider: 'kakao'
 		});
 		this.doSignUp();
@@ -55,7 +55,7 @@ class SignInWithKakao extends Component {
 						buttonText="카카오로 로그인하기"
 						onSuccess={(user) => this.responseKakao(user)}
 						onFailure={(err) => this.responseFail(err)}
-						getProfile="true"
+						getProfile={true}
 					/>
 				</>
 			</div>
