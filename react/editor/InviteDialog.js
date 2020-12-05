@@ -6,20 +6,28 @@ class InviteDialog extends Component {
 		super(props);
 
 		this.state = {
-			isModalOpen: false,
-			projectURL: ''
+			projectURL: `${server.serverUrl}/project/${this.props.project}`
 		};
 
 		this.handleInviteDialog = this.handleInviteDialog.bind(this);
+		this.handleMaskClick = this.handleMaskClick.bind(this);
+	}
+
+	handleMaskClick() {
+		this.props.closeModal();
 	}
 
 	handleInviteDialog() {
-		const url = `${server.serverUrl}/project/${this.props.project}`;
-		console.log(url);
-		this.setState({
-			isModalOpen: true,
-			projectURL: url
-		});
+		this.props.openModal();
+	}
+
+	componentDidMount() {
+		document.body.style.cssText = `position: fixed; top: -${window.scrollY}px`;
+		return () => {
+			const scrollY = document.body.style.top;
+			document.body.style.cssText = `position: ""; top: "";`;
+			window.scrollTo(0, parseInt(scrollY || '0') * -1);
+		};
 	}
 
 	render() {
@@ -28,11 +36,16 @@ class InviteDialog extends Component {
 				<button className={'invite-button'} onClick={this.handleInviteDialog}>
 					초대하기
 				</button>
-				{this.state.isModalOpen && (
+				{this.props.isModalOpen && (
 					<>
 						<ModalOverlay />
-						<ModalWrapper>
+						<ModalWrapper onClick={this.handleMaskClick} tabIndex="-1">
 							<ModalInner>
+								<div className={'close-button-container'}>
+									<button className={'close-button'} onClick={this.handleMaskClick}>
+										X
+									</button>
+								</div>
 								<h1 className={'invite-title'}>초대 링크 생성 완료</h1>
 								<h1 className={'project-url'}>{this.state.projectURL}</h1>
 							</ModalInner>

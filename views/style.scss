@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
-@import "~video-react/styles/scss/video-react"; 
+@import '~video-react/styles/scss/video-react';
 @font-face {
 	font-family: SourceSans;
 	src: url('/fonts/sans/SourceSansPro-Regular.ttf');
@@ -43,6 +43,13 @@ header {
 		.project-url {
 			font-size: 0.8rem;
 			color: black;
+		}
+
+		.close-button-container {
+			display: flex;
+			.close-button {
+				margin-left: auto;
+			}
 		}
 	}
 

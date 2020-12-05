@@ -18,6 +18,8 @@ export default class Editor extends Component {
 		super(props);
 		this.onLogin = this.onLogin.bind(this);
 		this.loadData = this.loadData.bind(this);
+		this.openModal = this.openModal.bind(this);
+		this.closeModal = this.closeModal.bind(this);
 		this.renderVideo = this.renderVideo.bind(this);
 		this.addResource = this.addResource.bind(this);
 		this.delResource = this.delResource.bind(this);
@@ -83,7 +85,8 @@ export default class Editor extends Component {
 			thumbnailHash: new Date(1970, 0, 1),
 			editing: false,
 			rendering: false,
-			logged: false
+			logged: false,
+			isModalOpen: false
 		};
 
 		this.loadData();
@@ -127,7 +130,12 @@ export default class Editor extends Component {
 					</a>
 					<div className="divider" />
 					<h1 className={'project-name'}>Project Name</h1>
-					<InviteDialog project={this.state.project} />
+					<InviteDialog
+						project={this.state.project}
+						openModal={this.openModal}
+						closeModal={this.closeModal}
+						isModalOpen={this.state.isModalOpen}
+					/>
 					<SubmitToolbar
 						openSubmitDialog={this.openSubmitDialog}
 						progress={this.state.processing}
@@ -182,6 +190,18 @@ export default class Editor extends Component {
 			logged: true
 		});
 		console.log('logged in');
+	}
+
+	openModal() {
+		this.setState({
+			isModalOpen: true
+		});
+	}
+
+	closeModal() {
+		this.setState({
+			isModalOpen: false
+		});
 	}
 
 	loadData() {
