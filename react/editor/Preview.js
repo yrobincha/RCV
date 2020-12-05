@@ -44,27 +44,6 @@ export default class Preview extends Component {
             )}
           </div>
         )}
-        <br />
-        <div className="prev-toolbar">
-          <button onClick={this.stop} className="no-border" title="재생 중지">
-            <i className="material-icons" aria-hidden="true">
-              stop
-            </i>
-          </button>
-          {this.props.playing ? (
-            <button onClick={this.pause} title="재생 일시 중지">
-              <i className="material-icons" aria-hidden="true">
-                pause
-              </i>
-            </button>
-          ) : (
-            <button onClick={this.play} title="계속 재생">
-              <i className="material-icons" aria-hidden="true">
-                play(); play_arrow
-              </i>
-            </button>
-          )}
-        </div>
       </div>
     );
   }
