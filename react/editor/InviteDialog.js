@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { server } from '../../config';
+
 import styled from 'styled-components';
 class InviteDialog extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			projectURL: `${server.serverUrl}/project/${this.props.project}`
+			projectURL: `${server.serverUrl}/project/${this.props.project}`,
+			copied: false
 		};
 
 		this.handleInviteDialog = this.handleInviteDialog.bind(this);
@@ -42,12 +45,20 @@ class InviteDialog extends Component {
 						<ModalWrapper tabIndex="-1">
 							<ModalInner>
 								<div className={'close-button-container'}>
-									<button className={'close-button'} onClick={this.handleMaskClick}>
-										X
-									</button>
+									<a className={'close-button'} onClick={this.handleMaskClick}></a>
 								</div>
-								<h1 className={'invite-title'}>초대 링크 생성 완료</h1>
-								<h1 className={'project-url'}>{this.state.projectURL}</h1>
+								<h1 className={'invite-title'}>초대 링크 생성 완료 !</h1>
+								<div className={'url-copy-button-container'}>
+									<h1 className={'project-url'}>{this.state.projectURL}</h1>
+									<CopyToClipboard text={this.state.projectURL} onCopy={() => this.setState({ copied: true })}>
+										<button className={'copy-button'}>복사하기</button>
+									</CopyToClipboard>
+									{this.state.copied && (
+										<i className="material-icons complete-icon" aria-hidden="true">
+											done_outline
+										</i>
+									)}
+								</div>
 							</ModalInner>
 						</ModalWrapper>
 					</>
@@ -84,14 +95,14 @@ const ModalInner = styled.div`
 	box-sizing: border-box;
 	position: relative;
 	box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
-	background-color: #fff;
+	background-color: #161616;
 	border-radius: 10px;
-	width: 540px;
+	width: 600px;
 	max-width: 720px;
 	top: 50%;
 	transform: translateY(-50%);
 	margin: 0 auto;
-	padding: 40px 20px;
+	padding: 10px 20px;
 `;
 
 export default InviteDialog;

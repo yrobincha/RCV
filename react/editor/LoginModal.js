@@ -20,13 +20,9 @@ const LoginModal = ({ isModalOpen, closeModal, onLogin }) => {
 					<ModalWrapper>
 						<ModalInner>
 							<div className={'close-button-container'}>
-								<button className={'close-button'} onClick={closeModal}>
-									X
-								</button>
+								<a className={'close-button'} onClick={closeModal}></a>
 							</div>
-							<h1 onClick={closeModal} className={'title'}>
-								시작하기
-							</h1>
+							<h1 className={'title'}>시작하기</h1>
 							<SignInWithGoogle onLogin={onLogin} closeModal={closeModal} isModalOpen={isModalOpen} />
 							<SignInWithKakao onLogin={onLogin} closeModal={closeModal} isModalOpen={isModalOpen} />
 						</ModalInner>
@@ -72,7 +68,7 @@ const ModalInner = styled.div`
 	top: 50%;
 	transform: translateY(-50%);
 	margin: 0 auto;
-	padding: 40px 20px;
+	padding: 10px 20px;
 `;
 
 export default LoginModal;
