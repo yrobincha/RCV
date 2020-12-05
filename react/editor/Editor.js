@@ -11,10 +11,12 @@ import Preview from './Preview';
 import timeManager from '../../models/timeManager';
 import { io } from 'socket.io-client';
 import InviteDialog from './InviteDialog';
+import LoginByInviteModal from './LoginByInviteModal';
 
 export default class Editor extends Component {
 	constructor(props) {
 		super(props);
+		this.onLogin = this.onLogin.bind(this);
 		this.loadData = this.loadData.bind(this);
 		this.renderVideo = this.renderVideo.bind(this);
 		this.addResource = this.addResource.bind(this);
@@ -80,10 +82,23 @@ export default class Editor extends Component {
 			thumbnail: null,
 			thumbnailHash: new Date(1970, 0, 1),
 			editing: false,
-			rendering: false
+			rendering: false,
+			logged: false
 		};
 
 		this.loadData();
+	}
+
+	componentDidMount() {
+		const wid = window.sessionStorage.getItem('id');
+		if (wid) {
+			console.log(wid);
+			this.setState({
+				logged: true
+			});
+		} else {
+			console.log('not logged in');
+		}
 	}
 
 	render() {
@@ -120,6 +135,7 @@ export default class Editor extends Component {
 					/>
 				</header>
 				<main>
+					{this.state.logged ? null : <LoginByInviteModal onLogin={this.onLogin} />}
 					<div>
 						<Sources
 							project={this.state.project}
@@ -159,6 +175,13 @@ export default class Editor extends Component {
 				</footer>
 			</>
 		);
+	}
+
+	onLogin() {
+		this.setState({
+			logged: true
+		});
+		console.log('logged in');
 	}
 
 	loadData() {

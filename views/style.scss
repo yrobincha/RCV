@@ -27,11 +27,21 @@ header {
 	.right {
 		margin-left: auto;
 	}
-	.invite-button-container {
+	.invite-dialog-container {
 		margin-left: 64em;
 
 		.invite-button {
 			border-color: #336620;
+		}
+
+		.invite-title {
+			font-size: 1.5rem;
+			color: black;
+		}
+
+		.project-url {
+			font-size: 0.8rem;
+			color: black;
 		}
 	}
 
