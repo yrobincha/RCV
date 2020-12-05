@@ -3,7 +3,7 @@ import LoginModal from './LoginModal';
 import SignInWithGoogle from './SignInWithGoogle';
 import SignInWithKakao from './SignInWithKakao';
 import styled from 'styled-components';
-import GoogleLogin from 'react-google-login';
+import { useHistory } from 'react-router';
 
 const Hidden = styled.div`
 	position: absolute;
@@ -17,6 +17,12 @@ const Hidden = styled.div`
 const Header = ({ logged, onLogout, onLogin }) => {
 	const name = window.localStorage.getItem('name');
 	const [isModalOpen, setModalOpen] = useState(false);
+	const history = useHistory();
+
+	const handleProjectList = () => {
+		history.push('/project');
+	};
+
 	const openModal = () => {
 		setModalOpen(true);
 	};
@@ -30,7 +36,9 @@ const Header = ({ logged, onLogout, onLogin }) => {
 			<div className={'container'}>
 				{logged ? (
 					<>
-						<a className={'user-name'}>Hello {name}</a>
+						<a className={'user-name'} onClick={handleProjectList}>
+							Hello {name}
+						</a>
 						<a className={'login'} onClick={onLogout}>
 							로그아웃
 						</a>
