@@ -106,6 +106,10 @@ export default class Editor extends Component {
   }
 
   render() {
+    const userList = this.state.userList.map((user) => (
+      <div key={user}>{user}</div>
+    ));
+
     return (
       <>
         <header>
@@ -134,6 +138,7 @@ export default class Editor extends Component {
           </a>
           <div className="divider" />
           <h1 className={"project-name"}>Project Name</h1>
+          {userList}
           <InviteDialog
             project={this.state.project}
             openModal={this.openModal}
