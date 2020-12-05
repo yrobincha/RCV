@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { GoogleLogin } from 'react-google-login';
 import axios from 'axios';
-
-class Login extends Component {
+// require('dotenv').config();
+class SignInWithGoogle extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -27,9 +27,10 @@ class Login extends Component {
 			name: user.getBasicProfile().getName(),
 			provider: 'google'
 		});
-		// console.log(this.state.id, this.state.name, this.state.provider);
-		// this.props.onLogin();
 		this.doSignUp();
+		if (this.props.isModalOpen === true) {
+			this.props.closeModal();
+		}
 	}
 
 	responseFail(err) {
@@ -51,7 +52,7 @@ class Login extends Component {
 				<>
 					<GoogleLogin
 						className={'google-login-button'}
-						clientId="439002818439-7schr17esj308t5h9cr9f6cbrfcltmsf.apps.googleusercontent.com"
+						clientId={process.env.GOOGLE_API_KEY}
 						buttonText="Sign in with google"
 						onSuccess={(user) => this.responseGoogle(user)}
 						onFailure={(err) => this.responseFail(err)}
@@ -63,4 +64,4 @@ class Login extends Component {
 	}
 }
 
-export default Login;
+export default SignInWithGoogle;

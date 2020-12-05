@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
-import LoginFailedModal from './LoginFailedModal';
+import LoginModal from './LoginModal';
 
 const MainSection = ({ logged, onLogin }) => {
 	const history = useHistory();
@@ -38,7 +38,7 @@ const MainSection = ({ logged, onLogin }) => {
 						시작하기
 					</button>
 				</div>
-				<LoginFailedModal isModalOpen={isModalOpen} closeModal={closeModal} onLogin={onLogin} />
+				<LoginModal isModalOpen={isModalOpen} closeModal={closeModal} onLogin={onLogin} />
 			</div>
 			<img className={'main-image'} src="images/collaboration.jpg" alt="main image" />
 		</>
