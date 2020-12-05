@@ -18,21 +18,22 @@ exports.default = (req, res) => {
   res.json({
     msg: req.session.userID,
   });
-  
 };
 
 exports.projectPOST = (req, res, next) => {
+  let projectID = nanoid(32);
+  fs.mkdir(
+    path.join(config.projectPath, projectID),
+    { recursive: true },
+    (err) => {
+      if (err) return next(err);
 
-	let projectID = nanoid(32);
-	fs.mkdir(path.join(config.projectPath, projectID), { recursive: true }, (err) => {
-		if (err) return next(err);
-
-		projectManager.save(projectID, projectManager.init()).then(
-			() => res.json({ project: projectID }),
-			err => next(err)
-		);
-	});
-
+      projectManager.save(projectID, projectManager.init()).then(
+        () => res.json({ project: projectID }),
+        (err) => next(err)
+      );
+    }
+  );
 };
 
 exports.projectGET = (req, res) => {
@@ -203,7 +204,7 @@ exports.projectGET = (req, res) => {
         resources: resources,
         timeline: timeline,
         processing: processing,
-        name : req.session.name
+        name: req.session.name,
       });
     },
     (err) => fileErr(err, res)
@@ -1276,7 +1277,7 @@ exports.projectTrackPOST = (req, res, next) => {
       projectManager.save(req.params.projectID, root.outerHTML, release).then(
         () =>
           res.json({
-            msg: "Stopa přidána",
+            msg: "추가된 트랙",
             track: newTractor.id,
           }),
         (err) => next(err)

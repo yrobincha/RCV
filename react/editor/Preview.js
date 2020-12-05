@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import ReactPlayer from "react-player";
-import { Player } from 'video-react';
+import { Player } from "video-react";
 
 export default class Preview extends Component {
   constructor(props) {
@@ -17,7 +17,6 @@ export default class Preview extends Component {
 
   render() {
     return (
-      
       <div id="preview">
         <h3>
           <i className="material-icons" aria-hidden={true}>
@@ -32,13 +31,18 @@ export default class Preview extends Component {
             playsInline
             src={`${window.location.href}/output.mp4`}
             playing={this.state.playing}
+            width={640}
+            height={360}
+            fluid={false}
           />
         ) : (
           <div>
-          {this.props.editing && (
-            <img src={`${this.props.thumbnail}?${this.props.thumbnailHash}`} />
-          )}
-        </div>
+            {this.props.editing && (
+              <img
+                src={`${this.props.thumbnail}?${this.props.thumbnailHash}`}
+              />
+            )}
+          </div>
         )}
         <br />
         <div className="prev-toolbar">
@@ -56,8 +60,7 @@ export default class Preview extends Component {
           ) : (
             <button onClick={this.play} title="계속 재생">
               <i className="material-icons" aria-hidden="true">
-                play();
-                play_arrow
+                play(); play_arrow
               </i>
             </button>
           )}
@@ -71,7 +74,7 @@ export default class Preview extends Component {
   }
 
   play() {
-    console.log("Play")
+    console.log("Play");
     const { player } = this.player.getState();
     player.play();
     this.setState({
