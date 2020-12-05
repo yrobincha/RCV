@@ -28,10 +28,13 @@ header {
 	.right {
 		margin-left: auto;
 	}
+	.invite-button-container {
+		margin-left: 64em;
 
-	// .users {
-
-	// }
+		.invite-button {
+			border-color: #336620;
+		}
+	}
 
 	height: 55px;
 }
@@ -181,8 +184,8 @@ progress {
 }
 
 .material-icons {
-	font-size: 18px;
-	padding-right: 3px;
+	font-size: 16px;
+	padding-right: 2px;
 	position: relative;
 	top: 3px;
 }
