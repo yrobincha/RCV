@@ -25,11 +25,8 @@ header {
 		margin: 0 1em;
 	}
 
-	.right {
-		margin-left: auto;
-	}
 	.invite-dialog-container {
-		margin-left: 64em;
+		margin-left: 72em;
 
 		.invite-button {
 			border-color: #336620;
@@ -235,6 +232,10 @@ progress {
 	padding-right: 2px;
 	position: relative;
 	top: 3px;
+}
+
+.render-icon {
+	width: 20px;
 }
 
 .complete-icon {
