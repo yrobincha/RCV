@@ -13,6 +13,7 @@ const fs = require("fs");
 const path = require("path");
 const { exec } = require("child_process");
 const Busboy = require("busboy");
+const Project = require("../models/projects");
 
 exports.default = (req, res) => {
   res.json({
@@ -116,7 +117,7 @@ exports.projectGET = (req, res) => {
                 track.getAttribute("producer")
               );
               const playlistEntry = playlist
-                .getElementsByTagName("entry")
+              renderVideo   .getElementsByTagName("entry")
                 .item(0);
               const duration = mltxmlManager.getDuration(
                 playlistEntry,
@@ -199,13 +200,20 @@ exports.projectGET = (req, res) => {
         );
       });
 
-      res.json({
-        project: req.params.projectID,
-        resources: resources,
-        timeline: timeline,
-        processing: processing,
-        name: req.session.name,
-      });
+      Project.findOne({projectID : req.params.projectID}, (err, project)=> {
+        if(project){
+            res.json({
+              project: req.params.projectID,
+              projectName : project.name,
+              resources: resources,
+              timeline: timeline,
+              processing: processing,
+              name: req.session.name,
+            });
+        } 
+      })
+
+    
     },
     (err) => fileErr(err, res)
   );

@@ -223,7 +223,8 @@ export default class Editor extends Component {
           if (this.state.processing !== null && data.processing === null) {
             data.processing = 100;
             this.setState({ rendering: false });
-          }
+		  }
+		  console.log(data.projectName);
           this.setState({
             id: data.project,
             resources: data.resources,
