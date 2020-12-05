@@ -40,9 +40,9 @@ class SignInWithKakao extends Component {
 
 	doSignUp() {
 		const { id, name, provider } = this.state;
-		window.sessionStorage.setItem('id', id);
-		window.sessionStorage.setItem('name', name);
-		window.sessionStorage.setItem('provider', provider);
+		window.localStorage.setItem('id', id);
+		window.localStorage.setItem('name', name);
+		window.localStorage.setItem('provider', provider);
 		this.props.onLogin();
 	}
 

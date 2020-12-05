@@ -12,11 +12,13 @@ function NewProjectDialog() {
 	const [logged, setLogged] = useState(false);
 
 	useEffect(() => {
-		const id = window.sessionStorage.getItem('id');
+		const id = window.localStorage.getItem('id');
 		if (id) {
 			onLogin();
+			console.log('logged in');
 		} else {
 			onLogout();
+			console.log('not logged in');
 		}
 	});
 
@@ -27,7 +29,7 @@ function NewProjectDialog() {
 	const onLogout = () => {
 		setLogged(false);
 
-		const provider = window.sessionStorage.getItem('provider');
+		const provider = window.localStorage.getItem('provider');
 		if (provider === 'google') {
 			const auth2 = window.gapi.auth2.getAuthInstance();
 			auth2.signOut().then(function () {
@@ -35,7 +37,7 @@ function NewProjectDialog() {
 			});
 		}
 
-		window.sessionStorage.clear();
+		window.localStorage.clear();
 	};
 
 	return (

@@ -2,7 +2,7 @@ import React from 'react';
 import SignInWithGoogle from './SignInWithGoogle';
 
 const Header = ({ logged, onLogout, onLogin }) => {
-	const name = window.sessionStorage.getItem('name');
+	const name = window.localStorage.getItem('name');
 	return (
 		<div id={'header'}>
 			<div className={'container'}>

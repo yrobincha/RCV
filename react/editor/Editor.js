@@ -90,7 +90,7 @@ export default class Editor extends Component {
 	}
 
 	componentDidMount() {
-		const wid = window.sessionStorage.getItem('id');
+		const wid = window.localStorage.getItem('id');
 		if (wid) {
 			console.log(wid);
 			this.setState({
