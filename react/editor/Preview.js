@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import ReactPlayer from "react-player";
+import { Player } from 'video-react';
 
 export default class Preview extends Component {
   constructor(props) {
@@ -16,6 +17,7 @@ export default class Preview extends Component {
 
   render() {
     return (
+      
       <div id="preview">
         <h3>
           <i className="material-icons" aria-hidden={true}>
@@ -24,19 +26,19 @@ export default class Preview extends Component {
           </i>
           미리보기
         </h3>
-        <div>
+        {typeof this.props.items.video !== "undefined" &&
+        !this.props.rendering ? (
+          <Player
+            playsInline
+            src={`${window.location.href}/output.mp4`}
+            playing={this.state.playing}
+          />
+        ) : (
+          <div>
           {this.props.editing && (
             <img src={`${this.props.thumbnail}?${this.props.thumbnailHash}`} />
           )}
         </div>
-        {typeof this.props.items.video !== "undefined" &&
-        !this.props.rendering ? (
-          <ReactPlayer
-            url={`${window.location.href}/output.mp4`}
-            playing={this.state.playing}
-          />
-        ) : (
-          <ReactPlayer url={""} playing={false} />
         )}
         <br />
         <div className="prev-toolbar">
@@ -54,6 +56,7 @@ export default class Preview extends Component {
           ) : (
             <button onClick={this.play} title="계속 재생">
               <i className="material-icons" aria-hidden="true">
+                play();
                 play_arrow
               </i>
             </button>
@@ -68,6 +71,9 @@ export default class Preview extends Component {
   }
 
   play() {
+    console.log("Play")
+    const { player } = this.player.getState();
+    player.play();
     this.setState({
       playing: true,
     });
