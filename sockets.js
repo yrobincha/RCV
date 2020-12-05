@@ -63,7 +63,7 @@ module.exports = function (io) {
 			} else {
 				cnt++;
 				if (projects.get(projectID).size == cnt) {
-					console.log(socket.id + ' reload completed.');
+					//console.log(socket.id + ' reload completed.');
 					cnt = 0;
 					io.to(projectID).emit('reload complete', socket.id);
 				}
