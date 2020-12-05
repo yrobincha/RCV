@@ -6,8 +6,6 @@ import MainSection from '../editor/MainSection';
 import CreateNewProject from '../editor/CreateNewProject';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-// Modal.setAppElement(document.body);
-
 function NewProjectDialog() {
 	const [logged, setLogged] = useState(false);
 
@@ -34,6 +32,10 @@ function NewProjectDialog() {
 			const auth2 = window.gapi.auth2.getAuthInstance();
 			auth2.signOut().then(function () {
 				console.log('Google logout');
+			});
+		} else if (provider === 'kakao') {
+			window.Kakao.Auth.logout(function () {
+				console.log('Kakao logout');
 			});
 		}
 
