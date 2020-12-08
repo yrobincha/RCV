@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import KakaoLogin from 'react-kakao-login';
 import axios from 'axios';
+import styled from 'styled-components';
 require('dotenv').config();
 class SignInWithKakao extends Component {
 	constructor(props) {
@@ -51,6 +52,7 @@ class SignInWithKakao extends Component {
 			<div id={'login'}>
 				<>
 					<KakaoLogin
+						className={'kakao-login-button'}
 						token={process.env.KAKAO_API_KEY}
 						buttonText="카카오로 로그인하기"
 						onSuccess={(user) => this.responseKakao(user)}

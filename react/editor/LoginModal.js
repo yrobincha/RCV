@@ -22,7 +22,9 @@ const LoginModal = ({ isModalOpen, closeModal, onLogin }) => {
 							<div className={'close-button-container'}>
 								<a className={'close-button'} onClick={closeModal}></a>
 							</div>
-							<h1 className={'title'}>시작하기</h1>
+							<div className={'title-container'}>
+								<h1 className={'title'}>시작하기</h1>
+							</div>
 							<SignInWithGoogle onLogin={onLogin} closeModal={closeModal} isModalOpen={isModalOpen} />
 							<SignInWithKakao onLogin={onLogin} closeModal={closeModal} isModalOpen={isModalOpen} />
 						</ModalInner>
@@ -69,6 +71,9 @@ const ModalInner = styled.div`
 	transform: translateY(-50%);
 	margin: 0 auto;
 	padding: 10px 20px;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
 `;
 
 export default LoginModal;

@@ -25,6 +25,11 @@ header {
 		margin: 0 1em;
 	}
 
+	.right {
+		margin-left: auto;
+		flex-direction: row;
+	}
+
 	.project-name {
 		font-size: 1.6rem;
 		padding-bottom: 0.2em;
@@ -32,8 +37,8 @@ header {
 	}
 
 	.invite-dialog-container {
-		margin-left: 72em;
-
+		margin-left: auto;
+		width: 80%;
 		.invite-button {
 			border-color: #336620;
 		}
@@ -619,11 +624,15 @@ tr:nth-child(even) {
 
 // Login
 #login {
-	.google-login-button {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	.google-login-button,
+	.kakao-login-button {
 		display: inline-block;
 		background: white;
 		color: #444;
-		width: 190px;
+		width: 220px;
 		border-radius: 5px;
 		border: thin solid #888;
 		box-shadow: 1px 1px 1px grey;
@@ -632,7 +641,8 @@ tr:nth-child(even) {
 		cursor: pointer;
 	}
 
-	.google-login-button:hover {
+	.google-login-button:hover,
+	.kakao-login-button:hover {
 		transform: scale(1.03);
 	}
 }
@@ -670,6 +680,18 @@ tr:nth-child(even) {
 		.close-button:after {
 			transform: rotate(-45deg);
 		}
+	}
+
+	.title {
+		margin-top: 0;
+	}
+
+	.title-container {
+		text-align: center;
+		width: 220px;
+		border-bottom: 1px solid rgb(216, 216, 216);
+		padding-bottom: 0.4em;
+		margin-bottom: 1.3em;
 	}
 }
 
@@ -748,25 +770,6 @@ tr:nth-child(even) {
 	}
 	.start-button:hover {
 		transform: translateY(-4px);
-	}
-}
-
-// Modal for not logged in
-.login-failed-modal {
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 320px;
-	height: 300px;
-	border-radius: 10px;
-	background-color: #161616;
-	box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
-	text-align: center;
-	z-index: 101;
-	.title {
-		font-size: 1.3rem;
-		margin-bottom: 0.2em;
 	}
 }
 

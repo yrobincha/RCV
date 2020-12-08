@@ -142,14 +142,16 @@ export default class Editor extends Component {
 						closeModal={this.closeModal}
 						isModalOpen={this.state.isModalOpen}
 					/>
-					<SubmitToolbar
-						openSubmitDialog={this.openSubmitDialog}
-						progress={this.state.processing}
-						project={this.state.project}
-					/>
+					<div className="right">
+						<SubmitToolbar
+							openSubmitDialog={this.openSubmitDialog}
+							progress={this.state.processing}
+							project={this.state.project}
+						/>
+					</div>
 				</header>
 				<main>
-					{this.state.logged ? null : <LoginByInviteModal onLogin={this.onLogin} />}
+					{this.state.logged ? null : <LoginByInviteModal onLogin={this.onLogin} closeModal={this.closeModal} />}
 					<div>
 						<Sources
 							project={this.state.project}
