@@ -36,7 +36,9 @@ export default class Editor extends Component {
 		this.playing = this.playing.bind(this);
 		this.pause = this.pause.bind(this);
 		this.setTime = this.setTime.bind(this);
-
+		this.getThumbnail = this.getThumbnail.bind(this);
+		this.getPlayingTrack = this.getPlayingTrack.bind(this);	
+	
 		this.datetimeStart = new Date(1970, 0, 1);
 		this.timerStart = new Date(1970, 0, 1);
 		this.timerFunction = null;
@@ -66,6 +68,13 @@ export default class Editor extends Component {
 		this.socket.on('reload complete', (data) => {
 			this.setState({ req: false });
 		});
+		this.socket.on('thumbnail changed', (data) => {
+			this.setState({
+				thumbnailOn : data.thumbnailOn,
+				thumbnail : data.thumbnail,
+				thumbnailHash : data.thumbnailHash
+			});
+		});
 
 		this.state = {
 			id: null,
@@ -84,6 +93,7 @@ export default class Editor extends Component {
 			init: false,
 			thumbnail: null,
 			thumbnailHash: new Date(1970, 0, 1),
+			thunmbnailOn : false,
 			editing: false,
 			rendering: false,
 			logged: false,
@@ -165,6 +175,7 @@ export default class Editor extends Component {
 							editing={this.state.editing}
 							thumbnail={this.state.thumbnail}
 							thumbnailHash={this.state.thumbnailHash}
+							thumbnailOn={this.state.thumbnailOn}
 							items={this.state.timeline}
 							time={this.state.time}
 							playing={this.state.playing}
@@ -423,11 +434,14 @@ export default class Editor extends Component {
 	play() {
 		this.datetimeStart = new Date();
 		this.timerStart = this.state.time;
-		this.setState({ playing: true });
-		this.timerFunction = setInterval(this.playing, 33);
+		this.setState({thumbnailOn: true,  playing: true });
+		this.timerFunction = setInterval(this.playing, 200);
 	}
 
 	playing() {
+		var now = new Date(this.timerStart.getTime() + Date.now() - this.datetimeStart.getTime());
+		var data = this.getPlayingTrack(now);
+		this.getThumbnail(data.video, data.ptime);
 		this.setState({
 			playing: true,
 			time: new Date(this.timerStart.getTime() + Date.now() - this.datetimeStart.getTime())
@@ -451,7 +465,32 @@ export default class Editor extends Component {
 			this.socket.emit('reload', { projectID: this.state.id, time: time });
 		}
 		this.socket.emit('reload complete', this.state.id);
+		var data = this.getPlayingTrack(time);
+		this.getThumbnail(data.video, data.ptime);	
 
+		this.setState({ thumbnailOn: true, editing: true, time: time });
+	}
+	getPlayingTrack(time){	
+		var start = new Date();
+		var trackStart = new Date();
+		var track = -1;
+		this.state.timeline.video[0].items.forEach((item) => {
+			var vtime = new Date("January 1, 1970," + item.start.split(",")[0]);
+			var ttime = new Date("January 1, 1970," + item['in'].split(",")[0]);
+			vtime.setMilliseconds(item.start.split(",")[1]);
+			ttime.setMilliseconds(item['in'].split(",")[1]);
+			if(time >= vtime){ 
+				start = vtime;
+				trackStart = ttime;
+				track +=1;
+			}
+		});
+		var ptime = new Date(trackStart.getTime() + time.getTime() - start.getTime());
+		var video = this.state.timeline.video[0].items[track].resource;
+		return {video : video, ptime : ptime};
+	};
+
+	getThumbnail(video, time){
 		const url = `${server.apiUrl}/project/${this.state.project}/thumbnail`;
 		const params = {
 			method: 'POST',
@@ -459,12 +498,12 @@ export default class Editor extends Component {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				resource: this.state.resources,
+				resource: video,
 				projectID: this.state.project,
 				time: time
 			})
 		};
-		if (Math.abs(time.getTime() - this.state.time.getTime()) >= 100) {
+		if (Math.abs(time.getTime() - this.state.time.getTime()) >= 20) {
 			fetch(url, params)
 				.then((response) => response.json())
 				.then((data) => {
@@ -475,12 +514,18 @@ export default class Editor extends Component {
 						thumbnail: '/images/' + data.thumbsFilePath,
 						thumbnailHash: Date.now()
 					});
-					console.log(this.state.thumbnail);
+
+		this.socket.emit('thumbnailOn', {
+			projectID : this.state.id,
+			thumbnailOn : true, 
+			thumbnail : this.state.thumbnail,
+			thumbnailHash : this.state.thumbnailHash
+		});
+					//console.log(this.state.thumbnail);
 					this.loadData();
 				})
 				.catch((error) => this.openFetchErrorDialog(error.message));
 		}
-		this.setState({ editing: true, time: time });
-		// this.socket.emit('reload', this.state.id);
 	}
+	
 }
