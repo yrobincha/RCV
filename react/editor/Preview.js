@@ -25,17 +25,6 @@ export default class Preview extends Component {
           </i>
           미리보기
         </h3>
-        {typeof this.props.items.video !== "undefined" &&
-        !this.props.rendering ? (
-          <Player
-            playsInline
-            src={`${window.location.href}/output.mp4`}
-            playing={this.state.playing}
-            width={640}
-            height={360}
-            fluid={false}
-          />
-        ) : (
           <div>
             {this.props.editing && (
               <img
@@ -43,9 +32,15 @@ export default class Preview extends Component {
               />
             )}
           </div>
-        )}
+		<button onClick={this.props.pause} title="멈춤">
+			<i className="material-icons" aria-hidden="true">pause</i>
+		</button>
+				
+		<button onClick={this.play} title="재생">
+			<i className="material-icons" aria-hidden="true">play_arrow</i>
+		</button>
       </div>
-    );
+     );
   }
 
   stop() {
@@ -53,9 +48,9 @@ export default class Preview extends Component {
   }
 
   play() {
-    console.log("Play");
-    const { player } = this.player.getState();
-    player.play();
+    console.log(this.props.time);
+    //const { player } = this.player.getState();
+    //player.play();
     this.setState({
       playing: true,
     });

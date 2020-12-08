@@ -36,6 +36,7 @@ export default class Editor extends Component {
 		this.playing = this.playing.bind(this);
 		this.pause = this.pause.bind(this);
 		this.setTime = this.setTime.bind(this);
+		this.getThumbnail = this.getThumbnail.bind(this);
 
 		this.datetimeStart = new Date(1970, 0, 1);
 		this.timerStart = new Date(1970, 0, 1);
@@ -422,10 +423,11 @@ export default class Editor extends Component {
 		this.datetimeStart = new Date();
 		this.timerStart = this.state.time;
 		this.setState({ playing: true });
-		this.timerFunction = setInterval(this.playing, 33);
+		this.timerFunction = setInterval(this.playing, 200);
 	}
 
 	playing() {
+		this.getThumbnail(new Date(this.timerStart.getTime() + Date.now() - this.datetimeStart.getTime()));
 		this.setState({
 			playing: true,
 			time: new Date(this.timerStart.getTime() + Date.now() - this.datetimeStart.getTime())
@@ -449,7 +451,11 @@ export default class Editor extends Component {
 			this.socket.emit('reload', { projectID: this.state.id, time: time });
 		}
 		this.socket.emit('reload complete', this.state.id);
+		this.getThumbnail(time);
+		// this.socket.emit('reload', this.state.id);
+	}
 
+	getThumbnail(time){
 		const url = `${server.apiUrl}/project/${this.state.project}/thumbnail`;
 		const params = {
 			method: 'POST',
@@ -462,7 +468,7 @@ export default class Editor extends Component {
 				time: time
 			})
 		};
-		if (Math.abs(time.getTime() - this.state.time.getTime()) >= 100) {
+		if (Math.abs(time.getTime() - this.state.time.getTime()) >= 20) {
 			fetch(url, params)
 				.then((response) => response.json())
 				.then((data) => {
@@ -479,6 +485,5 @@ export default class Editor extends Component {
 				.catch((error) => this.openFetchErrorDialog(error.message));
 		}
 		this.setState({ editing: true, time: time });
-		// this.socket.emit('reload', this.state.id);
 	}
 }
