@@ -64,11 +64,8 @@ class LoginByInviteModal extends Component {
 				<ModalOverlay />
 				<ModalWrapper>
 					<ModalInner>
-						{/* <div className={'close-button-container'}>
-							<a className={'close-button'} onClick={this.props.closeModal}></a>
-						</div> */}
 						<div className={'title-container'}>
-							<h1 className={'title'}>시작하기</h1>
+							<h1 className={'title'}>프로젝트 참여하기</h1>
 						</div>
 						<div id={'login'}>
 							<GoogleLogin

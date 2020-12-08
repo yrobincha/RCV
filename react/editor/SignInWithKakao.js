@@ -54,7 +54,7 @@ class SignInWithKakao extends Component {
 					<KakaoLogin
 						className={'kakao-login-button'}
 						token={process.env.KAKAO_API_KEY}
-						buttonText="카카오로 로그인하기"
+						buttonText="Sign in with kakao"
 						onSuccess={(user) => this.responseKakao(user)}
 						onFailure={(err) => this.responseFail(err)}
 						getProfile={true}
