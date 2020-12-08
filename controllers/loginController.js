@@ -100,7 +100,6 @@ exports.thumbnailPOST = (req, res) => {
   let ss = zero(date.getSeconds(), 2);
   let ms = zero(date.getMilliseconds(), 3);
   let timestamp = mm + ":" + ss + "." + ms;
-  //console.log(timestamp)
 
   var filename = null;
   var video = path.join(
@@ -108,7 +107,7 @@ exports.thumbnailPOST = (req, res) => {
     "..",
     "WORKER",
     req.body.projectID,
-    Object.keys(req.body.resource)[0] + ".mp4"
+    req.body.resource + ".mp4"
   );
   ffmpeg(video)
     .on("filenames", function (filenames) {
