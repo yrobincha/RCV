@@ -26,7 +26,7 @@ export default class Preview extends Component {
           미리보기
         </h3>
           <div>
-            {(this.props.editing || this.props.playing) && (
+            {(this.props.thumbnailOn) && (
               <img
                 src={`${this.props.thumbnail}?${this.props.thumbnailHash}`}
               />

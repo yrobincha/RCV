@@ -68,6 +68,13 @@ export default class Editor extends Component {
 		this.socket.on('reload complete', (data) => {
 			this.setState({ req: false });
 		});
+		this.socket.on('thumbnail changed', (data) => {
+			this.setState({
+				thumbnailOn : data.thumbnailOn,
+				thumbnail : data.thumbnail,
+				thumbnailHash : data.thumbnailHash
+			});
+		});
 
 		this.state = {
 			id: null,
@@ -86,6 +93,7 @@ export default class Editor extends Component {
 			init: false,
 			thumbnail: null,
 			thumbnailHash: new Date(1970, 0, 1),
+			thunmbnailOn : false,
 			editing: false,
 			rendering: false,
 			logged: false,
@@ -165,6 +173,7 @@ export default class Editor extends Component {
 							editing={this.state.editing}
 							thumbnail={this.state.thumbnail}
 							thumbnailHash={this.state.thumbnailHash}
+							thumbnailOn={this.state.thumbnailOn}
 							items={this.state.timeline}
 							time={this.state.time}
 							playing={this.state.playing}
@@ -423,7 +432,7 @@ export default class Editor extends Component {
 	play() {
 		this.datetimeStart = new Date();
 		this.timerStart = this.state.time;
-		this.setState({ playing: true });
+		this.setState({thumbnailOn: true,  playing: true });
 		this.timerFunction = setInterval(this.playing, 200);
 	}
 
@@ -457,7 +466,7 @@ export default class Editor extends Component {
 		var data = this.getPlayingTrack(time);
 		this.getThumbnail(data.video, data.ptime);	
 
-		this.setState({ editing: true, time: time });
+		this.setState({ thumbnailOn: true, editing: true, time: time });
 	}
 	getPlayingTrack(time){	
 		var start = new Date();
@@ -503,6 +512,13 @@ export default class Editor extends Component {
 						thumbnail: '/images/' + data.thumbsFilePath,
 						thumbnailHash: Date.now()
 					});
+
+		this.socket.emit('thumbnailOn', {
+			projectID : this.state.id,
+			thumbnailOn : true, 
+			thumbnail : this.state.thumbnail,
+			thumbnailHash : this.state.thumbnailHash
+		});
 					//console.log(this.state.thumbnail);
 					this.loadData();
 				})
