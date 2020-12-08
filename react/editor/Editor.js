@@ -37,8 +37,8 @@ export default class Editor extends Component {
 		this.pause = this.pause.bind(this);
 		this.setTime = this.setTime.bind(this);
 		this.getThumbnail = this.getThumbnail.bind(this);
-		this.getPlayingTrack = this.getPlayingTrack.bind(this);	
-	
+		this.getPlayingTrack = this.getPlayingTrack.bind(this);
+
 		this.datetimeStart = new Date(1970, 0, 1);
 		this.timerStart = new Date(1970, 0, 1);
 		this.timerFunction = null;
@@ -70,9 +70,9 @@ export default class Editor extends Component {
 		});
 		this.socket.on('thumbnail changed', (data) => {
 			this.setState({
-				thumbnailOn : data.thumbnailOn,
-				thumbnail : data.thumbnail,
-				thumbnailHash : data.thumbnailHash
+				thumbnailOn: data.thumbnailOn,
+				thumbnail: data.thumbnail,
+				thumbnailHash: data.thumbnailHash
 			});
 		});
 
@@ -93,7 +93,7 @@ export default class Editor extends Component {
 			init: false,
 			thumbnail: null,
 			thumbnailHash: new Date(1970, 0, 1),
-			thunmbnailOn : false,
+			thunmbnailOn: false,
 			editing: false,
 			rendering: false,
 			logged: false,
@@ -117,7 +117,11 @@ export default class Editor extends Component {
 	}
 
 	render() {
-		const userList = this.state.userList.map((user) => <div key={user}>{user}</div>);
+		const userList = this.state.userList.map((user) => (
+			<div key={user} className={'user'}>
+				{user}
+			</div>
+		));
 
 		return (
 			<>
@@ -144,7 +148,7 @@ export default class Editor extends Component {
 					</a>
 					<div className="divider" />
 					<h1 className={'project-name'}>{this.state.projectName}</h1>
-					{userList}
+					{/* {userList} */}
 
 					<InviteDialog
 						project={this.state.project}
@@ -434,7 +438,7 @@ export default class Editor extends Component {
 	play() {
 		this.datetimeStart = new Date();
 		this.timerStart = this.state.time;
-		this.setState({thumbnailOn: true,  playing: true });
+		this.setState({ thumbnailOn: true, playing: true });
 		this.timerFunction = setInterval(this.playing, 200);
 	}
 
@@ -466,31 +470,31 @@ export default class Editor extends Component {
 		}
 		this.socket.emit('reload complete', this.state.id);
 		var data = this.getPlayingTrack(time);
-		this.getThumbnail(data.video, data.ptime);	
+		this.getThumbnail(data.video, data.ptime);
 
 		this.setState({ thumbnailOn: true, editing: true, time: time });
 	}
-	getPlayingTrack(time){	
+	getPlayingTrack(time) {
 		var start = new Date();
 		var trackStart = new Date();
 		var track = -1;
 		this.state.timeline.video[0].items.forEach((item) => {
-			var vtime = new Date("January 1, 1970," + item.start.split(",")[0]);
-			var ttime = new Date("January 1, 1970," + item['in'].split(",")[0]);
-			vtime.setMilliseconds(item.start.split(",")[1]);
-			ttime.setMilliseconds(item['in'].split(",")[1]);
-			if(time >= vtime){ 
+			var vtime = new Date('January 1, 1970,' + item.start.split(',')[0]);
+			var ttime = new Date('January 1, 1970,' + item['in'].split(',')[0]);
+			vtime.setMilliseconds(item.start.split(',')[1]);
+			ttime.setMilliseconds(item['in'].split(',')[1]);
+			if (time >= vtime) {
 				start = vtime;
 				trackStart = ttime;
-				track +=1;
+				track += 1;
 			}
 		});
 		var ptime = new Date(trackStart.getTime() + time.getTime() - start.getTime());
 		var video = this.state.timeline.video[0].items[track].resource;
-		return {video : video, ptime : ptime};
-	};
+		return { video: video, ptime: ptime };
+	}
 
-	getThumbnail(video, time){
+	getThumbnail(video, time) {
 		const url = `${server.apiUrl}/project/${this.state.project}/thumbnail`;
 		const params = {
 			method: 'POST',
@@ -515,17 +519,16 @@ export default class Editor extends Component {
 						thumbnailHash: Date.now()
 					});
 
-		this.socket.emit('thumbnailOn', {
-			projectID : this.state.id,
-			thumbnailOn : true, 
-			thumbnail : this.state.thumbnail,
-			thumbnailHash : this.state.thumbnailHash
-		});
+					this.socket.emit('thumbnailOn', {
+						projectID: this.state.id,
+						thumbnailOn: true,
+						thumbnail: this.state.thumbnail,
+						thumbnailHash: this.state.thumbnailHash
+					});
 					//console.log(this.state.thumbnail);
 					this.loadData();
 				})
 				.catch((error) => this.openFetchErrorDialog(error.message));
 		}
 	}
-	
 }
