@@ -42,6 +42,7 @@ exports.projectGET = (req, res) => {
     async ([document]) => {
       // Resources
       const resources = {};
+
       const producerNodes = document.getElementsByTagName("producer");
       for (let producer of producerNodes) {
         let id = producer.id.replace(/^producer/, "");
@@ -71,7 +72,9 @@ exports.projectGET = (req, res) => {
       const timeline = {
         audio: [],
         video: [],
+        text: [],
       };
+      
       const tracks = document.querySelectorAll('mlt>playlist[id*="track"]');
       for (let track of tracks) {
         const trackEntry = {
@@ -108,16 +111,14 @@ exports.projectGET = (req, res) => {
             const tractor = document.getElementById(
               entry.getAttribute("producer")
             );
-            const tracks = tractor.getElementsByTagName("multitrack").item(0)
-              .childNodes;
+            const tracks = tractor.getElementsByTagName("multitrack").item(0).childNodes;
             const trackFilters = tractor.getElementsByTagName("filter");
             let index = 0;
             for (let track of tracks) {
               const playlist = document.getElementById(
                 track.getAttribute("producer")
               );
-              const playlistEntry = playlist.getElementsByTagName("entry")
-                .item(0);
+              const playlistEntry = playlist.getElementsByTagName("entry").item(0);
               const duration = mltxmlManager.getDuration(
                 playlistEntry,
                 document
@@ -138,8 +139,15 @@ exports.projectGET = (req, res) => {
                       service: serviceAlias,
                     });
                   } else {
+                    var params = [];
+                    for (let attr of trackFilter.getElementsByTagName("property")) {
+                        var param = {name : attr.getAttribute("name"),
+                                    value : attr.innerHTML}
+                        params.push(param)
+                    }
                     filters.push({
                       service: trackFilter.getAttribute("mlt_service"),
+                      params: params
                     });
                   }
                 }

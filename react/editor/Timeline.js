@@ -113,8 +113,14 @@ export default class Timeline extends Component {
 
 			track.items.forEach((item, index) => {
 				let content = this.props.resources[item.resource].name;
-				if (item.filters.length > 0)
+				
+				if (item.filters.length > 0){
+					if(item.filters[0].service == "text"){
+						content = '<div class="caption"></div><i class="material-icons">closed_caption</i>' + content;
+					}else{
 					content = '<div class="filter"></div><i class="filter material-icons">flare</i>' + content;
+					}
+				}
 				items.push({
 					id: track.id + ':' + index,
 					content: content,
@@ -163,12 +169,12 @@ export default class Timeline extends Component {
 					</i>
 					제거
 				</button>
-				{/* <button onClick={this.buttonText}>
+				<button onClick={this.buttonText}>
 					<i className="material-icons" aria-hidden="true">
-						text
+						closed_caption
 					</i>
 					자막
-				</button> */}
+				</button>
 				<button onClick={this.buttonRender}>
 					<i className="material-icons render-icon" aria-hidden="true">
 						published_with_changes

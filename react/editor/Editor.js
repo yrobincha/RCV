@@ -444,7 +444,7 @@ export default class Editor extends Component {
 	playing() {
 		var now = new Date(this.timerStart.getTime() + Date.now() - this.datetimeStart.getTime());
 		var data = this.getPlayingTrack(now);
-		this.getThumbnail(data.video, data.ptime);
+		this.getThumbnail(data.video, data.ptime, data.filter);
 		this.setState({
 			playing: true,
 			time: new Date(this.timerStart.getTime() + Date.now() - this.datetimeStart.getTime())
@@ -469,15 +469,24 @@ export default class Editor extends Component {
 		}
 		this.socket.emit('reload complete', this.state.id);
 		var data = this.getPlayingTrack(time);
-		this.getThumbnail(data.video, data.ptime);
+		this.getThumbnail(data.video, data.ptime, data.filter);
 
 		this.setState({ thumbnailOn: true, editing: true, time: time });
 	}
+
 	getPlayingTrack(time) {
 		var start = new Date();
 		var trackStart = new Date();
 		var track = -1;
+		var filter = {
+			service : null,
+			properties : []
+		}
 		this.state.timeline.video[0].items.forEach((item) => {
+			if(item.filters.length > 0){
+				filter.service = item.filters[0].service;
+				filter.properties = item.filters[0].params;
+			}
 			var vtime = new Date('January 1, 1970,' + item.start.split(',')[0]);
 			var ttime = new Date('January 1, 1970,' + item['in'].split(',')[0]);
 			vtime.setMilliseconds(item.start.split(',')[1]);
@@ -490,10 +499,10 @@ export default class Editor extends Component {
 		});
 		var ptime = new Date(trackStart.getTime() + time.getTime() - start.getTime());
 		var video = this.state.timeline.video[0].items[track].resource;
-		return { video: video, ptime: ptime };
+		return { video: video, ptime: ptime, filter : filter};
 	}
 
-	getThumbnail(video, time) {
+	getThumbnail(video, time, filter) {
 		const url = `${server.apiUrl}/project/${this.state.project}/thumbnail`;
 		const params = {
 			method: 'POST',
@@ -503,7 +512,8 @@ export default class Editor extends Component {
 			body: JSON.stringify({
 				resource: video,
 				projectID: this.state.project,
-				time: time
+				time: time,
+				filter: filter
 			})
 		};
 		if (Math.abs(time.getTime() - this.state.time.getTime()) >= 20) {

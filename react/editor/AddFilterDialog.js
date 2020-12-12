@@ -161,7 +161,7 @@ export default class AddFilterDialog extends Component {
       input[filter.in[0].id] = this.state.level;
       newFilter.params[output.id] = output.value(input, item);
     }
-
+  
     this.props.onAdd(newFilter);
   }
 
@@ -210,6 +210,7 @@ export default class AddFilterDialog extends Component {
         return filter;
       }
     }
+
     return null;
   }
 }

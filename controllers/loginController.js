@@ -100,7 +100,8 @@ exports.thumbnailPOST = (req, res) => {
   let ss = zero(date.getSeconds(), 2);
   let ms = zero(date.getMilliseconds(), 3);
   let timestamp = mm + ":" + ss + "." + ms;
-
+  let filter = req.body.filter;
+  //console.log(req.body.filter)
   var filename = null;
   var video = path.join(
     __dirname,
@@ -109,14 +110,42 @@ exports.thumbnailPOST = (req, res) => {
     req.body.projectID,
     req.body.resource + ".mp4"
   );
+  // var outputPath = path.join('public/images/',req.body.resource+".png")
+  // console.log(outputPath)
+  // fs.stat(outputPath, (err)=>{
+  //   if(!err){
+  //     console.log("file exist")
+  //     return res.json({
+  //       success: true,
+  //       thumbsFilePath: req.body.resource+".png",
+  //       fileDuration: fileDuration,
+  //     });
+  //   }else{
+  //     ffmpeg(video)
+  //     .seekInput('00:04.000')
+  //     .output(outputPath)
+  //     .outputOptions([
+  //         '-frames', '1', 
+  //         "-filter:v drawtext=text='watermarkText':x=50:y=H-50:fontsize=32:fontcolor=white"
+  //     ])
+  //     .on('end', function() {
+  //       console.log('Screenshot taken');
+  //           return res.json({
+  //               success: true,
+  //               thumbsFilePath: filename,
+  //               fileDuration: fileDuration,
+  //             });
+  //     })
+  //     .run()
+  //   }
+  // })
+  
   ffmpeg(video)
     .on("filenames", function (filenames) {
-      //console.log("Will generate " + filenames.join(", "));
       thumbsFilePath = path.join("../public/images", filenames[0]);
       filename = filenames[0];
     })
     .on("end", function () {
-      //console.log("Screenshots taken");
       return res.json({
         success: true,
         thumbsFilePath: filename,
