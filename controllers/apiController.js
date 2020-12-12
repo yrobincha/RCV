@@ -116,8 +116,7 @@ exports.projectGET = (req, res) => {
               const playlist = document.getElementById(
                 track.getAttribute("producer")
               );
-              const playlistEntry = playlist
-              renderVideo   .getElementsByTagName("entry")
+              const playlistEntry = playlist.getElementsByTagName("entry")
                 .item(0);
               const duration = mltxmlManager.getDuration(
                 playlistEntry,

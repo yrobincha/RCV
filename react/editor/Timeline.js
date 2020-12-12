@@ -3,6 +3,7 @@ import { Timeline as Vis } from 'vis-timeline/standalone';
 import timeManager from '../../models/timeManager';
 import TimelineModel from './TimelineModel';
 import AddFilterDialog from './AddFilterDialog';
+import AddTextDialog from './AddTextDialog';
 import { server } from '../../config';
 import PropTypes from 'prop-types';
 
@@ -15,6 +16,7 @@ export default class Timeline extends Component {
 		this.state = {
 			selectedItems: [],
 			showAddFilterDialog: false,
+			showAddTextDialog: false,
 			duration: '00:00:00,000'
 		};
 
@@ -30,6 +32,8 @@ export default class Timeline extends Component {
 		this.getItemFromTrackIndex = this.getItemFromTrackIndex.bind(this);
 		this.addTrack = this.addTrack.bind(this);
 		this.delTrack = this.delTrack.bind(this);
+		this.buttonText = this.buttonText.bind(this);
+		this.closeAddTextDialog = this.closeAddTextDialog.bind(this);
 	}
 
 	componentDidMount() {
@@ -46,7 +50,7 @@ export default class Timeline extends Component {
 			zoomMax: 21600000,
 			editable: {
 				updateTime: true,
-				updateGroup: true
+				updateGroup: false,
 			},
 			onMove: this.onMove,
 			onMoving: this.onMoving,
@@ -141,6 +145,12 @@ export default class Timeline extends Component {
 	render() {
 		return (
 			<>
+				<button onClick={this.buttonFilter}>
+					<i className="material-icons" aria-hidden="true">
+						flare
+					</i>
+					필터
+				</button>
 				<button onClick={this.buttonSplit}>
 					<i className="material-icons" aria-hidden="true">
 						flip
@@ -153,6 +163,12 @@ export default class Timeline extends Component {
 					</i>
 					제거
 				</button>
+				{/* <button onClick={this.buttonText}>
+					<i className="material-icons" aria-hidden="true">
+						text
+					</i>
+					자막
+				</button> */}
 				<button onClick={this.buttonRender}>
 					<i className="material-icons render-icon" aria-hidden="true">
 						published_with_changes
@@ -169,6 +185,17 @@ export default class Timeline extends Component {
 						getItem={this.getItemFromTrackIndex}
 						project={this.props.project}
 						onClose={this.closeAddFilterDialog}
+						onAdd={(filter) => this.props.onAddFilter(filter)}
+						onDel={(filter) => this.props.onDelFilter(filter)}
+						fetchError={this.props.fetchError}
+					/>
+				)}
+				{this.state.showAddTextDialog && (
+					<AddTextDialog
+						item={this.state.selectedItems[0]}
+						getItem={this.getItemFromTrackIndex}
+						project={this.props.project}
+						onClose={this.closeAddTextDialog}
 						onAdd={(filter) => this.props.onAddFilter(filter)}
 						onDel={(filter) => this.props.onDelFilter(filter)}
 						fetchError={this.props.fetchError}
@@ -436,6 +463,15 @@ export default class Timeline extends Component {
 				this.props.loadData();
 			})
 			.catch((error) => this.props.fetchError(error.message));
+	}
+
+	buttonText() {
+		if (this.state.selectedItems.length === 0) return;
+		this.setState({ showAddTextDialog: true });
+	}
+
+	closeAddTextDialog() {
+		this.setState({ showAddTextDialog: false });
 	}
 }
 
