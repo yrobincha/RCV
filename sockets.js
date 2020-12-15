@@ -70,11 +70,13 @@ module.exports = function (io) {
 			}
 		});
 		socket.on('thumbnailOn', (data) => {	
+			if(data.projectID){
 			for (let item of  Array.from(projects.get(data.projectID).keys())) {
 				if(item != socket.id){
 					io.of('/').sockets.get(item).emit('thumbnail changed', data);
 				}
 			}
+		}
 		});
 	});
 };

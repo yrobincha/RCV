@@ -105,11 +105,18 @@ exports.thumbnailPOST = (req, res) => {
   let subtitle = null;
   let fontcolor = null;
   let size = null;
+  let level = null;
 
   if(filter.service === 'text'){
     subtitle = filter.properties[0].value;
     fontcolor = filter.properties[2].value;
     size = filter.properties[3].value;
+  } else if(filter.service === 'brightness'){
+    var num =  filter.properties[1].value.split(',');
+    if(num.length === 2)
+    level = '0' + '.' + num[1]
+    else 
+    level = num-1
   }
 
   var video = path.join(
@@ -127,9 +134,11 @@ exports.thumbnailPOST = (req, res) => {
     '-frames', '1',
   ];
 
+
   if(subtitle) 
   options.push(`-filter:v drawtext=text=${subtitle}':x=w*0.3:y=h*0.8:fontsize=${size}:fontcolor=${fontcolor}`)
- 
+  if(level && filter.service === 'brightness')
+  options.push(`-vf eq=brightness=${level}`)
 
   ffmpeg(video)
     .seekInput(timestamp)
