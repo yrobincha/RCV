@@ -105,7 +105,7 @@ exports.thumbnailPOST = (req, res) => {
   let subtitle = null;
   let fontcolor = null;
   let size = null;
-  
+
   if(filter.service === 'text'){
     subtitle = filter.properties[0].value;
     fontcolor = filter.properties[2].value;
@@ -128,7 +128,7 @@ exports.thumbnailPOST = (req, res) => {
   ];
 
   if(subtitle) 
-  options.push(`-filter:v drawtext=text=${subtitle}':x=50:y=H-50:fontsize=${size}:fontcolor=${fontcolor}`)
+  options.push(`-filter:v drawtext=text=${subtitle}':x=w*0.3:y=h*0.8:fontsize=${size}:fontcolor=${fontcolor}`)
  
 
   ffmpeg(video)
