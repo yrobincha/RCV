@@ -210,8 +210,9 @@ export default class AddFilterDialog extends Component {
         return filter;
       }
     }
+    return "text";
 
-    return null;
+    //return null;
   }
 }
 

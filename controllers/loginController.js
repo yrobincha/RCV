@@ -67,17 +67,17 @@ exports.projectPOST = (req, res, next) => {
 exports.projectsGET = (req, res) => {
   User.findOne({ userID: req.session.userID }, (err, user) => {
     if (err) console.log("no user");
-	if(!user){
-		res.json({});
-	}else{
-    Project.find({ projectID: { $in: user.projectIDs } }, (err, project) => {
-      if (!project) {
-        res.json({});
-      } else {
-        res.json(project);
-      }
-    });
-	}
+    if (!user) {
+      res.json({});
+    } else {
+      Project.find({ projectID: { $in: user.projectIDs } }, (err, project) => {
+        if (!project) {
+          res.json({});
+        } else {
+          res.json(project);
+        }
+      });
+    }
   });
 };
 
@@ -95,14 +95,23 @@ var zero = function (n, digits) {
 exports.thumbnailPOST = (req, res) => {
   let thumbsFilePath = "";
   let fileDuration = "";
+
   let date = new Date(req.body.time);
   let mm = zero(date.getMinutes(), 2);
   let ss = zero(date.getSeconds(), 2);
   let ms = zero(date.getMilliseconds(), 3);
   let timestamp = mm + ":" + ss + "." + ms;
   let filter = req.body.filter;
-  //console.log(req.body.filter)
-  var filename = null;
+  let subtitle = null;
+  let fontcolor = null;
+  let size = null;
+  
+  if(filter.service === 'text'){
+    subtitle = filter.properties[0].value;
+    fontcolor = filter.properties[2].value;
+    size = filter.properties[3].value;
+  }
+
   var video = path.join(
     __dirname,
     "..",
@@ -110,42 +119,23 @@ exports.thumbnailPOST = (req, res) => {
     req.body.projectID,
     req.body.resource + ".mp4"
   );
-  // var outputPath = path.join('public/images/',req.body.resource+".png")
-  // console.log(outputPath)
-  // fs.stat(outputPath, (err)=>{
-  //   if(!err){
-  //     console.log("file exist")
-  //     return res.json({
-  //       success: true,
-  //       thumbsFilePath: req.body.resource+".png",
-  //       fileDuration: fileDuration,
-  //     });
-  //   }else{
-  //     ffmpeg(video)
-  //     .seekInput('00:04.000')
-  //     .output(outputPath)
-  //     .outputOptions([
-  //         '-frames', '1', 
-  //         "-filter:v drawtext=text='watermarkText':x=50:y=H-50:fontsize=32:fontcolor=white"
-  //     ])
-  //     .on('end', function() {
-  //       console.log('Screenshot taken');
-  //           return res.json({
-  //               success: true,
-  //               thumbsFilePath: filename,
-  //               fileDuration: fileDuration,
-  //             });
-  //     })
-  //     .run()
-  //   }
-  // })
-  
+  var filename = 'thumbnail-' + req.body.resource + ".png";
+  var outputPath = path.join('public/images/', filename)
+
+  var options = [
+    '-s 320x240',
+    '-frames', '1',
+  ];
+
+  if(subtitle) 
+  options.push(`-filter:v drawtext=text=${subtitle}':x=50:y=H-50:fontsize=${size}:fontcolor=${fontcolor}`)
+ 
+
   ffmpeg(video)
-    .on("filenames", function (filenames) {
-      thumbsFilePath = path.join("../public/images", filenames[0]);
-      filename = filenames[0];
-    })
-    .on("end", function () {
+    .seekInput(timestamp)
+    .output(outputPath)
+    .outputOptions(options)
+    .on('end', function () {
       return res.json({
         success: true,
         thumbsFilePath: filename,
@@ -156,13 +146,5 @@ exports.thumbnailPOST = (req, res) => {
       console.error(err);
       return res.json({ success: false, err });
     })
-    .screenshots({
-      // Will take screens at 20%, 40%, 60% and 80% of the video
-      count: 1,
-      timestamps: [timestamp],
-      folder: "public/images",
-      size: "320x200",
-      // %b input basename ( filename w/o extension )
-      filename: "thumbnail-%b.png",
-    });
+    .run()
 };

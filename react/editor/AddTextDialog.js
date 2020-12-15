@@ -14,7 +14,9 @@ export default class AddTextDialog extends Component {
 
     this.state = {
       filter: "text",
-      level: 100, // Must match default value of first filter in /react/filters.js
+      text: 100, // Must match default value of first filter in /react/filters.js
+      color : "white",
+      size : 32
     };
 
     this.handleLevelChange = this.handleLevelChange.bind(this);
@@ -22,6 +24,8 @@ export default class AddTextDialog extends Component {
     this.handleCloseDialog = this.handleCloseDialog.bind(this);
     this.handleAddFilter = this.handleAddFilter.bind(this);
     this.handleDelFilter = this.handleDelFilter.bind(this);
+    this.handleColorChange = this.handleColorChange.bind(this);
+    this.handleSizeChange = this.handleSizeChange.bind(this);
   }
 
   render() {
@@ -45,26 +49,69 @@ export default class AddTextDialog extends Component {
                     <td>자막 없음</td>
                   </tr>
                 )}
+                {item.filters.map((filter) => (
+                  <tr key={filter.service}>
+                    <td>{AddTextDialog.getFilter(filter.service).title}</td>
+                    <td>
+                      <button
+                        onClick={() => this.handleDelFilter(filter.service)}
+                      >
+                        <i className="material-icons" aria-hidden="true">
+                          delete
+                        </i>
+                      </button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
-          <h3>새 자막 추가</h3>
+          {item.filters.length === 0 && (
+            <h3>새 자막 추가</h3>
+          )}
           <div>
             <form onSubmit={this.handleAddFilter}>
               <label htmlFor={"filter"}>자막: </label>
-            
+
               <br />
-                <>
-                  <label htmlFor={"text"}>입력: </label>
-                  <input
-                    type={"text"}
-                    name={"text"}
-                    defaultValue={""}
-                    required={true}
-                    title={"자막"}
-                    onChange={this.handleLevelChange}
-                  />
-                </>
+              <>
+                <label htmlFor={"text"}>입력: </label>
+                <input
+                  type={"text"}
+                  name={"text"}
+                  defaultValue={""}
+                  required={true}
+                  title={"자막"}
+                  onChange={this.handleLevelChange}
+                />
+              </>
+              <br />
+              <>
+                <label htmlFor={"size"}>크기: </label>
+                <input
+                  type={"range"}
+                  name={"size"}
+                  min={0}
+                  max={200}
+                  id={"fontsize"}
+                  defaultValue={100}
+                  onChange={this.handleSizeChange}
+                />
+                <output name="fonts" for="fontsize"></output>
+                <span> {this.state.level} %</span>
+              </>
+              <br/>
+              <>
+                <label htmlFor={"color"}>색상: </label>
+                <input
+                  type={"color"}
+                  name={"color"}
+                  value="#000000"
+                  onChange={this.handleColorChange}
+                />
+
+                <span> {this.state.level} %</span>
+              </>
               <br />
               <input type={"submit"} value={"자막 추가"} />
               <button onClick={this.handleCloseDialog}>닫기</button>
@@ -80,14 +127,21 @@ export default class AddTextDialog extends Component {
   }
 
   handleLevelChange(event) {
-    this.setState({ level: event.target.value });
+    this.setState({ text: event.target.value });
+  }
+
+  handleColorChange(event) {
+    this.setState({ color: event.target.value });
+  }
+
+  handleSizeChange(event) {
+    this.setState({ size: event.target.value });
   }
 
   handleCloseDialog() {
-
     this.setState({
       filter: filters.videoFilters[0].id,
-      level: 100, // Must match default value of first filter in /react/filters.js
+      text: "", // Must match default value of first filter in /react/filters.js
     });
     this.props.onClose();
   }
@@ -96,7 +150,7 @@ export default class AddTextDialog extends Component {
     event.preventDefault();
 
     let filter = AddTextDialog.getFilter(this.state.filter);
-  
+
     let newFilter = {
       filter: this.state.filter,
       params: {},
@@ -107,11 +161,15 @@ export default class AddTextDialog extends Component {
     const itemPath = this.props.item.split(":");
     newFilter.track = itemPath[0];
     newFilter.item = Number(itemPath[1]);
-
+    
+    
     for (let output of filter.out) {
-      input[filter.in[0].id] = this.state.level;
+      input[filter.in[0].id] = this.state.text;
+      input[filter.in[0].size] = this.state.size;
+      input[filter.in[0].color] = this.state.color;
       newFilter.params[output.id] = output.value(input, item);
     }
+    console.log(newFilter)
     this.props.onAdd(newFilter);
   }
 

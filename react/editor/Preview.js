@@ -14,7 +14,7 @@ export default class Preview extends Component {
       playing: false,
     };
   }
-
+  
   render() {
     return (
       <div id="preview">

@@ -176,6 +176,8 @@ export default {
       in: [
         {
           id: "text",
+          size: "size",
+          color: "color",
           title: "지속시간",
           type: "text",
           value: "",
@@ -192,8 +194,13 @@ export default {
         },
         {
           id: "fgcolour",
-          value: () => "white",
+          value: (input) => input.color,
         },
+        {
+          id: "size",
+          value: (input) => input.size,
+        },
+        
       ],
     },
 };

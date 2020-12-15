@@ -482,11 +482,8 @@ export default class Editor extends Component {
 			service : null,
 			properties : []
 		}
+
 		this.state.timeline.video[0].items.forEach((item) => {
-			if(item.filters.length > 0){
-				filter.service = item.filters[0].service;
-				filter.properties = item.filters[0].params;
-			}
 			var vtime = new Date('January 1, 1970,' + item.start.split(',')[0]);
 			var ttime = new Date('January 1, 1970,' + item['in'].split(',')[0]);
 			vtime.setMilliseconds(item.start.split(',')[1]);
@@ -497,6 +494,14 @@ export default class Editor extends Component {
 				track += 1;
 			}
 		});
+		if(track > -1){
+		let item = this.state.timeline.video[0].items[track];
+		if(item.filters.length !=0){
+			filter.service = item.filters[0].service;
+			filter.properties = item.filters[0].params;
+		}
+	}
+
 		var ptime = new Date(trackStart.getTime() + time.getTime() - start.getTime());
 		var video = this.state.timeline.video[0].items[track].resource;
 		return { video: video, ptime: ptime, filter : filter};
@@ -516,6 +521,7 @@ export default class Editor extends Component {
 				filter: filter
 			})
 		};
+		
 		if (Math.abs(time.getTime() - this.state.time.getTime()) >= 20) {
 			fetch(url, params)
 				.then((response) => response.json())
@@ -527,7 +533,7 @@ export default class Editor extends Component {
 						thumbnail: '/images/' + data.thumbsFilePath,
 						thumbnailHash: Date.now()
 					});
-
+					
 					this.socket.emit('thumbnailOn', {
 						projectID: this.state.id,
 						thumbnailOn: true,
