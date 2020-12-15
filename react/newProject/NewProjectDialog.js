@@ -51,7 +51,7 @@ function NewProjectDialog() {
 					<FeatureSection />
 					<Footer />
 				</Route>
-				<Route path="/project" exact>
+				<Route path="/project">
 					<CreateNewProject />
 				</Route>
 			</Switch>
