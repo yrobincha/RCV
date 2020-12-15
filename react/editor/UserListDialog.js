@@ -58,9 +58,11 @@ class UserListDialog extends Component {
             참여자 목록
           </button>
         </div>
-        {this.state.isPopoverOpen && (
-          <div className={"user-list"}>{userList}</div>
-        )}
+        {
+          /*this.state.isPopoverOpen &&*/ <div className={"user-list"}>
+            {userList}
+          </div>
+        }
       </>
     );
   }
