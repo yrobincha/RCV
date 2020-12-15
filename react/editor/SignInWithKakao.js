@@ -15,7 +15,7 @@ class SignInWithKakao extends Component {
 
 	responseKakao(user) {
 		console.log('Signed in as ' + user.profile.id);
-		// console.log(user.profile.properties.nickname);
+		// console.log(user.profile.properties.profile_image);
 		axios
 			.post('/login', {
 				userID: user.profile.id,

@@ -76,16 +76,15 @@ class LoginByInviteModal extends Component {
 								onFailure={(err) => this.responseFail(err)}
 								cookiePolicy={'single_host_origin'}
 							/>
-							<>
-								<KakaoLogin
-									className={'kakao-login-button'}
-									token={process.env.KAKAO_API_KEY}
-									buttonText="카카오로 로그인하기"
-									onSuccess={(user) => this.responseKakao(user)}
-									onFailure={(err) => this.responseFail(err)}
-									getProfile={true}
-								/>
-							</>
+
+							<KakaoLogin
+								className={'kakao-login-button'}
+								token={process.env.KAKAO_API_KEY}
+								buttonText="카카오로 로그인하기"
+								onSuccess={(user) => this.responseKakao(user)}
+								onFailure={(err) => this.responseFail(err)}
+								getProfile={true}
+							/>
 						</div>
 					</ModalInner>
 				</ModalWrapper>

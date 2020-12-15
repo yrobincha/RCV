@@ -7,7 +7,8 @@ class UserListDialog extends Component {
 		this.state = {
 			isPopoverOpen: false,
 			id: '',
-			provider: ''
+			provider: '',
+			userList: []
 		};
 
 		this.onHover = this.onHover.bind(this);
@@ -35,10 +36,10 @@ class UserListDialog extends Component {
 		});
 	}
 	render() {
-		const userList = this.props.userList.map((user) => (
+		let userList = this.props.userList.map((user) => (
 			<div key={user} className={'user-list'}>
-				{/* <h1>Test</h1> */}
 				<div className={'user-container'}>
+					<img className={'profile-image'} src="../images/sample-profile.jpeg" alt="Img" />
 					<p className={'user'}>{user}</p>
 				</div>
 			</div>
