@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { server } from '../../config';
-
 import styled from 'styled-components';
 class InviteDialog extends Component {
 	constructor(props) {
@@ -97,7 +96,7 @@ const ModalInner = styled.div`
 	box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
 	background-color: #161616;
 	border-radius: 10px;
-	width: 600px;
+	width: 620px;
 	max-width: 720px;
 	top: 50%;
 	transform: translateY(-50%);

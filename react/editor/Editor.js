@@ -12,6 +12,7 @@ import timeManager from '../../models/timeManager';
 import { io } from 'socket.io-client';
 import InviteDialog from './InviteDialog';
 import LoginByInviteModal from './LoginByInviteModal';
+import UserListDialog from './UserListDialog';
 
 export default class Editor extends Component {
 	constructor(props) {
@@ -117,12 +118,6 @@ export default class Editor extends Component {
 	}
 
 	render() {
-		const userList = this.state.userList.map((user) => (
-			<div key={user} className={'user'}>
-				{user}
-			</div>
-		));
-
 		return (
 			<>
 				<header>
@@ -148,7 +143,8 @@ export default class Editor extends Component {
 					</a>
 					<div className="divider" />
 					<h1 className={'project-name'}>{this.state.projectName}</h1>
-					{/* {userList} */}
+
+					<UserListDialog userList={this.state.userList} />
 
 					<InviteDialog
 						project={this.state.project}
@@ -479,9 +475,9 @@ export default class Editor extends Component {
 		var trackStart = new Date();
 		var track = -1;
 		var filter = {
-			service : null,
-			properties : []
-		}
+			service: null,
+			properties: []
+		};
 
 		this.state.timeline.video[0].items.forEach((item) => {
 			var vtime = new Date('January 1, 1970,' + item.start.split(',')[0]);
@@ -494,17 +490,17 @@ export default class Editor extends Component {
 				track += 1;
 			}
 		});
-		if(track > -1){
-		let item = this.state.timeline.video[0].items[track];
-		if(item.filters.length !=0){
-			filter.service = item.filters[0].service;
-			filter.properties = item.filters[0].params;
+		if (track > -1) {
+			let item = this.state.timeline.video[0].items[track];
+			if (item.filters.length != 0) {
+				filter.service = item.filters[0].service;
+				filter.properties = item.filters[0].params;
+			}
 		}
-	}
 
 		var ptime = new Date(trackStart.getTime() + time.getTime() - start.getTime());
 		var video = this.state.timeline.video[0].items[track].resource;
-		return { video: video, ptime: ptime, filter : filter};
+		return { video: video, ptime: ptime, filter: filter };
 	}
 
 	getThumbnail(video, time, filter) {
@@ -521,7 +517,7 @@ export default class Editor extends Component {
 				filter: filter
 			})
 		};
-		
+
 		if (Math.abs(time.getTime() - this.state.time.getTime()) >= 20) {
 			fetch(url, params)
 				.then((response) => response.json())
@@ -533,7 +529,7 @@ export default class Editor extends Component {
 						thumbnail: '/images/' + data.thumbsFilePath,
 						thumbnailHash: Date.now()
 					});
-					
+
 					this.socket.emit('thumbnailOn', {
 						projectID: this.state.id,
 						thumbnailOn: true,
