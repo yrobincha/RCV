@@ -2,7 +2,7 @@ const { json } = require('body-parser');
 const { get } = require('mongoose');
 
 module.exports = function (io) {
-	let projects = new Map(); //
+	let projects = new Map();
 	let cnt = 0;
 	io.on('connection', (socket) => {
 		console.log('a user connected');
@@ -23,31 +23,24 @@ module.exports = function (io) {
 			socket.join(data.projectID);
 			if (!projects.has(data.projectID)) {
 				projects.set(data.projectID, new Map());
-				projects.get(data.projectID).set(socket.id, data.name);
-				io.to(data.projectID).emit('userJoin', data.name);
-				io.to(data.projectID).emit('userList', Array.from(projects.get(data.projectID).values()));
 			} else {
-					projects.get(data.projectID).set(socket.id, data.name);
-					io.to(data.projectID).emit('userJoin', data.name);
-					io.to(data.projectID).emit('userList', Array.from(projects.get(data.projectID).values()));
-					for (let item of  Array.from(projects.get(data.projectID).keys())) {
-						if(item != socket.id){
-							io.of('/').sockets.get(item).emit('load', {id: socket.id});
-							break;
-						}
+				for (let item of Array.from(projects.get(data.projectID).keys())) {
+					if (item != socket.id) {
+						io.of('/').sockets.get(item).emit('load', { id: socket.id });
+						break;
 					}
-					  
-					  
+				}
 			}
-			//  console.log(projects.get(data.projectID));
+			projects.get(data.projectID).set(socket.id, data.name);
+			io.to(data.projectID).emit('userJoin', data.name);
+			io.to(data.projectID).emit('userList', Array.from(projects.get(data.projectID).values()));
 		});
 
 		socket.on('receive', (data) => {
-			io.of('/').sockets.get(data.id).emit('receive', {time : data.time, id :data.id});
+			io.of('/').sockets.get(data.id).emit('receive', { time: data.time, id: data.id });
 		});
 
 		socket.on('reload', (data) => {
-			// console.log("in reload -- > ");
 			if (!projects.has(data.projectID)) {
 				console.log("ERROR : we have not this project '" + data.projectID);
 			} else {
@@ -69,14 +62,14 @@ module.exports = function (io) {
 				}
 			}
 		});
-		socket.on('thumbnailOn', (data) => {	
-			if(data.projectID){
-			for (let item of  Array.from(projects.get(data.projectID).keys())) {
-				if(item != socket.id){
-					io.of('/').sockets.get(item).emit('thumbnail changed', data);
+		socket.on('thumbnailOn', (data) => {
+			if (data.projectID) {
+				for (let item of Array.from(projects.get(data.projectID).keys())) {
+					if (item != socket.id) {
+						io.of('/').sockets.get(item).emit('thumbnail changed', data);
+					}
 				}
 			}
-		}
 		});
 	});
 };
