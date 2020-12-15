@@ -23,13 +23,13 @@ module.exports = function (io) {
 			socket.join(data.projectID);
 			if (!projects.has(data.projectID)) {
 				projects.set(data.projectID, new Map());
-				projects.set(data.projectID, new Map());
 				projects.get(data.projectID).set(socket.id, data.name);
 				io.to(data.projectID).emit('userJoin', data.name);
+			    io.to(data.projectID).emit('userList', Array.from(projects.get(data.projectID).values()));
 			} else {
-				projects.set(data.projectID, new Map());
 				projects.get(data.projectID).set(socket.id, data.name);
 				io.to(data.projectID).emit('userJoin', data.name);
+			    io.to(data.projectID).emit('userList', Array.from(projects.get(data.projectID).values()));
 				for (let item of Array.from(projects.get(data.projectID).keys())) {
 					if (item != socket.id) {
 						io.of('/').sockets.get(item).emit('load', { id: socket.id });
@@ -37,9 +37,6 @@ module.exports = function (io) {
 					}
 				}
 			}
-			projects.get(data.projectID).set(socket.id, data.name);
-			io.to(data.projectID).emit('userJoin', data.name);
-			io.to(data.projectID).emit('userList', Array.from(projects.get(data.projectID).values()));
 		});
 
 		socket.on('receive', (data) => {
