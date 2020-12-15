@@ -15,8 +15,8 @@ export default class AddTextDialog extends Component {
     this.state = {
       filter: "text",
       text: 100, // Must match default value of first filter in /react/filters.js
-      color : "white",
-      size : 32
+      color : "#FFFFFF",
+      size : 100
     };
 
     this.handleLevelChange = this.handleLevelChange.bind(this);
@@ -94,11 +94,9 @@ export default class AddTextDialog extends Component {
                   min={0}
                   max={200}
                   id={"fontsize"}
-                  defaultValue={100}
+                  value={this.state.size}
                   onChange={this.handleSizeChange}
                 />
-                <output name="fonts" for="fontsize"></output>
-                <span> {this.state.level} %</span>
               </>
               <br/>
               <>
@@ -106,11 +104,9 @@ export default class AddTextDialog extends Component {
                 <input
                   type={"color"}
                   name={"color"}
-                  value="#000000"
+                  value={this.state.color}
                   onChange={this.handleColorChange}
                 />
-
-                <span> {this.state.level} %</span>
               </>
               <br />
               <input type={"submit"} value={"자막 추가"} />
